@@ -8,10 +8,11 @@ export default function ProfileBadge() {
   const location = useLocation();
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
+ useEffect(() => {
     getMe().then(data => {
       if (data?.user) setUser(data.user);
-    }).catch(() => {});
+      else setUser(null);
+    }).catch(() => { setUser(null); });
   }, [location.pathname]);
 
   if (location.pathname === "/" || location.pathname === "/auth") return null;

@@ -20,7 +20,7 @@ const app = express();
 // ── Security ──────────────────────────────────────────────────
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: [process.env.FRONTEND_URL, "https://chianya.vercel.app"],
   credentials: true,
 }));
 app.use(cookieParser());
