@@ -4,6 +4,7 @@ import { useChianya } from "../context/ChianyaContext";
 import { avatarLines } from "../avatar/avatarLines";
 import { feelingResponses, principles } from "../data/wisdom";
 import { useEffect, useRef, useState } from "react";
+import { getCommunityStats } from "../services/api";
 
 function ModeAtmosphere({ width, height }) {
   const canvasRef = useRef();
@@ -168,6 +169,10 @@ const MODES=[
 export default function ModeSelect() {
   const { feelings, setAvatarLine } = useChianya();
   const navigate = useNavigate();
+  const [stats, setStats] = useState(null);
+  useEffect(() => {
+    getCommunityStats().then(data => setStats(data)).catch(() => {});
+  }, []);
   const cardRef = useRef();
   const [cardSize, setCardSize] = useState({w:460,h:560});
   const primary = feelings[0]||"anxious";
@@ -381,6 +386,50 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
           transition={{delay:0.55,duration:1}}
           style={{height:"0.5px",background:"rgba(70,180,50,0.14)",
             marginBottom:"1.4rem",position:"relative",zIndex:2}}/>
+
+
+            {/* Community impact */}
+        {stats && (
+          <motion.div
+            initial={{ opacity:0, y:12 }}
+            animate={{ opacity:1, y:0 }}
+            transition={{ delay:0.7, duration:1 }}
+            style={{
+              position:"relative", zIndex:2,
+              marginBottom:"1rem",
+              padding:"12px 16px",
+              borderRadius:14,
+              border:"0.5px solid rgba(66,160,46,0.15)",
+              background:"rgba(4,18,5,0.45)",
+              display:"flex",
+              justifyContent:"space-around",
+              flexWrap:"wrap",
+              gap:8,
+            }}>
+            {[
+              { value: stats.breaths, label: "breaths taken" },
+              { value: stats.releases, label: "things released" },
+              { value: stats.conversations, label: "conversations" },
+              { value: stats.users, label: "souls here" },
+            ].map((s, i) => (
+              <div key={i} style={{ textAlign:"center" }}>
+                <div style={{
+                  fontSize:"clamp(16px,3vw,20px)",
+                  color:"rgba(172,242,142,0.88)",
+                  fontFamily:"Georgia, serif",
+                  fontWeight:300,
+                }}>{s.value || 0}</div>
+                <div style={{
+                  fontSize:"clamp(8px,1.4vw,9px)",
+                  color:"rgba(85,175,62,0.38)",
+                  fontFamily:"Georgia, serif",
+                  fontStyle:"italic",
+                  letterSpacing:"0.12em",
+                }}>{s.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        )}
 
 
 <motion.button

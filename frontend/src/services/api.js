@@ -38,3 +38,6 @@ export const getFeedback = () =>
 
 export const deleteFeedback = (id) =>
   fetch(`${BASE}/feedback/${id}`, opts("DELETE")).then(r => r.json());
+
+export const getCommunityStats = () =>
+  fetch(`${BASE}/activity/community-stats`, opts("GET")).then(r => r.json());

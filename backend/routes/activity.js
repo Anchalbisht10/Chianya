@@ -96,4 +96,39 @@ router.post("/release-opening", protect, async (req, res) => {
   }
 });
 
+
+router.get("/community-stats", async (req, res) => {
+  try {
+    const stats = await UserActivity.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalBreaths: { $sum: "$breathingSessionsCompleted" },
+          totalReleases: { $sum: "$releaseSessionCount" },
+          totalAntarSessions: { $sum: "$antarSessionCount" },
+          totalGrounding: { $sum: "$groundSessionCount" },
+          totalWisdom: { $sum: "$wisdomSessionCount" },
+          totalJustSit: { $sum: "$justSitSessionCount" },
+          totalVisits: { $sum: "$totalVisits" },
+          totalUsers: { $sum: 1 },
+        }
+      }
+    ]);
+
+    const s = stats[0] || {};
+    res.json({
+      breaths: s.totalBreaths || 0,
+      releases: s.totalReleases || 0,
+      conversations: s.totalAntarSessions || 0,
+      groundings: s.totalGrounding || 0,
+      wisdom: s.totalWisdom || 0,
+      stillness: s.totalJustSit || 0,
+      visits: s.totalVisits || 0,
+      users: s.totalUsers || 0,
+    });
+  } catch (err) {
+    res.status(500).json({ error: "Could not retrieve stats." });
+  }
+});
+
 module.exports = router;
