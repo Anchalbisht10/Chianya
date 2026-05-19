@@ -58,7 +58,7 @@ export default function ProfileBadge() {
 
       {/* Name */}
       <span style={{
-        fontSize: 11,
+        fontSize: "clamp(13px,2vw,14px)",
         letterSpacing: "0.14em",
         fontFamily: "Georgia, serif",
         fontStyle: "italic",
@@ -67,20 +67,22 @@ export default function ProfileBadge() {
       }}>
         {user ? user.firstName : "guest"}
       </span>
-
-      {/* Sanctuary label */}
-      <span style={{
-        fontSize: 8,
-        letterSpacing: "0.12em",
-        fontFamily: "Georgia, serif",
-        color: user ? "rgba(98,202,68,0.5)" : "rgba(70,140,50,0.3)",
-        textAlign: "center",
-        lineHeight: 1.4,
-      }}>
+<motion.span
+        whileHover={{ color: !user ? "rgba(255,80,80,0.7)" : "rgba(98,202,68,0.5)" }}
+        style={{
+          fontSize: "clamp(11px,1.8vw,12px)",
+          letterSpacing: "0.12em",
+          fontFamily: "Georgia, serif",
+          color: user ? "rgba(98,202,68,0.5)" : "rgba(70,140,50,0.4)",
+          textAlign: "center",
+          lineHeight: 1.4,
+          border: user ? "none" : "0.5px solid rgba(70,140,50,0.3)",
+          borderRadius: 8,
+          padding: user ? "0" : "2px 8px",
+          transition: "all 0.3s",
+        }}>
         {user ? "sanctuary" : "sign in"}
-      </span>
-
-
+      </motion.span>
       {/* Logout */}
       {user && (
         <motion.div

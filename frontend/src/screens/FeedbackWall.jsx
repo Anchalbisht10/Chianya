@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { submitFeedback, getFeedback } from "../services/api";
+import { submitFeedback, getFeedback, deleteFeedback } from "../services/api";
 import { useChianya } from "../context/ChianyaContext";
 
 export default function FeedbackWall() {
