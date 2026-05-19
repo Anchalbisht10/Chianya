@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useChianya } from "../context/ChianyaContext";
-import { useEffect, useRef, useState } from "react";
 import { useEffect, useState } from "react";
 
 // Dreamy lake + floating stars canvas — INSIDE card only
