@@ -388,7 +388,49 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
             marginBottom:"1.4rem",position:"relative",zIndex:2}}/>
 
 
-            {/* Community impact */}
+          
+
+<motion.button
+          onClick={() => navigate("/feedback")}
+          initial={{ opacity:0 }} animate={{ opacity:1 }}
+          transition={{ delay:0.8 }}
+          whileHover={{ scale:1.04 }}
+          style={{
+            width:"100%", padding:"8px",
+            borderRadius:40, marginBottom:"1rem",
+            border:"0.5px solid rgba(68,175,50,0.2)",
+            background:"rgba(4,18,5,0.55)",
+            color:"rgba(95,185,70,0.5)",
+            fontSize:"clamp(9px,1.6vw,10px)", cursor:"pointer",
+            fontFamily:"Georgia, serif", fontStyle:"italic",
+            letterSpacing:"0.18em", transition:"all 0.4s",
+            position:"relative", zIndex:2,
+          }}>
+          ✦ voices from the forest
+        </motion.button>
+
+
+        <motion.button
+          onClick={() => navigate("/resources")}
+          initial={{ opacity:0 }} animate={{ opacity:1 }}
+          transition={{ delay:0.9 }}
+          whileHover={{ scale:1.04 }}
+          style={{
+            width:"100%", padding:"8px",
+            borderRadius:40, marginBottom:"1rem",
+            border:"0.5px solid rgba(68,175,50,0.2)",
+            background:"rgba(4,18,5,0.55)",
+            color:"rgba(95,185,70,0.5)",
+            fontSize:"clamp(9px,1.6vw,10px)", cursor:"pointer",
+            fontFamily:"Georgia, serif", fontStyle:"italic",
+            letterSpacing:"0.18em", transition:"all 0.4s",
+            position:"relative", zIndex:2,
+          }}>
+          ✦ real support & resources
+        </motion.button>
+
+
+          {/* Community impact */}
         {stats && (
           <motion.div
             initial={{ opacity:0, y:12 }}
@@ -431,45 +473,6 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
           </motion.div>
         )}
 
-
-<motion.button
-          onClick={() => navigate("/feedback")}
-          initial={{ opacity:0 }} animate={{ opacity:1 }}
-          transition={{ delay:0.8 }}
-          whileHover={{ scale:1.04 }}
-          style={{
-            width:"100%", padding:"8px",
-            borderRadius:40, marginBottom:"1rem",
-            border:"0.5px solid rgba(68,175,50,0.2)",
-            background:"rgba(4,18,5,0.55)",
-            color:"rgba(95,185,70,0.5)",
-            fontSize:"clamp(9px,1.6vw,10px)", cursor:"pointer",
-            fontFamily:"Georgia, serif", fontStyle:"italic",
-            letterSpacing:"0.18em", transition:"all 0.4s",
-            position:"relative", zIndex:2,
-          }}>
-          ✦ voices from the forest
-        </motion.button>
-
-
-        <motion.button
-          onClick={() => navigate("/resources")}
-          initial={{ opacity:0 }} animate={{ opacity:1 }}
-          transition={{ delay:0.9 }}
-          whileHover={{ scale:1.04 }}
-          style={{
-            width:"100%", padding:"8px",
-            borderRadius:40, marginBottom:"1rem",
-            border:"0.5px solid rgba(68,175,50,0.2)",
-            background:"rgba(4,18,5,0.55)",
-            color:"rgba(95,185,70,0.5)",
-            fontSize:"clamp(9px,1.6vw,10px)", cursor:"pointer",
-            fontFamily:"Georgia, serif", fontStyle:"italic",
-            letterSpacing:"0.18em", transition:"all 0.4s",
-            position:"relative", zIndex:2,
-          }}>
-          ✦ real support & resources
-        </motion.button>
 
 
         {/* Mode grid */}
