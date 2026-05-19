@@ -6,7 +6,7 @@ import { useChianya } from "../context/ChianyaContext";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { feelings } = useChianya();
+  const { } = useChianya();
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
 

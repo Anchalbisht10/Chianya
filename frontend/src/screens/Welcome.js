@@ -2,141 +2,16 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useChianya } from "../context/ChianyaContext";
 import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 // Dreamy lake + floating stars canvas — INSIDE card only
-function DreamyBackground({ width, height }) {
-  const canvasRef = useRef();
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width  = width  * dpr;
-    canvas.height = height * dpr;
-    const ctx = canvas.getContext("2d");
-    ctx.scale(dpr, dpr);
 
-    // Stars
-    const stars = Array.from({ length: 55 }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height * 0.65,
-      r: Math.random() * 1.8 + 0.4,
-      alpha: Math.random() * 0.6 + 0.2,
-      speed: Math.random() * 0.008 + 0.003,
-      phase: Math.random() * Math.PI * 2,
-      color: Math.random() > 0.5
-        ? `rgba(220,210,100,`
-        : `rgba(180,230,255,`,
-    }));
-
-    // Lake ripples
-    const ripples = Array.from({ length: 6 }, (_, i) => ({
-      x: width * 0.2 + Math.random() * width * 0.6,
-      y: height * 0.62 + Math.random() * height * 0.25,
-      r: 0, maxR: 30 + Math.random() * 40,
-      speed: 0.18 + Math.random() * 0.12,
-      alpha: 0.12 + Math.random() * 0.08,
-      delay: i * 1200,
-    }));
-
-    let t = 0; let frame;
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      // Sky gradient — faded blue/teal
-      const sky = ctx.createLinearGradient(0, 0, 0, height * 0.65);
-      sky.addColorStop(0,   "rgba(8,22,38,0.92)");
-      sky.addColorStop(0.5, "rgba(10,30,42,0.88)");
-      sky.addColorStop(1,   "rgba(12,38,32,0.82)");
-      ctx.fillStyle = sky;
-      ctx.fillRect(0, 0, width, height * 0.65);
-
-      // Lake — soft sky-blue
-      const lake = ctx.createLinearGradient(0, height*0.62, 0, height);
-      lake.addColorStop(0, "rgba(18,52,72,0.72)");
-      lake.addColorStop(0.4,"rgba(14,42,58,0.68)");
-      lake.addColorStop(1,  "rgba(8,24,34,0.82)");
-      ctx.fillStyle = lake;
-      ctx.beginPath();
-      ctx.ellipse(width/2, height*0.68, width*0.52, height*0.12, 0, 0, Math.PI*2);
-      ctx.fill();
-
-      // Lake shimmer
-      for (let i=0;i<12;i++) {
-        const lx = width*0.18 + Math.random()*width*0.64;
-        const ly = height*0.65 + Math.random()*height*0.1;
-        ctx.beginPath();
-        ctx.arc(lx, ly, Math.random()*1.2, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(180,240,255,${Math.random()*0.12})`;
-        ctx.fill();
-      }
-
-      // Floating stars
-      stars.forEach(s => {
-        const pulse = Math.sin(t * s.speed + s.phase);
-        const a = s.alpha * (0.7 + 0.3 * pulse);
-        // Draw star with slight glow
-        ctx.shadowColor = s.color + "0.6)";
-        ctx.shadowBlur = 6;
-        ctx.beginPath();
-        ctx.arc(s.x + Math.sin(t*0.004+s.phase)*1.5, s.y, s.r, 0, Math.PI*2);
-        ctx.fillStyle = s.color + a + ")";
-        ctx.fill();
-        ctx.shadowBlur = 0;
-
-        // Star reflection in lake
-        if (s.y < height*0.65) {
-          const ry = height*0.65 + (height*0.65 - s.y)*0.25;
-          ctx.beginPath();
-          ctx.arc(s.x, ry, s.r*0.6, 0, Math.PI*2);
-          ctx.fillStyle = s.color + (a*0.3) + ")";
-          ctx.fill();
-        }
-      });
-
-      // Ripples
-      ripples.forEach(rip => {
-        rip.r += rip.speed;
-        if (rip.r > rip.maxR) rip.r = 0;
-        const a = rip.alpha * (1 - rip.r/rip.maxR);
-        ctx.beginPath();
-        ctx.ellipse(rip.x, rip.y, rip.r, rip.r*0.28, 0, 0, Math.PI*2);
-        ctx.strokeStyle = `rgba(160,220,255,${a})`;
-        ctx.lineWidth = 0.7;
-        ctx.stroke();
-      });
-
-      // Soft mist layer
-      const mist = ctx.createLinearGradient(0, height*0.55, 0, height*0.78);
-      mist.addColorStop(0, "rgba(20,60,50,0)");
-      mist.addColorStop(0.5,"rgba(20,60,50,0.18)");
-      mist.addColorStop(1,  "rgba(20,60,50,0)");
-      ctx.fillStyle = mist;
-      ctx.fillRect(0, height*0.55, width, height*0.23);
-
-      t++;
-      frame = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => cancelAnimationFrame(frame);
-  }, [width, height]);
-
-  return (
-    <canvas ref={canvasRef}
-      style={{
-        position:"absolute", inset:0, width:"100%", height:"100%",
-        borderRadius:"inherit", pointerEvents:"none",
-        opacity: 0.85,
-      }}
-    />
-  );
-}
 
 export default function Welcome() {
   const navigate = useNavigate();
   const { setAvatarLine } = useChianya();
   const [phase, setPhase] = useState(0);
-  const [cardSize, setCardSize] = useState({ w:480, h:600 });
-  const cardRef = useRef();
+const cardRef = useRef();
 
   useEffect(() => {
     const t = [
@@ -147,19 +22,11 @@ export default function Welcome() {
     return () => t.forEach(clearTimeout);
   }, []);
 
-  useEffect(() => {
-    if (!cardRef.current) return;
-    const obs = new ResizeObserver(entries => {
-      const el = entries[0].contentRect;
-      setCardSize({ w: el.width, h: el.height });
-    });
-    obs.observe(cardRef.current);
-    return () => obs.disconnect();
-  }, []);
+
 
   const enter = () => {
     setAvatarLine("What are you carrying right now? The forest holds space for all of it.");
-   navigate("/auth");
+   navigate("/onboarding");
   };
 
   return (
