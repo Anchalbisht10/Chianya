@@ -1,4 +1,6 @@
-const BASE = "http://localhost:5000/api";
+const BASE = process.env.REACT_APP_BACKEND_URL
+  ? `${process.env.REACT_APP_BACKEND_URL}/api`
+  : "http://localhost:5000/api";
 
 const opts = (method, body) => ({
   method,
@@ -33,5 +35,6 @@ export const submitFeedback = (data) =>
 
 export const getFeedback = () =>
   fetch(`${BASE}/feedback`, opts("GET")).then(r => r.json());
+
 export const deleteFeedback = (id) =>
   fetch(`${BASE}/feedback/${id}`, opts("DELETE")).then(r => r.json());
