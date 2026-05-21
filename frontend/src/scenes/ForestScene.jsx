@@ -420,7 +420,7 @@ const filaments = Array.from({ length: 75 }, () => ({
 
 // ── Main export ───────────────────────────────────────────────
 export default function ForestScene() {
-  const { feelings } = useChianya();
+const { feelings, currentMode } = useChianya();
   const primaryFeeling = feelings?.[0] || "default";
 const moodConfig = {
     anxious:     { fogFar: 18, bgColor: "#010602", },
@@ -500,7 +500,24 @@ const moodOverlay = {
     default:     "rgba(0,0,0,0)",
   };
 
-  const overlayColor = moodOverlay[primaryFeeling] || moodOverlay.default;
+  
+
+ const overlayColor = moodOverlay[primaryFeeling] || moodOverlay.default;
+
+ const modeOverlay = {
+    antar:    "rgba(255,195,50,0.14)",
+    breathe:  "rgba(20,140,220,0.16)",
+    release:  "rgba(120,60,20,0.14)",
+    ground:   "rgba(60,140,40,0.13)",
+    justSit:  "rgba(80,20,160,0.14)",
+    wisdom:   "rgba(200,220,255,0.11)",
+    default:  "rgba(0,0,0,0)",
+  };
+
+  const finalOverlay = currentMode && currentMode !== "default"
+    ? modeOverlay[currentMode] || moodOverlay[primaryFeeling] || moodOverlay.default
+    : moodOverlay[primaryFeeling] || moodOverlay.default;
+
 
   return (
     <div style={{
@@ -510,7 +527,7 @@ const moodOverlay = {
       {/* Mood overlay */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 2,
-        background: overlayColor,
+        background: finalOverlay,
         transition: "background 2s ease",
         pointerEvents: "none",
       }} />

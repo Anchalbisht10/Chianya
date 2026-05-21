@@ -74,7 +74,7 @@ function GroundingCanvas({ width, height }) {
 
 export default function Ground() {
   const navigate = useNavigate();
-  const { setAvatarLine } = useChianya();
+ const { setAvatarLine, setCurrentMode } = useChianya();
   const [done, setDone] = useState([]);
   const cardRef = useRef();
   const [cardSize, setCardSize] = useState({w:480,h:600});
@@ -84,6 +84,7 @@ export default function Ground() {
 }, [allDone]);
 
   useEffect(() => { setAvatarLine(avatarLines.ground); }, []);
+  setCurrentMode("ground");
   useEffect(() => {
     if(!cardRef.current)return;
     const obs=new ResizeObserver(e=>{

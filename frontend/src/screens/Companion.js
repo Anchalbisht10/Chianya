@@ -326,7 +326,7 @@ function ForestConsciousnessAtmosphere() {
 
 export default function Companion() {
   const navigate = useNavigate();
-  const { feelings, setAvatarLine } = useChianya();
+  const { feelings, setAvatarLine, setCurrentMode } = useChianya();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -338,6 +338,7 @@ const initialized = useRef(false);
 useEffect(() => {
   if (initialized.current) return;
   initialized.current = true;
+  setCurrentMode("antar");
   setAvatarLine(avatarLines.companion);
   callAntar(
     `The user arrived feeling: ${feelings.join(", ") || "something heavy"}. Open with a single warm, grounded reflection and one gentle question. 2-3 sentences only.`,

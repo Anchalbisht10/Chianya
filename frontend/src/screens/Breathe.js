@@ -180,7 +180,7 @@ function TealBreathSpirit({ phase, done }) {
 
 export default function Breathe() {
   const navigate = useNavigate();
-  const { setAvatarLine } = useChianya();
+  const { setAvatarLine, setCurrentMode } = useChianya();
   const [phase, setPhase] = useState(0);
   const [cycle, setCycle] = useState(1);
   const [done, setDone] = useState(false);
@@ -188,6 +188,7 @@ export default function Breathe() {
 
   useEffect(() => {
     setAvatarLine(avatarLines.breathe);
+    setCurrentMode("breathe");
     let p=0, c=1;
     const tick = () => setTimeout(() => {
       p = (p+1) % 3;

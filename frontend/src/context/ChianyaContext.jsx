@@ -10,6 +10,7 @@ export function ChianyaProvider({ children }) {
   const [soundEnabled, setSoundEnabled]   = useState(false);
   const [journalEntries, setJournalEntries] = useState([]);
 const [todayReflection, setTodayReflection] = useState("");
+const [currentMode, setCurrentMode] = useState("default");
 
   return (
     <ChianyaContext.Provider value={{
@@ -20,6 +21,7 @@ const [todayReflection, setTodayReflection] = useState("");
       soundEnabled, setSoundEnabled,
       journalEntries, setJournalEntries,
       todayReflection, setTodayReflection,
+      currentMode, setCurrentMode,
     }}>
       {children}
     </ChianyaContext.Provider>

@@ -115,12 +115,13 @@ function EarthAtmosphere() {
 
 export default function Release() {
   const navigate = useNavigate();
-  const { setAvatarLine } = useChianya();
+ const { setAvatarLine, setCurrentMode } = useChianya();
   const [text, setText] = useState("");
   const [released, setReleased] = useState(false);
   const canvasRef = useRef();
 
   useEffect(() => { setAvatarLine(avatarLines.release); }, []);
+  setCurrentMode("release");  
 
 const doRelease = () => {
   if (!text.trim()) return;

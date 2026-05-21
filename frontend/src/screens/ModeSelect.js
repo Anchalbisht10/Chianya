@@ -167,8 +167,8 @@ const MODES=[
 ];
 
 export default function ModeSelect() {
-  const { feelings, setAvatarLine } = useChianya();
-  const navigate = useNavigate();
+ const { feelings, setAvatarLine, setCurrentMode } = useChianya();
+   const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   useEffect(() => {
     getCommunityStats().then(data => setStats(data)).catch(() => {});
@@ -192,11 +192,11 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
     return()=>obs.disconnect();
   },[]);
 
-  const go=(mode)=>{
+ const go=(mode)=>{
     setAvatarLine(avatarLines[mode.id]||avatarLines.sit);
+    setCurrentMode(mode.id);
     navigate(mode.path);
   };
-
   return (
     <motion.div initial={{opacity:0}} animate={{opacity:1}}
       transition={{duration:1.2}}

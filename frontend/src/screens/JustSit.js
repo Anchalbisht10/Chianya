@@ -131,9 +131,10 @@ function SittingMonk() {
 
 export default function JustSit() {
   const navigate = useNavigate();
-  const { setAvatarLine } = useChianya();
+  const { setAvatarLine, setCurrentMode } = useChianya();
 useEffect(() => {
   setAvatarLine(avatarLines.sit);
+  setCurrentMode("justSit");
   const timer = setTimeout(() => {
     logSession("justSit", [], { durationSeconds: 60 }).catch(()=>{});
   }, 60000);

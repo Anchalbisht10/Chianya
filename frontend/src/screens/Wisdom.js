@@ -277,7 +277,7 @@ function CelestialSpirit({ pulsing=true }) {
 
 export default function Wisdom() {
   const navigate = useNavigate();
-  const { setAvatarLine, feelings } = useChianya();
+  const { setAvatarLine, feelings, setCurrentMode } = useChianya();
 const [focusMode, setFocusMode] = useState(false);
 const [today, setToday] = useState(dailyInsights[new Date().getDay() % dailyInsights.length]);
 
@@ -297,6 +297,7 @@ useEffect(() => {
 
 useEffect(() => {
   setAvatarLine("A small truth for today's journey through the forest.");
+  setCurrentMode("wisdom");
 }, []);
 
   return (
