@@ -81,10 +81,13 @@ router.post("/login", async (req, res) => {
 
 // Logout
 router.post("/logout", (req, res) => {
-  res.clearCookie("chianyaToken");
+  res.clearCookie("chianyaToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
   res.json({ message: "You have left the sanctuary." });
 });
-
 // Password reset request
 router.post("/reset-password-request", async (req, res) => {
   try {
