@@ -165,8 +165,9 @@ export default function Auth() {
         {/* Skip */}
 {/* Skip */}
         <div style={{ textAlign: "center" }}>
-          <button onClick={async () => {
-            await fetch("http://localhost:5000/api/auth/logout", {
+         <button onClick={async () => {
+            const base = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+            await fetch(`${base}/api/auth/logout`, {
               method: "POST", credentials: "include"
             }).catch(()=>{});
             navigate("/entry");

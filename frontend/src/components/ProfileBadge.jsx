@@ -89,7 +89,8 @@ export default function ProfileBadge() {
         <motion.div
           onClick={async (e) => {
             e.stopPropagation();
-            await fetch("http://localhost:5000/api/auth/logout", {
+          const base = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+            await fetch(`${base}/api/auth/logout`, {
               method: "POST", credentials: "include"
             }).catch(()=>{});
             setUser(null);
