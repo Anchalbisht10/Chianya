@@ -1,3 +1,5 @@
+
+import { useChianya } from "../context/ChianyaContext";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 import { useRef, useMemo } from "react";
@@ -418,6 +420,26 @@ const filaments = Array.from({ length: 75 }, () => ({
 
 // ── Main export ───────────────────────────────────────────────
 export default function ForestScene() {
+  const { feelings } = useChianya();
+  const primaryFeeling = feelings?.[0] || "default";
+const moodConfig = {
+    anxious:     { fogFar: 18, bgColor: "#010602", },
+    heavy:       { fogFar: 14, bgColor: "#010401", },
+    lonely:      { fogFar: 16, bgColor: "#010305", },
+    overwhelmed: { fogFar: 15, bgColor: "#010502", },
+    restless:    { fogFar: 22, bgColor: "#020803", },
+    tired:       { fogFar: 12, bgColor: "#010401", },
+    scattered:   { fogFar: 20, bgColor: "#020703", },
+    numb:        { fogFar: 10, bgColor: "#010301", },
+    stuck:       { fogFar: 13, bgColor: "#010401", },
+    hurt:        { fogFar: 15, bgColor: "#020302", },
+    hollow:      { fogFar: 11, bgColor: "#010301", },
+    lost:        { fogFar: 14, bgColor: "#010305", },
+    default:     { fogFar: 58, bgColor: "#020903", },
+  };
+
+  const mood = moodConfig[primaryFeeling] || moodConfig.default;
+
   const trees = useMemo(() => {
     const arr = [];
     // Inner ring — glowing, close
@@ -462,17 +484,42 @@ export default function ForestScene() {
     return { x: Math.cos(a)*r, z: Math.sin(a)*r };
   }), []);
 
+const moodOverlay = {
+    anxious:     "rgba(8,28,4,0.45)",
+    heavy:       "rgba(4,16,8,0.55)",
+    lonely:      "rgba(4,8,24,0.50)",
+    overwhelmed: "rgba(8,24,4,0.48)",
+    restless:    "rgba(4,28,4,0.35)",
+    tired:       "rgba(4,12,4,0.58)",
+    scattered:   "rgba(8,24,4,0.42)",
+    numb:        "rgba(2,8,2,0.65)",
+    stuck:       "rgba(4,12,4,0.55)",
+    hurt:        "rgba(12,4,4,0.45)",
+    hollow:      "rgba(2,8,2,0.62)",
+    lost:        "rgba(4,8,20,0.48)",
+    default:     "rgba(0,0,0,0)",
+  };
+
+  const overlayColor = moodOverlay[primaryFeeling] || moodOverlay.default;
+
   return (
     <div style={{
       position: "fixed", top:0, left:0,
       width: "100vw", height: "100vh", zIndex: 0,
     }}>
+      {/* Mood overlay */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 2,
+        background: overlayColor,
+        transition: "background 2s ease",
+        pointerEvents: "none",
+      }} />
       {/* 2D lake overlay */}
       <LakeCanvas />
 
       <Canvas
         camera={{ position:[0, 1, 3.5], fov:78 }}
-        style={{ width:"100%", height:"100%", background:"#020903" }}
+        style={{ width:"100%", height:"100%", background: mood.bgColor, transition:"background 2s ease" }}
         gl={{ antialias:true }}
       >
         <ambientLight intensity={0.07} color="#1a3d10" />
@@ -486,7 +533,7 @@ export default function ForestScene() {
         <pointLight position={[0,-1,0]} intensity={0.18}
           color="#4090c0" distance={18} />
 
-        <fog attach="fog" args={["#040e05", 10, 58]} />
+        <fog attach="fog" args={["#040e05", 10, mood.fogFar]} />
 
         <Stars radius={92} depth={52} count={2600}
           factor={2.2} saturation={0.14} fade speed={0.35} />
