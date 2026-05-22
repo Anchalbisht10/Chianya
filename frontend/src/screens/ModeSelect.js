@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
 import { avatarLines } from "../avatar/avatarLines";
 import { feelingResponses, principles } from "../data/wisdom";
 import { useEffect, useRef, useState } from "react";
 import { getCommunityStats } from "../services/api";
+import { motion, AnimatePresence } from "framer-motion";
 
 function ModeAtmosphere({ width, height }) {
   const canvasRef = useRef();
@@ -180,6 +180,7 @@ export default function ModeSelect() {
   const suggested = response?.practice||"breathe";
   const { todayReflection, setTodayReflection } = useChianya();
 const [reflectOpen, setReflectOpen] = useState(false);
+const [menuOpen, setMenuOpen] = useState(false);
 const [reflectInput, setReflectInput] = useState(todayReflection || "");
 
   useEffect(() => {
@@ -220,7 +221,11 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
           position:"relative",overflow:"hidden",
         }}>
         <ModeAtmosphere width={cardSize.w} height={cardSize.h}/>
-
+<div style={{
+          display:"flex", justifyContent:"space-between",
+          alignItems:"center", marginBottom:"clamp(1rem,2.5vw,1.5rem)",
+          position:"relative", zIndex:2,
+        }}>
         {/* Return button */}
         <motion.button onClick={()=>navigate("/entry")}
           whileHover={{scale:1.06,
@@ -240,6 +245,25 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
             position:"relative",zIndex:2,
           }}>← Return</motion.button>
 
+{/* Forest menu button */}
+        <motion.button
+          onClick={() => setMenuOpen(o => !o)}
+          whileHover={{ scale: 1.06 }}
+          style={{
+            background: "rgba(7,36,7,0.65)",
+            border: "0.5px solid rgba(72,182,50,0.28)",
+            borderRadius: 24, color: "rgba(125,210,86,0.52)",
+            fontSize: "clamp(10px,1.8vw,11px)", cursor: "pointer",
+            letterSpacing: "0.22em", fontFamily: "Georgia, serif",
+            padding: "6px 18px",
+            backdropFilter: "blur(12px)",
+            transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
+            position: "relative", zIndex: 2,
+          }}>
+          {menuOpen ? "✕ close" : "✦ forest"}
+        </motion.button>
+
+        </div>
 {/* ── Daily reflection prompt ── */}
 <motion.div
   initial={{ opacity:0 }}
@@ -387,47 +411,97 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
           style={{height:"0.5px",background:"rgba(70,180,50,0.14)",
             marginBottom:"1.4rem",position:"relative",zIndex:2}}/>
 
+{/* Forest menu drawer */}
+   <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ opacity: 0, x: 300 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 300 }}
+              transition={{ duration: 0.4, ease: [0.16,1,0.3,1] }}
+              style={{
+                position: "fixed",
+                top: 0,
+                right: 0,
+                height: "100vh",
+                width: "clamp(240px,35vw,320px)",
+                background: "rgba(3,14,5,0.96)",
+                border: "0.5px solid rgba(70,180,50,0.2)",
+                borderRadius: "16px 0 0 16px",
+                backdropFilter: "blur(32px)",
+                zIndex: 100,
+                display: "flex",
+                flexDirection: "column",
+                padding: "2rem 1.5rem",
+                gap: 12,
+                boxShadow: "-4px 0 40px rgba(20,140,20,0.15)",
+              }}>
+              <div style={{
+                fontSize: "clamp(9px,1.6vw,10px)",
+                letterSpacing: "0.28em",
+                color: "rgba(92,195,68,0.35)",
+                fontFamily: "Georgia, serif",
+                marginBottom: "0.5rem",
+              }}>THE FOREST</div>
 
+              {[
+                { label: "voices from the forest", path: "/feedback", desc: "what others have carried here" },
+                { label: "real support & resources", path: "/resources", desc: "when you need a human voice" },
+                { label: "why chianya exists", path: "/about", desc: "the story behind this sanctuary" },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  onClick={() => { setMenuOpen(false); navigate(item.path); }}
+                  whileHover={{ x: -4, borderColor: "rgba(98,222,68,0.4)" }}
+                  style={{
+                    padding: "14px 16px",
+                    borderRadius: 14,
+                    border: "0.5px solid rgba(68,175,50,0.2)",
+                    background: "rgba(4,18,5,0.55)",
+                    cursor: "pointer",
+                    transition: "all 0.3s",
+                  }}>
+                  <div style={{
+                    fontSize: "clamp(11px,2vw,12px)",
+                    color: "rgba(162,238,132,0.88)",
+                    fontFamily: "Georgia, serif",
+                    fontStyle: "italic",
+                    marginBottom: 4,
+                  }}>✦ {item.label}</div>
+                  <div style={{
+                    fontSize: "clamp(9px,1.6vw,10px)",
+                    color: "rgba(85,175,62,0.38)",
+                    fontFamily: "Georgia, serif",
+                    fontStyle: "italic",
+                  }}>{item.desc}</div>
+                </motion.div>
+              ))}
+
+              <motion.button
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  marginTop: "auto",
+                  padding: "8px",
+                  borderRadius: 40,
+                  border: "0.5px solid rgba(68,175,50,0.2)",
+                  background: "transparent",
+                  color: "rgba(85,175,62,0.35)",
+                  fontSize: 11,
+                  cursor: "pointer",
+                  fontFamily: "Georgia, serif",
+                  fontStyle: "italic",
+                  letterSpacing: "0.14em",
+                }}>
+                close
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
           
 
-<motion.button
-          onClick={() => navigate("/feedback")}
-          initial={{ opacity:0 }} animate={{ opacity:1 }}
-          transition={{ delay:0.8 }}
-          whileHover={{ scale:1.04 }}
-          style={{
-            width:"100%", padding:"8px",
-            borderRadius:40, marginBottom:"1rem",
-            border:"0.5px solid rgba(68,175,50,0.2)",
-            background:"rgba(4,18,5,0.55)",
-            color:"rgba(95,185,70,0.5)",
-            fontSize:"clamp(9px,1.6vw,10px)", cursor:"pointer",
-            fontFamily:"Georgia, serif", fontStyle:"italic",
-            letterSpacing:"0.18em", transition:"all 0.4s",
-            position:"relative", zIndex:2,
-          }}>
-          ✦ voices from the forest
-        </motion.button>
-
-
-        <motion.button
-          onClick={() => navigate("/resources")}
-          initial={{ opacity:0 }} animate={{ opacity:1 }}
-          transition={{ delay:0.9 }}
-          whileHover={{ scale:1.04 }}
-          style={{
-            width:"100%", padding:"8px",
-            borderRadius:40, marginBottom:"1rem",
-            border:"0.5px solid rgba(68,175,50,0.2)",
-            background:"rgba(4,18,5,0.55)",
-            color:"rgba(95,185,70,0.5)",
-            fontSize:"clamp(9px,1.6vw,10px)", cursor:"pointer",
-            fontFamily:"Georgia, serif", fontStyle:"italic",
-            letterSpacing:"0.18em", transition:"all 0.4s",
-            position:"relative", zIndex:2,
-          }}>
-          ✦ real support & resources
-        </motion.button>
 
 
           {/* Community impact */}

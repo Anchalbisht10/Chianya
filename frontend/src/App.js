@@ -17,6 +17,7 @@ import ProfileBadge from "./components/ProfileBadge";
 import FeedbackWall from "./screens/FeedbackWall";
 import Resources from "./screens/Resources";
 import Onboarding from "./screens/Onboarding";
+import About from "./screens/About";
 
 export default function App() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
             <Route path="/feedback" element={<FeedbackWall />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/about" element={<About />} />
             
           </Routes>
         </div>
