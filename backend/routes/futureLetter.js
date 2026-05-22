@@ -10,10 +10,9 @@ router.post("/", async (req, res) => {
     if (letter.length > 2000)
       return res.status(400).json({ error: "Letter too long." });
 
-    // const deliverOn = new Date();
-    // deliverOn.setDate(deliverOn.getDate() + parseInt(days));
-const deliverOn = new Date();
-    deliverOn.setMinutes(deliverOn.getMinutes() + parseInt(days));
+    const deliverOn = new Date();
+    deliverOn.setDate(deliverOn.getDate() + parseInt(days));
+
 
 
     await FutureLetter.create({ email, letter, deliverOn });

@@ -84,8 +84,8 @@ mongoose.connect(process.env.MONGODB_URI)
   });
 
   // Run every day at 8am — deliver future letters
-    // cron.schedule("0 8 * * *", async () => {
-      cron.schedule("* * * * *", async () => {
+    cron.schedule("0 8 * * *", async () => {
+     
       try {
         const now = new Date();
         const letters = await FutureLetter.find({
