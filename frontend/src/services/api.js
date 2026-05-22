@@ -13,6 +13,9 @@ export const register    = (data) => fetch(`${BASE}/auth/register`, opts("POST",
 export const login       = (data) => fetch(`${BASE}/auth/login`,    opts("POST", data)).then(r => r.json());
 export const logout      = ()     => fetch(`${BASE}/auth/logout`,   opts("POST")).then(r => r.json());
 export const getMe       = ()     => fetch(`${BASE}/auth/me`,       opts("GET")).then(r => r.json());
+export const sendFutureLetter = (data) => fetch(`${BASE}/future-letter`, opts("POST", data)).then(r => r.json());
+
+
 
 export const sendToAntar = (message, feelings, sessionId) =>
   fetch(`${BASE}/antar/message`, opts("POST", { message, feelings, sessionId })).then(r => r.json());

@@ -1,5 +1,8 @@
 
 require("dotenv").config();
+const cron          = require("node-cron");
+const FutureLetter  = require("./models/FutureLetter");
+const { sendFutureLetter } = require("./services/emailService");
 const express     = require("express");
 const mongoose    = require("mongoose");
 const cors        = require("cors");
@@ -14,6 +17,7 @@ const activityRoutes = require("./routes/activity");
 const releaseRoutes  = require("./routes/release");
 const wisdomRoutes   = require("./routes/wisdom");
 const feedbackRoutes = require("./routes/feedback");
+const futureLetterRoutes = require("./routes/futureLetter");
 
 const app = express();
 
@@ -26,6 +30,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json({ limit: "10kb" }));
 app.use("/api/feedback", feedbackRoutes);
+app.use("/api/future-letter", futureLetterRoutes);
 
 // ── Rate limiting ─────────────────────────────────────────────
 const limiter = rateLimit({
@@ -77,3 +82,27 @@ mongoose.connect(process.env.MONGODB_URI)
     console.error("MongoDB connection failed:", err.message);
     process.exit(1);
   });
+
+  // Run every day at 8am — deliver future letters
+    // cron.schedule("0 8 * * *", async () => {
+      cron.schedule("* * * * *", async () => {
+      try {
+        const now = new Date();
+        const letters = await FutureLetter.find({
+          delivered: false,
+          deliverOn: { $lte: now },
+        });
+
+        for (const l of letters) {
+          const daysAgo = Math.round(
+            (now - l.createdAt) / (1000 * 60 * 60 * 24)
+          );
+          await sendFutureLetter(l.email, l.letter, daysAgo);
+          l.delivered = true;
+          await l.save();
+          console.log(`Future letter delivered to ${l.email}`);
+        }
+      } catch (err) {
+        console.error("Cron error:", err.message);
+      }
+    });

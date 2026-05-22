@@ -164,6 +164,22 @@ function Section({ children, delay, label }) {
       }}>{children}</div>
     </motion.div>
   );
+<div style={{
+          textAlign: "center",
+          marginTop: "2rem",
+          paddingTop: "1rem",
+          borderTop: "0.5px solid rgba(70,180,50,0.1)",
+          fontSize: "clamp(8px,1.4vw,9px)",
+          color: "rgba(85,175,62,0.25)",
+          fontFamily: "Georgia, serif",
+          letterSpacing: "0.18em",
+          lineHeight: 2,
+        }}>
+          © 2026 Anchal Bisht · All Rights Reserved<br/>
+          Chianya — Forest of Consciousness<br/>
+          Unauthorized reproduction or use is prohibited.
+        </div>
+
 }
 
 function Divider() {
