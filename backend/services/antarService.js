@@ -21,8 +21,7 @@ function detectCrisis(text) {
   const lower = text.toLowerCase();
   return CRISIS_KEYWORDS.some(k => lower.includes(k));
 }
-
-async function antarMessage({ messages, feelings, userMessage }) {
+async function antarMessage({ messages, feelings, userMessage, lastSessionSummary }) {
   const isCrisis = detectCrisis(userMessage);
 
   let systemPrompt = ANTAR_SYSTEM;
@@ -35,8 +34,10 @@ async function antarMessage({ messages, feelings, userMessage }) {
     systemPrompt += `\n\nThis user may be in distress. Before continuing the conversation naturally, warmly and gently mention iCall India (9152987821) as a place to speak to someone. Do this with care — not as an interruption, but as Antar would say it.`;
   }
 
-  if (messages && messages.length > 4) {
-    systemPrompt += `\n\nThis user has spoken with you before. They are returning. Acknowledge this subtly — not directly, but through the warmth of familiarity. Like a forest that recognizes someone who has walked its paths before.`;
+ if (lastSessionSummary) {
+    systemPrompt += `\n\nThis user has spoken with you before. In their last visit, you said things like: "${lastSessionSummary}". Acknowledge their return subtly and warmly — not by quoting yourself, but by carrying the thread. If they mentioned a feeling last time, you might gently ask if anything has shifted. Like a forest that remembers who has walked its paths.`;
+  } else if (messages && messages.length > 4) {
+    systemPrompt += `\n\nThis user has been speaking with you for a while in this session. Stay warm and consistent.`;
   }
 
   const history = messages.slice(-10).map(m => ({

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
 import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function MonkSVG() {
   return (
@@ -295,24 +296,35 @@ export default function Avatar() {
   const { avatarLine } = useChianya();
  const location = useLocation();
 
+const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+const avatarScale = screenWidth < 500 ? 0.25 : screenWidth < 700 ? 0.32 : screenWidth < 900 ? 0.40 : screenWidth < 1100 ? 0.58 : 1;
   if (location.pathname === "/") return null;
+  // if (window.innerWidth < 600) return null;
 return (
   <div style={{
     position: "fixed",
     bottom: 0,
     right: 0,
     zIndex: 50,
+    transform: `scale(${avatarScale})`,
+    transformOrigin: "bottom right",
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
     gap: 6,
     pointerEvents: "none",
-    transform: "scale(var(--avatar-scale, 1))",
-    transformOrigin: "bottom right",
     paddingBottom: "clamp(0px, 1.5vh, 16px)",
     paddingRight: "clamp(0px, 1.5vw, 20px)",
   }}>
-      {/* Speech bubble */}
+
+    {/* Speech bubble — hidden below 1000px */}
+  {screenWidth >= 650 && (
       <AnimatePresence mode="wait">
         <motion.div
           key={avatarLine}
@@ -322,7 +334,7 @@ return (
           transition={{ duration: 0.9, ease: "easeOut" }}
           style={{
             maxWidth: 270,
-               marginRight: 48,
+            marginRight: 48,
             background: "rgba(8,28,8,0.88)",
             border: "0.5px solid rgba(120,255,120,0.25)",
             borderRadius: "18px 18px 4px 18px",
@@ -341,42 +353,26 @@ return (
           {avatarLine}
         </motion.div>
       </AnimatePresence>
+    )}
 
-     {/* Monk */}
-<motion.div
-  initial={{
-    opacity: 0,
-    scale: 0.72,
-    y: 40,
-  }}
-  animate={{
-    opacity: 1,
-    scale: 1,
-    y: [0, -10, 0],
-  }}
-  transition={{
-    opacity: {
-      duration: 1.8,
-      ease: "easeOut",
-    },
-    scale: {
-      duration: 1.8,
-      ease: "easeOut",
-    },
-    y: {
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  }}
-  style={{
-    position: "relative",
-    marginRight: 18,
-    transformOrigin: "bottom center",
-  }}
->
-  <MonkSVG />
-</motion.div>
-    </div>
-  );
+    {/* Monk */}
+    <motion.div
+      initial={{ opacity: 0, scale: 0.72, y: 40 }}
+      animate={{ opacity: 1, scale: 1, y: [0, -10, 0] }}
+      transition={{
+        opacity: { duration: 1.8, ease: "easeOut" },
+        scale: { duration: 1.8, ease: "easeOut" },
+        y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+      }}
+      style={{
+        position: "relative",
+        marginRight: 18,
+        transformOrigin: "bottom center",
+      }}
+    >
+      <MonkSVG />
+    </motion.div>
+  </div>
+);
+
 }

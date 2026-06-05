@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getMyActivity, logout } from "../services/api";
+import { getMyActivity, logout, getMoodTimeline } from "../services/api";
 import { useChianya } from "../context/ChianyaContext";
 
 export default function Dashboard() {
@@ -9,13 +9,16 @@ export default function Dashboard() {
   const { } = useChianya();
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [timeline, setTimeline] = useState([]);
 
-  useEffect(() => {
-    getMyActivity().then(data => {
+getMyActivity().then(data => {
       if (data?.activity) setActivity(data.activity);
       setLoading(false);
     }).catch(() => setLoading(false));
-  }, []);
+
+    getMoodTimeline().then(data => {
+      if (data?.entries) setTimeline(data.entries);
+    }).catch(() => {});
 
   const handleLogout = async () => {
     await logout();
@@ -54,9 +57,10 @@ export default function Dashboard() {
         }}>
 
         {/* Header */}
-        <div style={{
+       <div style={{
           display: "flex", justifyContent: "space-between",
           alignItems: "center", marginBottom: "1.6rem",
+          flexWrap: "wrap", gap: 8,
         }}>
           <motion.button onClick={() => navigate("/entry")}
             whileHover={{ scale: 1.06 }}
@@ -169,6 +173,90 @@ export default function Dashboard() {
               day: "numeric", month: "long", year: "numeric"
             })}
           </div>
+        )}
+{/* Mood Timeline */}
+        {timeline.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            style={{ marginBottom: "1.6rem" }}>
+            <div style={{
+              fontSize: "clamp(8px,1.4vw,9px)",
+              letterSpacing: "0.28em",
+              color: "rgba(92,195,68,0.35)",
+              fontFamily: "Georgia, serif",
+              marginBottom: "1rem",
+            }}>YOUR LAST 7 DAYS</div>
+
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+            }}>
+              {(() => {
+                const days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+                const grouped = {};
+                timeline.forEach(e => {
+                  const d = new Date(e.createdAt);
+                  const key = days[d.getDay()];
+                  if (!grouped[key]) grouped[key] = [];
+                  grouped[key].push(e.feeling);
+                });
+
+                const feelingColors = {
+                  anxious: "rgba(255,180,60,0.7)",
+                  heavy: "rgba(100,140,255,0.7)",
+                  lonely: "rgba(180,120,255,0.7)",
+                  overwhelmed: "rgba(255,100,100,0.7)",
+                  restless: "rgba(255,200,60,0.7)",
+                  tired: "rgba(140,180,200,0.7)",
+                  lost: "rgba(120,160,255,0.7)",
+                  scattered: "rgba(255,160,80,0.7)",
+                  numb: "rgba(160,160,180,0.7)",
+                  stuck: "rgba(180,140,100,0.7)",
+                  hurt: "rgba(255,120,120,0.7)",
+                  hollow: "rgba(140,140,160,0.7)",
+                };
+
+                return Object.entries(grouped).map(([day, feelings], i) => (
+                  <motion.div key={day}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                    }}>
+                    <div style={{
+                      fontSize: "clamp(9px,1.5vw,10px)",
+                      color: "rgba(85,175,62,0.4)",
+                      fontFamily: "Georgia, serif",
+                      width: 28,
+                      flexShrink: 0,
+                    }}>{day}</div>
+                    <div style={{
+                      display: "flex", gap: 6, flexWrap: "wrap",
+                    }}>
+                      {[...new Set(feelings)].map((f, j) => (
+                        <div key={j} style={{
+                          padding: "3px 10px",
+                          borderRadius: 20,
+                          fontSize: "clamp(9px,1.5vw,10px)",
+                          fontFamily: "Georgia, serif",
+                          fontStyle: "italic",
+                          background: "rgba(5,22,5,0.7)",
+                          border: `0.5px solid ${feelingColors[f] || "rgba(70,180,50,0.3)"}`,
+                          color: feelingColors[f] || "rgba(142,218,108,0.7)",
+                        }}>{f}</div>
+                      ))}
+                    </div>
+                  </motion.div>
+                ));
+              })()}
+            </div>
+          </motion.div>
         )}
 
         <motion.div

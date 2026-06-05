@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
+import ShareCard from "../components/ShareCard";
 import { avatarLines } from "../avatar/avatarLines";
 import { sendToAntar, logSession } from "../services/api";
 // ── Deep forest consciousness atmosphere ──────────────────────
@@ -326,7 +327,8 @@ function ForestConsciousnessAtmosphere() {
 
 export default function Companion() {
   const navigate = useNavigate();
-  const { feelings, setAvatarLine, setCurrentMode } = useChianya();
+const { feelings, setAvatarLine, setCurrentMode, avatarLine } = useChianya();
+const [showCard, setShowCard] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -359,9 +361,9 @@ try {
     const reply = data.reply || "The forest is still here. So am I.";
     if (data.sessionId) setSessionId(data.sessionId);
     setMessages(prev => [...prev, { role: "assistant", content: reply }]);
-    if (messages.length === 0) {
-      logSession("antar", feelings || [], {}).catch(()=>{});
-    }
+   if (messages.length === 0) {
+  logSession("antar", feelings || [], {}).catch(()=>{});
+}
   } catch {
     setMessages(prev => [...prev, {
       role: "assistant",
@@ -411,7 +413,7 @@ try {
           position: "relative", zIndex: 2,
         }}>
           <motion.button
-            onClick={() => navigate("/modes")}
+           onClick={() => { setShowCard(true); setTimeout(() => navigate("/modes"), 2500); }}
             whileHover={{
               scale: 1.06,
               boxShadow: "0 0 24px rgba(50,192,42,0.2)",
@@ -553,6 +555,14 @@ try {
           >↑</motion.button>
         </div>
       </div>
+      {showCard && (
+  <ShareCard
+    feeling={feelings[0] || "anxious"}
+    antarLine={avatarLine}
+    mode="antar"
+    onClose={() => setShowCard(false)}
+  />
+)}
     </motion.div>
   );
 }

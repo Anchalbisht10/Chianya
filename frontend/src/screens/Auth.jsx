@@ -120,21 +120,36 @@ export default function Auth() {
             }}
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
-            onKeyDown={e => e.key === "Enter" && handle()}
-            style={{
-              padding: "12px 16px", borderRadius: 12,
-              border: "0.5px solid rgba(70,180,50,0.22)",
-              background: "rgba(5,26,5,0.68)",
-              color: "rgba(162,238,132,0.92)",
-              fontFamily: "Georgia, serif", fontStyle: "italic",
-              fontSize: "clamp(12px,2.2vw,13px)", outline: "none",
-            }}
-          />
+        <div style={{ position: "relative" }}>
+            <input
+              type={form.showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={form.password}
+              onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
+              onKeyDown={e => e.key === "Enter" && handle()}
+              style={{
+                width: "100%", padding: "12px 44px 12px 16px", borderRadius: 12,
+                border: "0.5px solid rgba(70,180,50,0.22)",
+                background: "rgba(5,26,5,0.68)",
+                color: "rgba(162,238,132,0.92)",
+                fontFamily: "Georgia, serif", fontStyle: "italic",
+                fontSize: "clamp(12px,2.2vw,13px)", outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+            <button
+              type="button"
+              onClick={() => setForm(p => ({ ...p, showPassword: !p.showPassword }))}
+              style={{
+                position: "absolute", right: 12, top: "50%",
+                transform: "translateY(-50%)",
+                background: "none", border: "none", cursor: "pointer",
+                color: "rgba(98,200,75,0.6)",
+                fontSize: 16, padding: 0, lineHeight: 1,
+              }}>
+              {form.showPassword ? "🙈" : "🌿"}
+            </button>
+          </div>
         </div>
 
         {/* Error */}
@@ -162,9 +177,7 @@ export default function Auth() {
           {loading ? "The forest is listening..." : mode === "login" ? "Enter the Sanctuary" : "Begin Your Journey"}
         </motion.button>
 
-        {/* Skip */}
-{/* Skip */}
-        <div style={{ textAlign: "center" }}>
+     <div style={{ textAlign: "center" }}>
          <button onClick={async () => {
             const base = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
             await fetch(`${base}/api/auth/logout`, {

@@ -44,3 +44,18 @@ export const deleteFeedback = (id) =>
 
 export const getCommunityStats = () =>
   fetch(`${BASE}/activity/community-stats`, opts("GET")).then(r => r.json());
+
+export const submitRating = (data) =>
+  fetch(`${BASE}/ratings`, opts("POST", data)).then(r => r.json());
+
+export const getRatings = () =>
+  fetch(`${BASE}/ratings`, opts("GET")).then(r => r.json());
+
+export const deleteRating = (id) =>
+  fetch(`${BASE}/ratings/${id}`, opts("DELETE")).then(r => r.json());
+
+export const logMood = (feeling) =>
+  fetch(`${BASE}/mood`, opts("POST", { feeling })).then(r => r.json());
+
+export const getMoodTimeline = () =>
+  fetch(`${BASE}/mood/timeline`, opts("GET")).then(r => r.json());

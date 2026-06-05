@@ -19,6 +19,8 @@ import Resources from "./screens/Resources";
 import Onboarding from "./screens/Onboarding";
 import About from "./screens/About";
 import FutureLetter from "./screens/FutureLetter";
+import StarButton from "./components/StarButton";
+import Admin from "./screens/Admin";
 
 export default function App() {
   return (
@@ -31,6 +33,7 @@ export default function App() {
           <ForestScene />
           <Avatar />
           <ProfileBadge />
+          <StarButton />
           <Routes>
             <Route path="/"          element={<Welcome />} />
             <Route path="/auth"      element={<Auth />} />
@@ -48,6 +51,7 @@ export default function App() {
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/future-letter" element={<FutureLetter />} />
             <Route path="/about" element={<About />} />
+            <Route path="/admin" element={<Admin />} />
             
           </Routes>
         </div>

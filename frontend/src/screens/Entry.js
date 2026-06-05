@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
 import { avatarLines } from "../avatar/avatarLines";
 import { feelingResponses } from "../data/wisdom";
+import { logMood } from "../services/api";
 
 
 const FEELINGS = [
@@ -185,12 +186,15 @@ function AtmosphericBg({ width, height }) {
 }
 
 export default function Entry() {
-const { setFeelings, setAvatarLine } = useChianya();
+const { setFeelings, setAvatarLine, avatarLine } = useChianya();
+  const isMobile = window.innerWidth < 1100;
   const [selected, setSelected] = useState([]);
   const navigate = useNavigate();
   const cardRef = useRef();
   const [cardSize, setCardSize] = useState({ w:480, h:600 });
+  const [transitioning, setTransitioning] = useState(false);
 
+  const transitionRef = useRef(false);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("chianya_visited");
@@ -210,18 +214,278 @@ const { setFeelings, setAvatarLine } = useChianya();
     return () => obs.disconnect();
   }, []);
 
- const toggle = (f) => setSelected(prev =>
-  prev.includes(f) ? [] : [f]
-);
+const toggle = (f) => {
+    setSelected([f]);
+    setTransitioning(true);
+  };
 
-  const enter = () => {
+const enter = () => {
     setFeelings(selected);
     setAvatarLine(avatarLines.modes);
+    if (selected[0]) logMood(selected[0]).catch(() => {});
     navigate("/modes");
   };
 
   const activeFeeling = selected[0];
   const reflection = activeFeeling && feelingResponses[activeFeeling]?.reflection;
+const currentFeeling = selected[0] || "";
+  const currentReflection = feelingResponses[currentFeeling]?.reflection || "The forest holds space for all of it.";
+
+if (transitioning) return (
+    <motion.div
+      key="transition"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.2 }}
+      style={{
+        position: "absolute", inset: 0, zIndex: 10,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "clamp(1rem,3vw,2rem)",
+      }}>
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 1.2, ease: [0.16,1,0.3,1] }}
+        style={{
+          background: "rgba(3,14,5,0.92)",
+          border: "0.5px solid rgba(70,180,50,0.2)",
+          borderRadius: "clamp(16px,3vw,24px)",
+          padding: "clamp(2rem,5vw,3.5rem)",
+          maxWidth: 460, width: "100%",
+          backdropFilter: "blur(28px)",
+          textAlign: "center",
+        }}>
+       <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ marginBottom: "1.5rem", display: "flex", justifyContent: "center" }}>
+            <svg width="160" height="160" viewBox="0 0 160 160" style={{ overflow: "visible" }}>
+
+              {/* Outer divine rays */}
+              {[...Array(12)].map((_, i) => {
+                const angle = (i / 12) * Math.PI * 2;
+                return (
+                  <motion.line key={i}
+                    x1={80 + Math.cos(angle) * 48}
+                    y1={70 + Math.sin(angle) * 48}
+                    x2={80 + Math.cos(angle) * 70}
+                    y2={70 + Math.sin(angle) * 70}
+                    stroke={i % 2 === 0 ? "rgba(60,220,200,0.35)" : "rgba(40,180,220,0.2)"}
+                    strokeWidth={i % 2 === 0 ? 1.5 : 0.8}
+                    strokeLinecap="round"
+                    animate={{ opacity: [0.2, 0.8, 0.2] }}
+                    transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.18 }}
+                  />
+                );
+              })}
+
+              {/* Outer aura */}
+              <motion.circle cx="80" cy="70" r="48"
+                fill="none" stroke="rgba(40,200,200,0.1)" strokeWidth="16"
+                animate={{ r: [48, 53, 48], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Inner glow circle */}
+              <motion.circle cx="80" cy="70" r="36"
+                fill="rgba(20,100,120,0.15)"
+                stroke="rgba(60,220,220,0.3)" strokeWidth="1"
+                animate={{ r: [36, 38, 36] }}
+                transition={{ duration: 3.5, repeat: Infinity }}
+              />
+
+              {/* Halo */}
+              <motion.circle cx="80" cy="46" r="26"
+                fill="none" stroke="rgba(80,240,220,0.35)" strokeWidth="1.2"
+                animate={{ r: [26, 28, 26], opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 4, repeat: Infinity }}
+              />
+
+              {/* Halo dots */}
+              {[...Array(10)].map((_, i) => {
+                const a = (i / 10) * Math.PI * 2;
+                return (
+                  <motion.circle key={i}
+                    cx={80 + Math.cos(a) * 26}
+                    cy={46 + Math.sin(a) * 26}
+                    r="1.4"
+                    fill="rgba(100,255,230,0.6)"
+                    animate={{ opacity: [0.1, 0.9, 0.1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.18 }}
+                  />
+                );
+              })}
+
+              {/* Head — teal */}
+              <motion.ellipse cx="80" cy="48" rx="20" ry="22"
+                fill="rgba(25,140,165,0.78)"
+                stroke="rgba(60,210,210,0.4)" strokeWidth="0.8"
+                animate={{ ry: [22, 23.5, 22] }}
+                transition={{ duration: 4.5, repeat: Infinity }}
+              />
+
+              {/* Top knot */}
+              <ellipse cx="80" cy="28" rx="8" ry="5.5"
+                fill="rgba(20,120,145,0.85)" />
+
+              {/* Eyes — serene closed */}
+              <path d="M 68 48 Q 73 45 78 48" fill="none"
+                stroke="rgba(8,55,70,0.88)" strokeWidth="1.3" strokeLinecap="round"/>
+              <path d="M 82 48 Q 87 45 92 48" fill="none"
+                stroke="rgba(8,55,70,0.88)" strokeWidth="1.3" strokeLinecap="round"/>
+
+              {/* Smile */}
+              <path d="M 70 58 Q 80 65 90 58" fill="none"
+                stroke="rgba(12,130,150,0.7)" strokeWidth="1.5" strokeLinecap="round"/>
+
+              {/* Third eye */}
+              <motion.circle cx="80" cy="37" r="2.5"
+                fill="rgba(242, 255, 60, 0.9)"
+                animate={{ opacity: [0.4, 1, 0.4], r: [2.5, 3, 2.5] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              <circle cx="80" cy="37" r="1" fill="rgba(200,255,255,1)" />
+
+              {/* Ears */}
+              <ellipse cx="59" cy="50" rx="4" ry="7"
+                fill="rgba(126, 155, 22, 0.68)" />
+              <ellipse cx="101" cy="50" rx="4" ry="7"
+                fill="rgba(126, 155, 22, 0.68)" />
+
+              {/* Neck */}
+              <rect x="73" y="68" width="14" height="11" rx="6"
+                fill="rgba(20,130,155,0.62)" />
+
+              {/* Robe body */}
+              <motion.path
+                d="M 28 90 Q 22 118 24 148 Q 52 156 80 157 Q 108 156 136 148 Q 138 118 132 90 Q 106 102 80 104 Q 54 102 28 90 Z"
+                fill="rgba(105, 135, 15, 0.62)"
+                stroke="rgba(210, 179, 40, 0.3)" strokeWidth="0.8"
+                animate={{ d: [
+                  "M 28 90 Q 22 118 24 148 Q 52 156 80 157 Q 108 156 136 148 Q 138 118 132 90 Q 106 102 80 104 Q 54 102 28 90 Z",
+                  "M 28 90 Q 21 120 23 148 Q 52 157 80 158 Q 108 157 137 148 Q 139 120 132 90 Q 106 103 80 105 Q 54 103 28 90 Z",
+                  "M 28 90 Q 22 118 24 148 Q 52 156 80 157 Q 108 156 136 148 Q 138 118 132 90 Q 106 102 80 104 Q 54 102 28 90 Z",
+                ]}}
+                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Shoulder line */}
+              <path d="M 28 90 Q 52 76 80 74 Q 108 76 132 90"
+                fill="rgba(18,120,145,0.65)"
+                stroke="rgba(45,195,215,0.38)" strokeWidth="0.8"
+              />
+
+              {/* Meditation hands */}
+              <motion.g animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 5, repeat: Infinity }}>
+                <ellipse cx="62" cy="128" rx="18" ry="10"
+                  fill="rgba(22,135,160,0.58)"
+                  stroke="rgba(60,210,230,0.32)" strokeWidth="0.7"
+                  transform="rotate(-16,62,128)" />
+                <ellipse cx="98" cy="128" rx="18" ry="10"
+                  fill="rgba(22,135,160,0.58)"
+                  stroke="rgba(60,210,230,0.32)" strokeWidth="0.7"
+                  transform="rotate(16,98,128)" />
+                <ellipse cx="80" cy="122" rx="9" ry="12"
+                  fill="rgba(22,135,160,0.48)" />
+
+                {/* Prayer beads */}
+                {[...Array(10)].map((_, i) => {
+                  const a = (i / 10) * Math.PI + Math.PI * 0.1;
+                  return (
+                    <motion.circle key={i}
+                      cx={80 + Math.cos(a) * 28}
+                      cy={134 + Math.sin(a) * 10}
+                      r="2"
+                      fill="rgba(18, 135, 86, 0.88)"
+                      stroke="rgba(55, 220, 135, 0.5)" strokeWidth="0.5"
+                      animate={{ opacity: [0.4, 1, 0.4] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.15 }}
+                    />
+                  );
+                })}
+              </motion.g>
+
+              {/* Rising particles */}
+              {[60, 72, 80, 88, 100].map((x, i) => (
+                <motion.circle key={i} cx={x} cy={8} r={1.4}
+                  fill="rgba(164, 224, 61, 0.82)"
+                  animate={{ cy: [8, -18, 8], opacity: [0, 0.8, 0] }}
+                  transition={{ duration: 3 + i * 0.4, repeat: Infinity, delay: i * 0.6 }}
+                />
+              ))}
+
+              {/* Lotus base */}
+              <motion.ellipse cx="80" cy="157" rx="48" ry="7"
+                fill="rgba(65, 228, 20, 0.1)"
+                animate={{ rx: [48, 55, 48], opacity: [0.3, 0.7, 0.3] }}
+                transition={{ duration: 4, repeat: Infinity }}
+              />
+            </svg>
+          </motion.div>
+        <div style={{
+          fontSize: "clamp(9px,1.6vw,10px)",
+          letterSpacing: "0.28em",
+          color: "rgba(92,195,68,0.38)",
+          fontFamily: "Georgia, serif",
+          marginBottom: "1rem",
+        }}>YOU ARE CARRYING</div>
+        <div style={{
+          fontSize: "clamp(20px,4vw,26px)",
+          color: "rgba(172,242,142,0.96)",
+          fontFamily: "Georgia, serif",
+          fontWeight: 300,
+          letterSpacing: "0.1em",
+          marginBottom: "1.2rem",
+        }}>{currentFeeling}</div>
+        <div style={{
+          fontSize: "clamp(12px,2.2vw,14px)",
+          color: "rgba(140,218,110,0.65)",
+          fontFamily: "Georgia, serif",
+          fontStyle: "italic",
+          lineHeight: 2,
+          marginBottom: "2rem",
+        }}>
+               {currentReflection}
+                  </div>
+        <motion.button
+          onClick={enter}
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.97 }}
+          style={{
+            width: "100%",
+            padding: "clamp(13px,2.8vw,17px)",
+            borderRadius: 50,
+            border: "0.5px solid rgba(108,228,80,0.5)",
+            background: "rgba(10,52,10,0.75)",
+            color: "rgba(180,250,150,0.97)",
+            fontSize: "clamp(13px,2.6vw,16px)",
+            cursor: "pointer",
+            fontFamily: "Georgia, serif",
+            fontStyle: "italic",
+            letterSpacing: "0.18em",
+            backdropFilter: "blur(22px)",
+            transition: "all 0.45s",
+            marginBottom: "1rem",
+          }}>
+          Enter the Sanctuary
+        </motion.button>
+        <button
+          onClick={() => setTransitioning(false)}
+          style={{
+            background: "none", border: "none",
+            color: "rgba(85,175,62,0.35)",
+            fontFamily: "Georgia, serif",
+            fontStyle: "italic",
+            fontSize: 11, cursor: "pointer",
+            letterSpacing: "0.12em",
+          }}>
+          ← choose differently
+        </button>
+      </motion.div>
+    </motion.div>
+  );
 
   return (
     <motion.div

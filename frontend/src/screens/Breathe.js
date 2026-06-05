@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
+import ShareCard from "../components/ShareCard";
 import { avatarLines } from "../avatar/avatarLines";
 import { logSession } from "../services/api";
 const PHASES = [
@@ -180,7 +181,8 @@ function TealBreathSpirit({ phase, done }) {
 
 export default function Breathe() {
   const navigate = useNavigate();
-  const { setAvatarLine, setCurrentMode } = useChianya();
+ const { setAvatarLine, setCurrentMode, feelings, avatarLine } = useChianya();
+const [showCard, setShowCard] = useState(false);
   const [phase, setPhase] = useState(0);
   const [cycle, setCycle] = useState(1);
   const [done, setDone] = useState(false);
@@ -192,7 +194,7 @@ export default function Breathe() {
     let p=0, c=1;
     const tick = () => setTimeout(() => {
       p = (p+1) % 3;
-     if (p === 0) { c++; if (c > TOTAL) { setDone(true); logSession("breathing", [], { cycles: TOTAL }).catch(()=>{}); return; } setCycle(c); }
+     if (p === 0) { c++; if (c > TOTAL) { setDone(true); logSession("breathing", [], { cycles: TOTAL }).catch(()=>{}); setTimeout(() => setShowCard(true), 1200); return; } setCycle(c); }
       setPhase(p); timer = tick();
     }, PHASES[p].duration * 1000);
     let timer = tick();
@@ -285,6 +287,15 @@ export default function Breathe() {
             }}>Return to the Forest</motion.button>
         )}
       </div>
+
+    {showCard && (
+  <ShareCard
+    feeling={feelings[0] || "anxious"}
+    antarLine={avatarLine}
+    mode="breathing"
+    onClose={() => setShowCard(false)}
+  />
+)}
     </motion.div>
   );
 }

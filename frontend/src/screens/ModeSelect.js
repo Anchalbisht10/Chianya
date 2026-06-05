@@ -421,10 +421,12 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
               transition={{ duration: 0.4, ease: [0.16,1,0.3,1] }}
               style={{
                 position: "fixed",
-                top: 0,
-                right: 0,
-                height: "100vh",
-                width: "clamp(240px,35vw,320px)",
+               top: 0,
+              right: 0,
+              height: "100%",
+              minHeight: "100vh",
+              width: "85vw",
+              maxWidth: 320,
                 background: "rgba(3,14,5,0.96)",
                 border: "0.5px solid rgba(70,180,50,0.2)",
                 borderRadius: "16px 0 0 16px",
@@ -436,13 +438,29 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
                 gap: 12,
                 boxShadow: "-4px 0 40px rgba(20,140,20,0.15)",
               }}>
-              <div style={{
-                fontSize: "clamp(9px,1.6vw,10px)",
-                letterSpacing: "0.28em",
-                color: "rgba(92,195,68,0.35)",
-                fontFamily: "Georgia, serif",
+             <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
                 marginBottom: "0.5rem",
-              }}>THE FOREST</div>
+              }}>
+                <div style={{
+                  fontSize: "clamp(9px,1.6vw,10px)",
+                  letterSpacing: "0.28em",
+                  color: "rgba(92,195,68,0.35)",
+                  fontFamily: "Georgia, serif",
+                }}>THE FOREST</div>
+                <button onClick={() => setMenuOpen(false)} style={{
+                  background: "none",
+                  border: "0.5px solid rgba(68,175,50,0.2)",
+                  borderRadius: 20,
+                  color: "rgba(95,185,70,0.4)",
+                  fontSize: 11,
+                  cursor: "pointer",
+                  padding: "3px 10px",
+                  fontFamily: "Georgia, serif",
+                }}>✕</button>
+              </div>
 
               {[
                 { label: "voices from the forest", path: "/feedback", desc: "what others have carried here" },

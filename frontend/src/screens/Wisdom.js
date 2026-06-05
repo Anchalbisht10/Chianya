@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
+import ShareCard from "../components/ShareCard";
 import { dailyInsights } from "../data/wisdom";
 import { getWisdomToday } from "../services/api";
 import { logSession } from "../services/api";
@@ -277,14 +278,16 @@ function CelestialSpirit({ pulsing=true }) {
 
 export default function Wisdom() {
   const navigate = useNavigate();
-  const { setAvatarLine, feelings, setCurrentMode } = useChianya();
+const { setAvatarLine, feelings, setCurrentMode, avatarLine } = useChianya();
+const [showCard, setShowCard] = useState(false);
 const [focusMode, setFocusMode] = useState(false);
 const [today, setToday] = useState(dailyInsights[new Date().getDay() % dailyInsights.length]);
 
 useEffect(() => {
   getWisdomToday(feelings || []).then(data => {
     if (data?.wisdom) {
-        logSession("wisdom", feelings || [], {}).catch(()=>{});
+logSession("wisdom", feelings || [], {}).catch(()=>{});
+setTimeout(() => setShowCard(true), 3000);
       setToday({
         teaching: data.wisdom.teachingText,
         explanation: data.wisdom.reflection,
@@ -502,6 +505,14 @@ useEffect(() => {
           </motion.div>
         )}
       </AnimatePresence>
+      {showCard && (
+  <ShareCard
+    feeling={feelings[0] || "anxious"}
+    antarLine={avatarLine}
+    mode="justSit"
+    onClose={() => setShowCard(false)}
+  />
+)}
     </motion.div>
   );
 }

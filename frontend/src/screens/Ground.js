@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
+import ShareCard from "../components/ShareCard";
 import { avatarLines } from "../avatar/avatarLines";
 import { logSession } from "../services/api";
 
@@ -74,13 +75,17 @@ function GroundingCanvas({ width, height }) {
 
 export default function Ground() {
   const navigate = useNavigate();
- const { setAvatarLine, setCurrentMode } = useChianya();
+const { setAvatarLine, setCurrentMode, feelings, avatarLine } = useChianya();
+const [showCard, setShowCard] = useState(false);
   const [done, setDone] = useState([]);
   const cardRef = useRef();
   const [cardSize, setCardSize] = useState({w:480,h:600});
   const allDone = done.length === STEPS.length;
-  useEffect(() => {
-  if (allDone) logSession("ground", [], {}).catch(()=>{});
+useEffect(() => {
+  if (allDone) {
+    logSession("ground", [], {}).catch(()=>{});
+    setTimeout(() => setShowCard(true), 1200);
+  }
 }, [allDone]);
 
   useEffect(() => { setAvatarLine(avatarLines.ground); }, []);
@@ -225,6 +230,14 @@ export default function Ground() {
           )}
         </AnimatePresence>
       </div>
+      {showCard && (
+        <ShareCard
+          feeling={feelings[0] || "anxious"}
+          antarLine={avatarLine}
+          mode="ground"
+          onClose={() => setShowCard(false)}
+        />
+      )}
     </motion.div>
   );
 }

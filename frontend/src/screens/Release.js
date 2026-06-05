@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
+import ShareCard from "../components/ShareCard";
 import { avatarLines } from "../avatar/avatarLines";
 import { logSession } from "../services/api";
 
@@ -115,7 +116,8 @@ function EarthAtmosphere() {
 
 export default function Release() {
   const navigate = useNavigate();
- const { setAvatarLine, setCurrentMode } = useChianya();
+const { setAvatarLine, setCurrentMode, feelings, avatarLine } = useChianya();
+const [showCard, setShowCard] = useState(false);
   const [text, setText] = useState("");
   const [released, setReleased] = useState(false);
   const canvasRef = useRef();
@@ -125,8 +127,9 @@ export default function Release() {
 
 const doRelease = () => {
   if (!text.trim()) return;
-  setReleased(true);
-  logSession("release", [], {}).catch(()=>{});
+ setReleased(true);
+logSession("release", [], {}).catch(()=>{});
+setTimeout(() => setShowCard(true), 4000);
   const canvas = canvasRef.current;
   if (!canvas) return;
   const dpr = window.devicePixelRatio||1;
@@ -334,6 +337,14 @@ const doRelease = () => {
           </motion.div>
         )}
       </div>
+      {showCard && (
+  <ShareCard
+    feeling={feelings[0] || "anxious"}
+    antarLine={avatarLine}
+    mode="release"
+    onClose={() => setShowCard(false)}
+  />
+)}
     </motion.div>
   );
 }

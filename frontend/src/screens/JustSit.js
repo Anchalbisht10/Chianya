@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
+import ShareCard from "../components/ShareCard";
 import { logSession } from "../services/api";
 import { avatarLines } from "../avatar/avatarLines";
 
@@ -131,13 +132,15 @@ function SittingMonk() {
 
 export default function JustSit() {
   const navigate = useNavigate();
-  const { setAvatarLine, setCurrentMode } = useChianya();
+const { setAvatarLine, setCurrentMode, feelings, avatarLine } = useChianya();
+const [showCard, setShowCard] = useState(false);
 useEffect(() => {
   setAvatarLine(avatarLines.sit);
   setCurrentMode("justSit");
-  const timer = setTimeout(() => {
+ const timer = setTimeout(() => {
     logSession("justSit", [], { durationSeconds: 60 }).catch(()=>{});
-  }, 60000);
+    setTimeout(() => setShowCard(true), 500);
+  }, 80000);
   return () => clearTimeout(timer);
 }, []);
 
@@ -198,7 +201,7 @@ useEffect(() => {
           initial={{opacity:0}}
           animate={{opacity:1}}
           transition={{delay:10,duration:2}}
-          onClick={()=>navigate("/modes")}
+        onClick={() => { setShowCard(true); setTimeout(() => navigate("/modes"), 2500); }}
           style={{
             marginTop:"2rem",padding:"11px 32px",borderRadius:40,
             border:"0.5px solid rgba(98,220,68,0.35)",
@@ -210,6 +213,14 @@ useEffect(() => {
           }}
         >Return to the Forest</motion.button>
       </div>
+      {showCard && (
+  <ShareCard
+    feeling={feelings[0] || "anxious"}
+    antarLine={avatarLine}
+    mode="justSit"
+    onClose={() => setShowCard(false)}
+  />
+)}
     </motion.div>
   );
 }

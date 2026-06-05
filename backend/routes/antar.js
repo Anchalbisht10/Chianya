@@ -43,9 +43,26 @@ router.post("/message", optionalAuth, async (req, res) => {
       }
     }
 
-    const history = conversation?.messages || [];
-    const reply   = await antarMessage({ messages: history, feelings, userMessage: message });
+   const history = conversation?.messages || [];
 
+// Get last session summary for returning users
+let lastSessionSummary = null;
+if (userId) {
+  const previousConv = await Conversation.findOne({
+    userId,
+    _id: { $ne: conversation?._id },
+  }).sort({ lastActive: -1 }).select("messages lastActive");
+
+  if (previousConv && previousConv.messages.length > 0) {
+    const lastMessages = previousConv.messages.slice(-4);
+    lastSessionSummary = lastMessages
+      .filter(m => m.role === "antar")
+      .map(m => m.content)
+      .join(" | ");
+  }
+}
+
+const reply = await antarMessage({ messages: history, feelings, userMessage: message, lastSessionSummary });
     // Save messages (logged-in users only)
     if (conversation) {
       conversation.messages.push({ role: "user",  content: message });
