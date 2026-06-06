@@ -23,6 +23,7 @@ import StarButton from "./components/StarButton";
 import Admin from "./screens/Admin";
 import CursorTrail from "./components/CursorTrail";
 import Creator from "./screens/Creator";
+import InstallButton from "./components/InstallButton";
 
 export default function App() {
   return (
@@ -37,6 +38,8 @@ export default function App() {
           <ProfileBadge />
           <StarButton />
           <CursorTrail />
+          <InstallButton />
+          
           <Routes>
             <Route path="/"          element={<Welcome />} />
             <Route path="/auth"      element={<Auth />} />
