@@ -115,9 +115,8 @@ export default function Auth() {
             placeholder="Email address"
             value={form.email}
             onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
-            onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
-            onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
-            style={{
+onFocus={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zIndex !== '9999') c.style.opacity = '0'; })}
+onBlur={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zIndex !== '9999') c.style.opacity = ''; })}            style={{
               padding: "12px 16px", borderRadius: 12,
               border: "0.5px solid rgba(70,180,50,0.22)",
               background: "rgba(5,26,5,0.68)",

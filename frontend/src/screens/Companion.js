@@ -522,8 +522,8 @@ onClick={() => { setShowCard(true); setTimeout(() => navigate("/modes"), 4000); 
         <textarea
             value={input}
             onChange={e => setInput(e.target.value)}
-            onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
-            onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
+onFocus={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zIndex !== '9999') c.style.opacity = '0'; })}
+onBlur={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zIndex !== '9999') c.style.opacity = ''; })}
             onKeyDown={e => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault(); send();

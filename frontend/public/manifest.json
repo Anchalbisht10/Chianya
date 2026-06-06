@@ -1,6 +1,7 @@
 {
-"short_name": "Chianya",
-"name": "Chianya — Forest of Consciousness",
+  "short_name": "Chianya",
+  "name": "Chianya — Forest of Consciousness",
+  "description": "A sanctuary for your inner world. Pause, feel, and reconnect.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,20 @@
   ],
   "start_url": ".",
   "display": "standalone",
- "theme_color": "#030a04",
-"background_color": "#030a04"
+  "theme_color": "#030a04",
+  "background_color": "#030a04",
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
 }

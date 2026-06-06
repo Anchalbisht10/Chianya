@@ -287,9 +287,8 @@ logSession("release", [], {}).catch(()=>{});
          <textarea value={text} onChange={e=>setText(e.target.value)}
                 placeholder="I am releasing..."
                 rows={3}
-                onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
-                onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
-                style={{
+                onFocus={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zIndex !== '9999') c.style.opacity = '0'; })}
+onBlur={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zIndex !== '9999') c.style.opacity = ''; })}              style={{
                   width:"100%",padding:"12px 14px",borderRadius:12,
                   border:"0.5px solid rgba(72,182,50,0.22)",
                   background:"rgba(5,26,5,0.68)",

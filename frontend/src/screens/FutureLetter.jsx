@@ -113,9 +113,8 @@ export default function FutureLetter() {
                 type="email"
                 value={form.email}
                 onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
-                onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
-                onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
-                placeholder="Your email address"
+              onFocus={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zIndex !== '9999') c.style.opacity = '0'; })}
+onBlur={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zIndex !== '9999') c.style.opacity = ''; })}                placeholder="Your email address"
                 style={{
                   width: "100%", padding: "11px 16px", borderRadius: 12,
                   border: "0.5px solid rgba(70,180,50,0.22)",
