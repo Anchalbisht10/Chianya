@@ -127,11 +127,11 @@ export default function InstallButton() {
         style={{
           position: "fixed",
           ...(isMobile ? {
-            top: 16,
-            right: 76,
+          top: 16,
+          right: 16,
           } : {
-            bottom: 16,
-            right: 76,
+           bottom: 16,
+          left: 16,
           }),
           zIndex: 100,
           width: 52, height: 52,
