@@ -39,11 +39,10 @@ getMyActivity().then(data => {
       transition={{ duration: 1.2 }}
    style={{
   position: "absolute", inset: 0, zIndex: 10,
-  display: "flex", alignItems: "center", justifyContent: "center",
-  padding: "clamp(0.5rem,2vw,2rem)",
-  paddingTop: "clamp(70px, 12vh, 90px)",    // ← ADD THIS
-  paddingBottom: "clamp(80px,12vh,100px)",
-  overflowY: "auto",
+ display: "flex", alignItems: "flex-start", justifyContent: "center",
+        padding: "clamp(1rem,3vw,2rem)",
+        paddingTop: "4rem",
+        overflowY: "auto",
 }}
       >
       <motion.div
@@ -55,8 +54,9 @@ getMyActivity().then(data => {
           background: "rgba(3,14,5,0.92)",
           border: "0.5px solid rgba(70,180,50,0.18)",
           borderRadius: "clamp(16px,3vw,24px)",
-          padding: "clamp(1.6rem,4vw,2.4rem)",
+        padding: "clamp(0.8rem,2vw,1.4rem)",
          maxWidth: 480, width: "100%",
+         maxHeight: "78vh", overflowY: "auto",
           backdropFilter: "blur(28px)",
           boxShadow: "0 0 80px rgba(20,140,20,0.09)",
  maxHeight: "calc(100vh - 160px)",
@@ -64,10 +64,10 @@ getMyActivity().then(data => {
         }}>
 
         {/* Header */}
-       <div style={{
+      <div style={{
           display: "flex", justifyContent: "space-between",
-          alignItems: "center", marginBottom: "1.6rem",
-          flexWrap: "wrap", gap: 8,
+          alignItems: "center", marginBottom: "1rem",
+          flexWrap: "nowrap", gap: 8,
         }}>
           <motion.button onClick={() => navigate("/entry")}
             whileHover={{ scale: 1.06 }}
@@ -133,8 +133,8 @@ getMyActivity().then(data => {
           }}>The forest is remembering...</div>
         ) : (
           <div style={{
-            display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
-          gap: "clamp(6px,1.5vw,10px)", marginBottom: "1.2rem",
+           display: "grid", gridTemplateColumns: "1fr 1fr 1fr",
+              gap: 6, marginBottom: "1rem",
           }}>
             {stats.map((s, i) => (
               <motion.div key={i}

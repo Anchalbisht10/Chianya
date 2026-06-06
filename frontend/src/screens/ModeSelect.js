@@ -205,7 +205,7 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
         position:"absolute",inset:0,zIndex:10,
         display:"flex",alignItems:"center",justifyContent:"center",
    padding: "clamp(1rem,3vw,2rem)",
-        paddingTop: "clamp(70px,12vh,90px)",
+       paddingTop: "5rem",
         paddingBottom: "clamp(80px,12vh,100px)",
         overflowY: "auto",
       }}>
@@ -222,7 +222,7 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
           backdropFilter:"blur(28px)",
           boxShadow:"0 0 80px rgba(18,140,18,0.1)",
           position:"relative",overflow:"hidden",
-          maxHeight:"calc(100dvh - 160px)",
+      maxHeight:"75vh",
           overflowY:"auto",
         }}>
         <ModeAtmosphere width={cardSize.w} height={cardSize.h}/>

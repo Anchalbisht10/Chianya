@@ -32,8 +32,10 @@ export default function Auth() {
       transition={{ duration: 1.2 }}
       style={{
         position: "absolute", inset: 0, zIndex: 10,
-        display: "flex", alignItems: "center", justifyContent: "center",
+       display: "flex", alignItems: "flex-start", justifyContent: "center",
         padding: "clamp(1rem,3vw,2rem)",
+        paddingTop: "5rem",
+        overflowY: "auto",
       }}>
       <motion.div
         initial={{ opacity: 0, y: 28, scale: 0.96 }}
@@ -45,6 +47,7 @@ export default function Auth() {
           borderRadius: "clamp(16px,3vw,24px)",
           padding: "clamp(2rem,5vw,3rem)",
           maxWidth: 420, width: "100%",
+          maxHeight: "78vh", overflowY: "auto",
           backdropFilter: "blur(28px)",
           boxShadow: "0 0 80px rgba(20,140,20,0.09)",
         }}>

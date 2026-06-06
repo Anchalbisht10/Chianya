@@ -287,7 +287,6 @@ useEffect(() => {
   getWisdomToday(feelings || []).then(data => {
     if (data?.wisdom) {
 logSession("wisdom", feelings || [], {}).catch(()=>{});
-setTimeout(() => setShowCard(true), 3000);
       setToday({
         teaching: data.wisdom.teachingText,
         explanation: data.wisdom.reflection,
@@ -333,7 +332,7 @@ useEffect(() => {
               backdropFilter:"blur(28px)",
               boxShadow:"0 0 80px rgba(18,140,18,0.1)",
             }}>
-            <motion.button onClick={()=>navigate("/modes")}
+            <motion.button onClick={()=>{ setShowCard(true); setTimeout(()=>navigate("/modes"), 3000); }}
               whileHover={{scale:1.06,boxShadow:"0 0 24px rgba(52,192,42,0.2)",
                 borderColor:"rgba(92,222,62,0.5)",color:"rgba(182,250,148,0.95)"}}
               style={{

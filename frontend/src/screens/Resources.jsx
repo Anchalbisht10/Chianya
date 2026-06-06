@@ -69,8 +69,9 @@ export default function Resources() {
     style={{
         position: "absolute", inset: 0, zIndex: 10,
         display: "flex", alignItems: "flex-start", justifyContent: "center",
-        padding: "clamp(1rem,3vw,2rem)", overflowY: "auto",
-      paddingTop: "clamp(5rem,12vh,7rem)",
+        padding: "clamp(1rem,3vw,2rem)",
+        paddingTop: "5rem",
+        overflowY: "auto",
     
       }}>
       <motion.div
@@ -83,6 +84,7 @@ export default function Resources() {
           borderRadius: "clamp(16px,3vw,24px)",
           padding: "clamp(1.6rem,4vw,2.4rem)",
         maxWidth: 520, width: "100%",
+        maxHeight: "78vh", overflowY: "auto",
           backdropFilter: "blur(28px)",
           boxShadow: "0 0 80px rgba(20,140,20,0.09)",
           maxHeight: "75vh", overflowY: "auto",

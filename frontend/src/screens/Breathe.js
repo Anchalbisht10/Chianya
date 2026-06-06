@@ -194,7 +194,7 @@ const [showCard, setShowCard] = useState(false);
     let p=0, c=1;
     const tick = () => setTimeout(() => {
       p = (p+1) % 3;
-     if (p === 0) { c++; if (c > TOTAL) { setDone(true); logSession("breathing", [], { cycles: TOTAL }).catch(()=>{}); setTimeout(() => setShowCard(true), 1200); return; } setCycle(c); }
+     if (p === 0) { c++; if (c > TOTAL) { setDone(true); logSession("breathing", [], { cycles: TOTAL }).catch(()=>{}); return; }setCycle(c); }
       setPhase(p); timer = tick();
     }, PHASES[p].duration * 1000);
     let timer = tick();
@@ -220,7 +220,7 @@ const [showCard, setShowCard] = useState(false);
         backdropFilter:"blur(28px)", textAlign:"center",
         boxShadow:"0 0 60px rgba(20,180,210,0.08)",
       }}>
-        <motion.button onClick={()=>navigate("/modes")}
+        <motion.button onClick={()=>{ setShowCard(true); setTimeout(()=>navigate("/modes"), 3000); }}
           whileHover={{scale:1.06,
             boxShadow:"0 0 24px rgba(30,200,225,0.2)",
             borderColor:"rgba(60,230,250,0.5)",

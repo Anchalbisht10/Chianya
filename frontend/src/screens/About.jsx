@@ -17,10 +17,9 @@ export default function About() {
       transition={{ duration: 1.2 }}
      style={{
         position: "absolute", inset: 0, zIndex: 10,
-        display: "flex", alignItems: "center", justifyContent: "center",
-    padding: "clamp(1rem,3vw,2rem)",
-        paddingTop: "clamp(70px,12vh,90px)",
-        paddingBottom: "clamp(80px,12vh,100px)",
+      display: "flex", alignItems: "flex-start", justifyContent: "center",
+        padding: "clamp(1rem,3vw,2rem)",
+        paddingTop: "6rem",
         overflowY: "auto",
       }}>
       <motion.div
@@ -31,8 +30,9 @@ export default function About() {
           background: "rgba(3,14,5,0.92)",
           border: "0.5px solid rgba(70,180,50,0.18)",
           borderRadius: "clamp(16px,3vw,24px)",
-          padding: "clamp(1.8rem,4vw,2.8rem)",
+     padding: "clamp(1rem,2.5vw,1.5rem)",
           maxWidth: 520, width: "100%",
+        maxHeight: "75vh", overflowY: "auto",
           backdropFilter: "blur(28px)",
           boxShadow: "0 0 80px rgba(20,140,20,0.09)",
           maxHeight: "75vh", overflowY: "auto",

@@ -72,17 +72,17 @@ export default function FutureLetter() {
               exit={{ opacity: 0 }}>
 
               <div style={{ textAlign: "center", marginBottom: "2rem" }}>
-                <div style={{ fontSize: "2rem", marginBottom: "0.8rem" }}>✉️</div>
+               <div style={{ fontSize: "1.4rem", marginBottom: "0.4rem" }}>✉️</div>
                 <div style={{
-                  fontSize: "clamp(20px,4vw,26px)", fontWeight: 300,
-                  letterSpacing: "0.14em", color: "rgba(172,242,142,0.96)",
-                  fontFamily: "Georgia, serif", marginBottom: 8,
+                 fontSize: "clamp(16px,3vw,20px)", fontWeight: 300,
+              letterSpacing: "0.14em", color: "rgba(172,242,142,0.96)",
+              fontFamily: "Georgia, serif", marginBottom: 4,
                 }}>A Letter to Your Future Self</div>
                 <div style={{
                   fontSize: "clamp(11px,2vw,13px)",
                   color: "rgba(140,218,110,0.55)",
                   fontFamily: "Georgia, serif", fontStyle: "italic",
-                  lineHeight: 1.9,
+                  lineHeight: 1.6,
                 }}>
                   Write what you want to remember.<br/>
                   The forest will keep it and return it to you.
@@ -94,7 +94,7 @@ export default function FutureLetter() {
                 onChange={e => setForm(p => ({ ...p, letter: e.target.value }))}
                 placeholder="Dear future me... write freely. No one else will read this until it reaches you."
                 maxLength={2000}
-                rows={6}
+                rows={3}
                 style={{
                   width: "100%", padding: "14px 16px", borderRadius: 14,
                   border: "0.5px solid rgba(70,180,50,0.22)",

@@ -413,7 +413,7 @@ try {
           position: "relative", zIndex: 2,
         }}>
           <motion.button
-onClick={() => { setShowCard(true); setTimeout(() => navigate("/modes"), 2500); }}
+onClick={() => { setShowCard(true); setTimeout(() => navigate("/modes"), 4000); }}
             whileHover={{
               scale: 1.06,
               boxShadow: "0 0 24px rgba(50,192,42,0.2)",

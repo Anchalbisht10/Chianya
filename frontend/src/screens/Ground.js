@@ -84,7 +84,6 @@ const [showCard, setShowCard] = useState(false);
 useEffect(() => {
   if (allDone) {
     logSession("ground", [], {}).catch(()=>{});
-    setTimeout(() => setShowCard(true), 1200);
   }
 }, [allDone]);
 
@@ -219,7 +218,7 @@ useEffect(() => {
                 You are here. You are safe.<br/>
                 This moment holds you completely.
               </div>
-              <motion.button onClick={()=>navigate("/modes")}
+              <motion.button onClick={()=>{ setShowCard(true); setTimeout(()=>navigate("/modes"), 3000); }}
                 whileHover={{scale:1.04}}
                 style={{
                   width:"100%",padding:"12px",borderRadius:40,

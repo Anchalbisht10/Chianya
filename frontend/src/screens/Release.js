@@ -129,7 +129,6 @@ const doRelease = () => {
   if (!text.trim()) return;
  setReleased(true);
 logSession("release", [], {}).catch(()=>{});
-setTimeout(() => setShowCard(true), 4000);
   const canvas = canvasRef.current;
   if (!canvas) return;
   const dpr = window.devicePixelRatio||1;
@@ -328,7 +327,7 @@ setTimeout(() => setShowCard(true), 4000);
                 You are a little lighter.
               </span>
             </p>
-            <motion.button onClick={()=>navigate("/modes")}
+            <motion.button onClick={()=>{ setShowCard(true); setTimeout(()=>navigate("/modes"), 3000); }}
               whileHover={{scale:1.04}}
               style={{
                 width:"100%",padding:"12px",borderRadius:40,

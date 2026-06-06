@@ -238,10 +238,12 @@ if (transitioning) return (
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1.2 }}
-      style={{
+    style={{
         position: "absolute", inset: 0, zIndex: 10,
-        display: "flex", alignItems: "center", justifyContent: "center",
+        display: "flex", alignItems: "flex-start", justifyContent: "center",
         padding: "clamp(1rem,3vw,2rem)",
+        paddingTop: "5rem",
+        overflowY: "auto",
       }}>
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.95 }}
@@ -251,10 +253,11 @@ if (transitioning) return (
           background: "rgba(3,14,5,0.92)",
           border: "0.5px solid rgba(70,180,50,0.2)",
           borderRadius: "clamp(16px,3vw,24px)",
-          padding: "clamp(2rem,5vw,3.5rem)",
-          maxWidth: 460, width: "100%",
+       padding: "clamp(1rem,3vw,1.8rem)",
+         maxWidth: 460, width: "100%",
           backdropFilter: "blur(28px)",
           textAlign: "center",
+          maxHeight: "78vh", overflowY: "auto",
         }}>
        <motion.div
             animate={{ y: [0, -8, 0] }}
