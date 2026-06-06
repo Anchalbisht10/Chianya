@@ -24,9 +24,9 @@ self.addEventListener("activate", (e) => {
   self.clients.claim();
 });
 
-self.addEventListener("fetch", (e) => {
-  if (e.request.method !== "GET") return;
+self.addEventListener('fetch', (e) => {
+  if (e.request.method !== 'GET') return;
   e.respondWith(
-    caches.match(e.request).then((cached) => cached || fetch(e.request))
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
