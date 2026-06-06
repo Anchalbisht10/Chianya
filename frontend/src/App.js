@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Suspense, lazy } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import { ChianyaProvider } from "./context/ChianyaContext";
 import ForestScene from "./scenes/ForestScene";
 import Avatar from "./avatar/Avatar";
