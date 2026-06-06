@@ -25,6 +25,7 @@ const app = express();
 
 // ── Security ──────────────────────────────────────────────────
 app.use(helmet());
+app.set('trust proxy', 1);
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   "https://chianya.vercel.app",
