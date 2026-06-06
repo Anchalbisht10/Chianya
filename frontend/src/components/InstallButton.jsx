@@ -61,7 +61,7 @@ export default function InstallButton() {
             style={{
               position: "fixed",
               bottom: 80,
-              right: 16,
+              left: 16,
               zIndex: 200,
               background: "rgba(3,14,5,0.97)",
               border: "0.5px solid rgba(98,222,68,0.4)",
