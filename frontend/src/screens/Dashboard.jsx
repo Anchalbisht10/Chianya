@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getMyActivity, logout, getMoodTimeline } from "../services/api";
 import { useChianya } from "../context/ChianyaContext";
+import { getStreak } from "../services/api";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -10,6 +11,13 @@ export default function Dashboard() {
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
   const [timeline, setTimeline] = useState([]);
+  const [streak, setStreak] = useState(null);
+
+  useEffect(() => {
+    getStreak().then(data => {
+      if (data?.streak !== undefined) setStreak(data);
+    }).catch(() => {});
+  }, []);
 
 getMyActivity().then(data => {
       if (data?.activity) setActivity(data.activity);
@@ -165,6 +173,158 @@ getMyActivity().then(data => {
               </motion.div>
             ))}
           </div>
+        )}
+
+        {/* Streak section */}
+        {streak && streak.streak > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 1 }}
+            style={{
+              marginBottom: "1.4rem",
+              padding: "clamp(12px,2.5vw,18px)",
+              borderRadius: 16,
+              border: streak.streak >= 7
+                ? "0.5px solid rgba(255,210,60,0.3)"
+                : "0.5px solid rgba(68,175,50,0.2)",
+              background: streak.streak >= 7
+                ? "rgba(20,15,5,0.7)"
+                : "rgba(4,18,5,0.55)",
+              position: "relative",
+              zIndex: 2,
+            }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: 10,
+            }}>
+              <div>
+                <div style={{
+                  fontSize: "clamp(8px,1.4vw,9px)",
+                  letterSpacing: "0.28em",
+                  color: "rgba(92,195,68,0.35)",
+                  fontFamily: "Georgia, serif",
+                  marginBottom: 4,
+                }}>YOUR FOREST STREAK</div>
+                <div style={{
+                  fontSize: "clamp(22px,4vw,28px)",
+                  color: streak.streak >= 7
+                    ? "rgba(255,210,80,0.95)"
+                    : "rgba(172,242,142,0.96)",
+                  fontFamily: "Georgia, serif",
+                  fontWeight: 300,
+                }}>
+                  {streak.streak} {streak.streak === 1 ? "day" : "days"}
+                </div>
+                <div style={{
+                  fontSize: "clamp(9px,1.6vw,10px)",
+                  color: "rgba(85,175,62,0.38)",
+                  fontFamily: "Georgia, serif",
+                  fontStyle: "italic",
+                }}>longest: {streak.longest} days</div>
+              </div>
+
+              {/* Badge */}
+              <div style={{ textAlign: "center" }}>
+                {streak.badge === "forest_elder" && (
+                  <motion.div
+                    animate={{ scale: [1, 1.08, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}>
+                    <div style={{ fontSize: "clamp(28px,5vw,36px)" }}>🌳</div>
+                    <div style={{
+                      fontSize: 8, letterSpacing: "0.2em",
+                      color: "rgba(255,210,80,0.6)",
+                      fontFamily: "Georgia, serif",
+                    }}>FOREST ELDER</div>
+                  </motion.div>
+                )}
+                {streak.badge === "forest_keeper" && (
+                  <motion.div
+                    animate={{ scale: [1, 1.08, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}>
+                    <div style={{ fontSize: "clamp(28px,5vw,36px)" }}>🌲</div>
+                    <div style={{
+                      fontSize: 8, letterSpacing: "0.2em",
+                      color: "rgba(172,242,142,0.6)",
+                      fontFamily: "Georgia, serif",
+                    }}>FOREST KEEPER</div>
+                  </motion.div>
+                )}
+                {streak.badge === "forest_walker" && (
+                  <motion.div
+                    animate={{ scale: [1, 1.06, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}>
+                    <div style={{ fontSize: "clamp(28px,5vw,36px)" }}>🌿</div>
+                    <div style={{
+                      fontSize: 8, letterSpacing: "0.2em",
+                      color: "rgba(162,238,132,0.6)",
+                      fontFamily: "Georgia, serif",
+                    }}>FOREST WALKER</div>
+                  </motion.div>
+                )}
+                {streak.badge === "forest_seedling" && (
+                  <motion.div
+                    animate={{ scale: [1, 1.06, 1] }}
+                    transition={{ duration: 3, repeat: Infinity }}>
+                    <div style={{ fontSize: "clamp(28px,5vw,36px)" }}>🌱</div>
+                    <div style={{
+                      fontSize: 8, letterSpacing: "0.2em",
+                      color: "rgba(145,222,115,0.55)",
+                      fontFamily: "Georgia, serif",
+                    }}>FOREST SEEDLING</div>
+                  </motion.div>
+                )}
+                {!streak.badge && (
+                  <div style={{ fontSize: "clamp(22px,4vw,28px)" }}>🪨</div>
+                )}
+              </div>
+            </div>
+
+            {/* Progress bar to next badge */}
+            <div style={{
+              fontSize: "clamp(8px,1.4vw,9px)",
+              color: "rgba(85,175,62,0.35)",
+              fontFamily: "Georgia, serif",
+              fontStyle: "italic",
+              marginBottom: 6,
+            }}>
+              {streak.streak < 3 && `${3 - streak.streak} more days to Forest Seedling 🌱`}
+              {streak.streak >= 3 && streak.streak < 7 && `${7 - streak.streak} more days to Forest Walker 🌿`}
+              {streak.streak >= 7 && streak.streak < 14 && `${14 - streak.streak} more days to Forest Keeper 🌲`}
+              {streak.streak >= 14 && streak.streak < 30 && `${30 - streak.streak} more days to Forest Elder 🌳`}
+              {streak.streak >= 30 && "You have reached the highest level. The forest bows to you."}
+            </div>
+
+            {/* Progress bar */}
+            <div style={{
+              height: 3,
+              borderRadius: 4,
+              background: "rgba(70,180,50,0.12)",
+              overflow: "hidden",
+            }}>
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{
+                  width: `${Math.min(100, (
+                    streak.streak < 3 ? (streak.streak / 3) * 100 :
+                    streak.streak < 7 ? ((streak.streak - 3) / 4) * 100 :
+                    streak.streak < 14 ? ((streak.streak - 7) / 7) * 100 :
+                    streak.streak < 30 ? ((streak.streak - 14) / 16) * 100 : 100
+                  ))}%`
+                }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+                style={{
+                  height: "100%",
+                  borderRadius: 4,
+                  background: streak.streak >= 7
+                    ? "rgba(255,210,60,0.6)"
+                    : "rgba(98,222,68,0.5)",
+                }}
+              />
+            </div>
+          </motion.div>
         )}
 
         {/* Joined date */}

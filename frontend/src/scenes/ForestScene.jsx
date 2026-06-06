@@ -4,6 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 import { useRef, useMemo } from "react";
 import { useEffect, useRef as useRefDOM } from "react";
+import { motion } from "framer-motion";
 
 // ── 3D swaying tree ──────────────────────────────────────────
 function SwayingTree({ position, scale, glowing, index }) {
@@ -157,7 +158,7 @@ function Lotus({ x, z }) {
 }
 
 // ── 2D lake + canvas overlay ─────────────────────────────────
-function LakeCanvas() {
+function LakeCanvas({ fireflyCount = 7 }) {
   const ref = useRefDOM();
   useEffect(() => {
     const canvas = ref.current;
@@ -381,18 +382,132 @@ const filaments = Array.from({ length: 75 }, () => ({
       ctx.fillRect(0, lakeTop - 18, W, 60);
 
       // ── Fireflies ────────────────────────────────────────
-      for (let i = 0; i < 7; i++) {
-        const fx = W * (0.06 + ((i * 0.15 + t * 0.0022 + Math.sin(t * 0.007 + i) * 0.055)) % 0.88);
-        const fy = lakeTop - 18 - Math.abs(Math.sin(t * 0.01 + i * 1.35)) * 58;
-        const fa = (Math.sin(t * 0.036 + i) * 0.5 + 0.5) * 0.58;
-        ctx.shadowColor = "rgba(118,255,118,0.52)";
-        ctx.shadowBlur = 9;
-        ctx.beginPath();
-        ctx.arc(fx, fy, 1.45, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(142,255,128,${fa})`;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
+for (let i = 0; i < fireflyCount; i++) {
+  const speed = 0.0006;
+
+  // Full canvas roaming — X and Y both wander everywhere
+  const fx = W * 0.5 + (
+    Math.sin(t * speed * 1.1 + i * 2.3) * W * 0.42 +
+    Math.cos(t * speed * 0.7 + i * 1.1) * W * 0.28 +
+    Math.sin(t * speed * 1.9 + i * 3.7) * W * 0.12
+  );
+  const fy = H * 0.5 + (
+    Math.sin(t * speed * 0.9 + i * 1.7) * H * 0.42 +
+    Math.cos(t * speed * 1.3 + i * 2.5) * H * 0.28 +
+    Math.sin(t * speed * 2.1 + i * 0.8) * H * 0.12
+  );
+
+  // Slow lazy blink
+  const blinkCycle = (t * 0.018 + i * 2.3) % (Math.PI * 2);
+  const fa = Math.pow(Math.max(0, Math.sin(blinkCycle)), 0.4) * 0.9;
+
+  // Slow gentle wing flap
+  const wingFlap = Math.sin(t * 0.04 + i) * 0.5 + 0.5;
+
+  // Face direction of travel
+  const fx2 = W * 0.5 + (
+    Math.sin((t + 1) * speed * 1.1 + i * 2.3) * W * 0.42 +
+    Math.cos((t + 1) * speed * 0.7 + i * 1.1) * W * 0.28 +
+    Math.sin((t + 1) * speed * 1.9 + i * 3.7) * W * 0.12
+  );
+  const fy2 = H * 0.5 + (
+    Math.sin((t + 1) * speed * 0.9 + i * 1.7) * H * 0.42 +
+    Math.cos((t + 1) * speed * 1.3 + i * 2.5) * H * 0.28 +
+    Math.sin((t + 1) * speed * 2.1 + i * 0.8) * H * 0.12
+  );
+  const angle = Math.atan2(fy2 - fy, fx2 - fx) + Math.PI / 2;
+
+  ctx.save();
+  ctx.translate(fx, fy);
+  ctx.rotate(angle);
+
+  // Soft outer glow
+  ctx.shadowColor = `rgba(255,220,80,${fa * 0.7})`;
+  ctx.shadowBlur = 18 + fa * 10;
+
+  // Left upper wing
+  ctx.beginPath();
+  ctx.ellipse(-6, -3, 7 + wingFlap * 3, 3.5, -Math.PI / 5, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,120,80,${fa * 0.35})`;
+  ctx.fill();
+  ctx.strokeStyle = `rgba(255,160,100,${fa * 0.6})`;
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+
+  // Right upper wing
+  ctx.beginPath();
+  ctx.ellipse(6, -3, 7 + wingFlap * 3, 3.5, Math.PI / 5, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,120,80,${fa * 0.35})`;
+  ctx.fill();
+  ctx.strokeStyle = `rgba(255,160,100,${fa * 0.6})`;
+  ctx.lineWidth = 0.7;
+  ctx.stroke();
+
+  // Left lower wing
+  ctx.beginPath();
+  ctx.ellipse(-5, 2, 5 + wingFlap * 2, 2.5, Math.PI / 6, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,100,60,${fa * 0.25})`;
+  ctx.fill();
+  ctx.strokeStyle = `rgba(255,140,80,${fa * 0.45})`;
+  ctx.lineWidth = 0.6;
+  ctx.stroke();
+
+  // Right lower wing
+  ctx.beginPath();
+  ctx.ellipse(5, 2, 5 + wingFlap * 2, 2.5, -Math.PI / 6, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,100,60,${fa * 0.25})`;
+  ctx.fill();
+  ctx.strokeStyle = `rgba(255,140,80,${fa * 0.45})`;
+  ctx.lineWidth = 0.6;
+  ctx.stroke();
+
+  // Body
+  ctx.shadowBlur = 0;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 2.2, 4.5, 0, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,200,120,${fa * 0.9})`;
+  ctx.fill();
+
+  // Head
+  ctx.beginPath();
+  ctx.arc(0, -4.5, 2, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(80,40,20,${Math.max(fa, 0.3)})`;
+  ctx.fill();
+
+  // Glowing abdomen
+  ctx.beginPath();
+  ctx.ellipse(0, 2.5, 1.8, 2.8, 0, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,220,80,${fa})`;
+  ctx.shadowColor = `rgba(255,200,50,${fa})`;
+  ctx.shadowBlur = 10 + fa * 12;
+  ctx.fill();
+
+  // Antennae
+  ctx.shadowBlur = 0;
+  ctx.strokeStyle = `rgba(100,60,20,${Math.max(fa, 0.25)})`;
+  ctx.lineWidth = 0.8;
+  ctx.beginPath();
+  ctx.moveTo(-1, -5.5);
+  ctx.quadraticCurveTo(-5, -10, -4, -13);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(1, -5.5);
+  ctx.quadraticCurveTo(5, -10, 4, -13);
+  ctx.stroke();
+
+  // Antenna tips
+  ctx.beginPath();
+  ctx.arc(-4, -13, 1.2, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,120,80,${Math.max(fa, 0.2)})`;
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(4, -13, 1.2, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255,120,80,${Math.max(fa, 0.2)})`;
+  ctx.fill();
+
+  ctx.shadowBlur = 0;
+  ctx.restore();
+}
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       t++;
@@ -403,8 +518,7 @@ const filaments = Array.from({ length: 75 }, () => ({
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", setSize);
-    };
-  }, []);
+    };}, [fireflyCount]);
 
   return (
     <canvas ref={ref} style={{
@@ -420,7 +534,7 @@ const filaments = Array.from({ length: 75 }, () => ({
 
 // ── Main export ───────────────────────────────────────────────
 export default function ForestScene() {
-const { feelings, currentMode } = useChianya();
+  const { feelings, currentMode, userStreak } = useChianya();
   const primaryFeeling = feelings?.[0] || "default";
 const moodConfig = {
     anxious:     { fogFar: 18, bgColor: "#010602", },
@@ -500,6 +614,34 @@ const moodOverlay = {
     default:     "rgba(0,0,0,0)",
   };
 
+
+  // Streak based forest enhancement
+ const streakConfig = userStreak >= 30 ? {
+    fogFar: 70,
+    ambientIntensity: 1.8,
+    fireflyCount: 40,        // was 14
+    extraGlow: "rgba(255,200,80,0.06)",
+  } : userStreak >= 14 ? {
+    fogFar: 65,
+    ambientIntensity: 1.5,
+    fireflyCount: 35,        // was 11
+    extraGlow: "rgba(180,255,120,0.05)",
+  } : userStreak >= 7 ? {
+    fogFar: 62,
+    ambientIntensity: 1.3,
+    fireflyCount: 28,        // was 9
+    extraGlow: "rgba(160,240,100,0.04)",
+  } : userStreak >= 3 ? {
+    fogFar: 60,
+    ambientIntensity: 1.1,
+    fireflyCount: 22,        // was 8
+    extraGlow: null,
+  } : {
+    fogFar: 58,
+    ambientIntensity: 1.0,
+    fireflyCount: 18,        // was 7
+    extraGlow: null,
+  };
   
 
  const overlayColor = moodOverlay[primaryFeeling] || moodOverlay.default;
@@ -525,14 +667,44 @@ const moodOverlay = {
       width: "100vw", height: "100vh", zIndex: 0,
     }}>
       {/* Mood overlay */}
-      <div style={{
+    <div style={{
         position: "absolute", inset: 0, zIndex: 2,
         background: finalOverlay,
         transition: "background 2s ease",
         pointerEvents: "none",
       }} />
+      {streakConfig.extraGlow && (
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 3,
+          background: streakConfig.extraGlow,
+          transition: "background 3s ease",
+          pointerEvents: "none",
+        }} />
+      )}
+      {userStreak >= 30 && (
+        <motion.div
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity }}
+          style={{
+            position: "absolute", inset: 0, zIndex: 3,
+            background: "radial-gradient(ellipse at bottom, rgba(255,180,40,0.08) 0%, transparent 70%)",
+            pointerEvents: "none",
+          }}
+        />
+      )}
+      {userStreak >= 7 && (
+        <motion.div
+          animate={{ opacity: [0.2, 0.5, 0.2] }}
+          transition={{ duration: 6, repeat: Infinity }}
+          style={{
+            position: "absolute", inset: 0, zIndex: 3,
+            background: "radial-gradient(ellipse at center bottom, rgba(80,220,80,0.06) 0%, transparent 60%)",
+            pointerEvents: "none",
+          }}
+        />
+      )}
       {/* 2D lake overlay */}
-      <LakeCanvas />
+   <LakeCanvas fireflyCount={streakConfig.fireflyCount} />
 
       <Canvas
         camera={{ position:[0, 1, 3.5], fov:78 }}
@@ -550,7 +722,7 @@ const moodOverlay = {
         <pointLight position={[0,-1,0]} intensity={0.18}
           color="#4090c0" distance={18} />
 
-        <fog attach="fog" args={["#040e05", 10, mood.fogFar]} />
+       <fog attach="fog" args={["#040e05", 10, streakConfig.fogFar]} />
 
         <Stars radius={92} depth={52} count={2600}
           factor={2.2} saturation={0.14} fade speed={0.35} />

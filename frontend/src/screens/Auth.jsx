@@ -185,7 +185,7 @@ onBlur={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zInd
           {loading ? "The forest is listening..." : mode === "login" ? "Enter the Sanctuary" : "Begin Your Journey"}
         </motion.button>
 
-     <div style={{ textAlign: "center" }}>
+   <div style={{ textAlign: "center" }}>
          <button onClick={async () => {
             const base = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
             await fetch(`${base}/api/auth/logout`, {
@@ -200,6 +200,25 @@ onBlur={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zInd
               letterSpacing: "0.12em",
             }}>
             continue without account
+          </button>
+
+          <br/>
+
+          <button onClick={() => navigate("/admin")}
+            style={{
+              background: "rgba(5,22,5,0.5)",
+              border: "0.5px solid rgba(70,180,50,0.2)",
+              borderRadius: 20,
+              color: "rgba(95,185,70,0.4)",
+              fontFamily: "Georgia, serif",
+              fontStyle: "italic",
+              fontSize: 10,
+              cursor: "pointer",
+              letterSpacing: "0.18em",
+              marginTop: 10,
+              padding: "5px 18px",
+            }}>
+            admin
           </button>
         </div>
       </motion.div>

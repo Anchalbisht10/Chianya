@@ -59,3 +59,6 @@ export const logMood = (feeling) =>
 
 export const getMoodTimeline = () =>
   fetch(`${BASE}/mood/timeline`, opts("GET")).then(r => r.json());
+
+export const getStreak = () =>
+  fetch(`${BASE}/activity/streak`, opts("GET")).then(r => r.json());

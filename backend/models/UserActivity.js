@@ -13,6 +13,9 @@ const UserActivitySchema = new mongoose.Schema({
   justSitSessionCount:        { type: Number, default: 0 },
   totalVisits:                { type: Number, default: 0 },
   lastVisited:                { type: Date, default: Date.now },
+  currentStreak:  { type: Number, default: 0 },
+  longestStreak:  { type: Number, default: 0 },
+  lastVisitDate:  { type: Date, default: null },
 }, { timestamps: true });
 
 module.exports = mongoose.model("UserActivity", UserActivitySchema);

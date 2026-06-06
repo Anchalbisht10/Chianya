@@ -1,4 +1,4 @@
-const express      = require("express");
+const express = require("express");
 const protect      = require("../middleware/auth");
 const UserActivity = require("../models/UserActivity");
 const {
@@ -128,6 +128,57 @@ router.get("/community-stats", async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: "Could not retrieve stats." });
+  }
+});
+router.get("/streak", protect, async (req, res) => {
+  try {
+   const activity = await UserActivity.findOne({ userId: req.user._id });
+    if (!activity) return res.json({ streak: 0, longest: 0, badge: null });
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const lastVisit = activity.lastVisitDate
+      ? new Date(activity.lastVisitDate)
+      : null;
+
+    if (lastVisit) lastVisit.setHours(0,0,0,0);
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    let streak = activity.currentStreak || 0;
+
+    if (!lastVisit) {
+      streak = 1;
+    } else if (lastVisit.getTime() === today.getTime()) {
+      streak = activity.currentStreak || 1;
+    } else if (lastVisit.getTime() === yesterday.getTime()) {
+      streak = (activity.currentStreak || 0) + 1;
+    } else {
+      streak = 1;
+    }
+
+    const longest = Math.max(streak, activity.longestStreak || 0);
+
+    await UserActivity.findOneAndUpdate(
+      { userId: req.user._id },
+      {
+        currentStreak: streak,
+        longestStreak: longest,
+        lastVisitDate: new Date(),
+      }
+    );
+
+    const badge =
+      streak >= 30 ? "forest_elder" :
+      streak >= 14 ? "forest_keeper" :
+      streak >= 7  ? "forest_walker" :
+      streak >= 3  ? "forest_seedling" : null;
+
+    res.json({ streak, longest, badge });
+  } catch (err) {
+    res.status(500).json({ error: "Could not fetch streak." });
   }
 });
 

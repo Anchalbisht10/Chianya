@@ -11,6 +11,7 @@ export function ChianyaProvider({ children }) {
   const [journalEntries, setJournalEntries] = useState([]);
 const [todayReflection, setTodayReflection] = useState("");
 const [currentMode, setCurrentMode] = useState("default");
+const [userStreak, setUserStreak] = useState(0);
 
   return (
     <ChianyaContext.Provider value={{
@@ -22,6 +23,7 @@ const [currentMode, setCurrentMode] = useState("default");
       journalEntries, setJournalEntries,
       todayReflection, setTodayReflection,
       currentMode, setCurrentMode,
+      userStreak, setUserStreak,
     }}>
       {children}
     </ChianyaContext.Provider>

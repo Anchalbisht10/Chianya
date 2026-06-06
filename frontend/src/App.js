@@ -7,6 +7,8 @@ import ProfileBadge from "./components/ProfileBadge";
 import StarButton from "./components/StarButton";
 import CursorTrail from "./components/CursorTrail";
 import InstallButton from "./components/InstallButton";
+import AmbientSound from "./components/AmbientSound";
+
 
 // Lazy load all screens
 const Welcome = lazy(() => import("./screens/Welcome"));
@@ -42,6 +44,7 @@ export default function App() {
           <StarButton />
           <CursorTrail />
           <InstallButton />
+          <AmbientSound />
 
           <Suspense fallback={null}>
             <Routes>

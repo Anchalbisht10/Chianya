@@ -5,6 +5,7 @@ import { useChianya } from "../context/ChianyaContext";
 import { avatarLines } from "../avatar/avatarLines";
 import { feelingResponses } from "../data/wisdom";
 import { logMood } from "../services/api";
+import { getStreak } from "../services/api";
 
 
 const FEELINGS = [
@@ -186,22 +187,50 @@ function AtmosphericBg({ width, height }) {
 }
 
 export default function Entry() {
-const { setFeelings, setAvatarLine, avatarLine } = useChianya();
+const { setFeelings, setAvatarLine, avatarLine, setUserStreak } = useChianya();
   const isMobile = window.innerWidth < 1100;
   const [selected, setSelected] = useState([]);
   const navigate = useNavigate();
   const cardRef = useRef();
   const [cardSize, setCardSize] = useState({ w:480, h:600 });
   const [transitioning, setTransitioning] = useState(false);
+  const [streakData, setStreakData] = useState(null);
 
   const transitionRef = useRef(false);
-
-  useEffect(() => {
-    const hasVisited = localStorage.getItem("chianya_visited");
-    if (hasVisited) {
-      setAvatarLine(avatarLines.returning);
-    }
-    localStorage.setItem("chianya_visited", "true");
+useEffect(() => {
+    getStreak().then(data => {
+      if (data?.streak) {
+        setStreakData(data);
+        setUserStreak(data.streak);
+        if (data.streak === 1) {
+          setAvatarLine("The forest opens for you. Whatever you are carrying — there is space for it here.");
+        } else if (data.streak === 3) {
+          setAvatarLine("Three days. The forest has begun to know your footsteps.");
+        } else if (data.streak === 7) {
+          setAvatarLine("Seven days. The forest has been counting. It missed you on the days you weren't here.");
+        } else if (data.streak === 14) {
+          setAvatarLine("Fourteen days. You keep coming back. That says something about you — something quiet and strong.");
+        } else if (data.streak === 30) {
+          setAvatarLine("A month. You came back every day. That is not nothing. That is everything.");
+        } else if (data.streak > 30) {
+          setAvatarLine("The forest knows you now. It has kept your place through every season.");
+        } else if (data.streak >= 2) {
+          setAvatarLine(`Day ${data.streak}. The forest remembers you came back.`);
+        }
+      } else {
+        const hasVisited = localStorage.getItem("chianya_visited");
+        if (hasVisited) {
+          setAvatarLine(avatarLines.returning);
+        }
+      }
+      localStorage.setItem("chianya_visited", "true");
+    }).catch(() => {
+      const hasVisited = localStorage.getItem("chianya_visited");
+      if (hasVisited) {
+        setAvatarLine(avatarLines.returning);
+      }
+      localStorage.setItem("chianya_visited", "true");
+    });
   }, []);
 
   useEffect(() => {
