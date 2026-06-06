@@ -284,9 +284,11 @@ logSession("release", [], {}).catch(()=>{});
           {!released && (
             <motion.div initial={{opacity:1}} exit={{opacity:0,y:8}}
               transition={{duration:0.5}}>
-              <textarea value={text} onChange={e=>setText(e.target.value)}
+         <textarea value={text} onChange={e=>setText(e.target.value)}
                 placeholder="I am releasing..."
                 rows={3}
+                onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
+                onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
                 style={{
                   width:"100%",padding:"12px 14px",borderRadius:12,
                   border:"0.5px solid rgba(72,182,50,0.22)",

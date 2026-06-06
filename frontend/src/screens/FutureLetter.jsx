@@ -92,6 +92,8 @@ export default function FutureLetter() {
               <textarea
                 value={form.letter}
                 onChange={e => setForm(p => ({ ...p, letter: e.target.value }))}
+                onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
+                onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
                 placeholder="Dear future me... write freely. No one else will read this until it reaches you."
                 maxLength={2000}
                 rows={3}
@@ -111,6 +113,8 @@ export default function FutureLetter() {
                 type="email"
                 value={form.email}
                 onChange={e => setForm(p => ({ ...p, email: e.target.value }))}
+                onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
+                onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
                 placeholder="Your email address"
                 style={{
                   width: "100%", padding: "11px 16px", borderRadius: 12,

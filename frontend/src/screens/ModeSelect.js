@@ -329,6 +329,8 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
         autoFocus
         value={reflectInput}
         onChange={e => setReflectInput(e.target.value)}
+        onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
+        onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
         placeholder="Write without judgment. This is only for you."
         rows={3}
         style={{

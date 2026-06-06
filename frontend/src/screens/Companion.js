@@ -519,9 +519,11 @@ onClick={() => { setShowCard(true); setTimeout(() => navigate("/modes"), 4000); 
           display: "flex", gap: 10,
           position: "relative", zIndex: 2,
         }}>
-          <textarea
+        <textarea
             value={input}
             onChange={e => setInput(e.target.value)}
+            onFocus={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '0')}
+            onBlur={() => document.querySelectorAll('canvas').forEach(c => c.style.opacity = '')}
             onKeyDown={e => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault(); send();
