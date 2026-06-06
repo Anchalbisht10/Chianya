@@ -474,6 +474,7 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
                 { label: "real support & resources", path: "/resources", desc: "when you need a human voice" },
                 { label: "why chianya exists", path: "/about", desc: "the story behind this sanctuary" },
                 { label: "letter to future self", path: "/future-letter" },
+                { label: "meet the creator", path: "/creator" },
               ].map((item, i) => (
                 <motion.div
                   key={i}

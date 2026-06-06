@@ -1,3 +1,10 @@
+
+> ⚠️ This project is protected under a custom license.
+> Code may not be copied, reused, or redistributed without 
+> explicit written permission from the author.
+> © 2026 Anchal Bisht · All Rights Reserved
+
+
 # Chianya — Forest of Consciousness
 
 > *"You don't have to explain anything. Just arrive as you are."*

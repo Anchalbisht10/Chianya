@@ -21,6 +21,8 @@ import About from "./screens/About";
 import FutureLetter from "./screens/FutureLetter";
 import StarButton from "./components/StarButton";
 import Admin from "./screens/Admin";
+import CursorTrail from "./components/CursorTrail";
+import Creator from "./screens/Creator";
 
 export default function App() {
   return (
@@ -34,6 +36,7 @@ export default function App() {
           <Avatar />
           <ProfileBadge />
           <StarButton />
+          <CursorTrail />
           <Routes>
             <Route path="/"          element={<Welcome />} />
             <Route path="/auth"      element={<Auth />} />
@@ -52,6 +55,7 @@ export default function App() {
             <Route path="/future-letter" element={<FutureLetter />} />
             <Route path="/about" element={<About />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/creator" element={<Creator />} />
             
           </Routes>
         </div>

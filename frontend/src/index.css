@@ -94,21 +94,25 @@ button { user-select: none; -webkit-user-select: none; }
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — invisible but functional */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(70,180,50,0.3);
+  background: rgba(70,180,50,0.08);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(70,180,50,0.6);
+  background: rgba(70,180,50,0.25);
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(70,180,50,0.3) transparent;
+  scrollbar-color: rgba(70,180,50,0.08) transparent;
+}
+/* Hide default cursor */
+* {
+  cursor: none !important;
 }
