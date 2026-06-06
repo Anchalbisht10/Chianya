@@ -103,10 +103,13 @@ useEffect(() => {
   return (
     <motion.div initial={{opacity:0}} animate={{opacity:1}}
       transition={{duration:1.2}}
-      style={{
+   style={{
         position:"absolute",inset:0,zIndex:10,
-        display:"flex",alignItems:"center",justifyContent:"center",
-        padding:"clamp(1rem,3vw,2rem)",overflowY:"auto",
+        display: "flex", alignItems: "flex-start", justifyContent: "center",
+        padding: "clamp(1rem,3vw,2rem)",
+    paddingTop: "4.5rem",
+        paddingBottom: "2rem",
+        overflowY: "auto",
       }}>
       <div ref={cardRef} style={{
         background:"rgba(3,14,5,0.91)",
@@ -114,7 +117,8 @@ useEffect(() => {
         borderRadius:"clamp(16px,3vw,24px)",
         padding:"clamp(1.8rem,4vw,2.8rem)",
         maxWidth:480,width:"100%",
-        backdropFilter:"blur(28px)",position:"relative",overflow:"hidden",
+ backdropFilter:"blur(28px)",position:"relative",
+        maxHeight:"78vh", overflowY:"auto",
       }}>
         <GroundingCanvas width={cardSize.w} height={cardSize.h}/>
 

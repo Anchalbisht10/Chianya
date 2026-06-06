@@ -72,3 +72,24 @@ button { user-select: none; -webkit-user-select: none; }
     margin-right: 8px !important;
   }
 }
+
+/* Mobile card optimization */
+@media (max-width: 480px) {
+  /* Reduce all card padding */
+  .mobile-compact {
+    padding: clamp(1rem, 3vw, 1.4rem) !important;
+  }
+
+  /* Push content up from bottom buttons */
+  .screen-scroll {
+    padding-bottom: 80px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-card {
+    max-height: calc(100dvh - 160px) !important;
+    overflow-y: auto !important;
+    margin-top: 10px;
+  }
+}

@@ -116,9 +116,8 @@ export default function ShareCard({ feeling, antarLine, mode, onClose }) {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 16, scale: 0.97 }}
         transition={{ duration: 0.8, ease: [0.16,1,0.3,1] }}
-        onClick={e => e.stopPropagation()}
-        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}
-      >
+       onClick={e => e.stopPropagation()}
+        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, maxWidth: "95vw", width: "100%" }}      >
         {/* Card */}
         <div
           ref={cardRef}
@@ -126,7 +125,7 @@ export default function ShareCard({ feeling, antarLine, mode, onClose }) {
             background: "#030e05",
             borderRadius: 20,
             padding: "1.6rem 1.6rem 1.2rem",
-            width: "clamp(300px,85vw,400px)",
+          width: "clamp(260px,88vw,400px)",
             border: "0.5px solid rgba(70,180,50,0.3)",
             fontFamily: "Georgia, serif",
             position: "relative",
@@ -206,7 +205,7 @@ export default function ShareCard({ feeling, antarLine, mode, onClose }) {
         </div>
 
         {/* Buttons */}
-        <div style={{ display: "flex", gap: 12 }}>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
           <motion.button
             onClick={download}
             whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}

@@ -207,7 +207,9 @@ const [showCard, setShowCard] = useState(false);
       style={{
         position:"absolute", inset:0, zIndex:10,
         display:"flex", alignItems:"center", justifyContent:"center",
-        padding:"clamp(1rem,3vw,2rem)",
+        padding: "clamp(1rem,3vw,2rem)",
+        paddingBottom: "clamp(80px,12vh,100px)",
+        overflowY: "auto",
       }}>
       <div style={{
         background:"rgba(3,16,20,0.92)",

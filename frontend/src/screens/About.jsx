@@ -15,10 +15,13 @@ export default function About() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
       transition={{ duration: 1.2 }}
-      style={{
+     style={{
         position: "absolute", inset: 0, zIndex: 10,
         display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "clamp(1rem,3vw,2rem)", overflowY: "auto",
+    padding: "clamp(1rem,3vw,2rem)",
+        paddingTop: "clamp(70px,12vh,90px)",
+        paddingBottom: "clamp(80px,12vh,100px)",
+        overflowY: "auto",
       }}>
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -29,9 +32,10 @@ export default function About() {
           border: "0.5px solid rgba(70,180,50,0.18)",
           borderRadius: "clamp(16px,3vw,24px)",
           padding: "clamp(1.8rem,4vw,2.8rem)",
-          maxWidth: 540, width: "100%",
+          maxWidth: 520, width: "100%",
           backdropFilter: "blur(28px)",
-          maxHeight: "88vh", overflowY: "auto",
+          boxShadow: "0 0 80px rgba(20,140,20,0.09)",
+          maxHeight: "75vh", overflowY: "auto",
         }}>
 
         <motion.button onClick={() => navigate("/modes")}

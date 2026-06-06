@@ -307,9 +307,12 @@ useEffect(() => {
     <motion.div initial={{opacity:0}} animate={{opacity:1}}
       transition={{duration:1.2}}
       style={{
-        position:"absolute",inset:0,zIndex:10,
-        display:"flex",alignItems:"center",justifyContent:"center",
+       position:"absolute", inset:0, zIndex:10,
+        display:"flex", alignItems:"flex-start", justifyContent:"center",
         padding:"clamp(1rem,3vw,2rem)",
+        paddingTop: "4.5rem",
+        paddingBottom: "2rem",
+        overflowY:"auto",
       }}>
 
       {/* Main wisdom card */}
@@ -326,6 +329,7 @@ useEffect(() => {
               borderRadius:"clamp(16px,3vw,24px)",
               padding:"clamp(1.8rem,4vw,2.8rem)",
               maxWidth:460,width:"100%",
+              maxHeight:"78vh", overflowY:"auto",
               backdropFilter:"blur(28px)",
               boxShadow:"0 0 80px rgba(18,140,18,0.1)",
             }}>

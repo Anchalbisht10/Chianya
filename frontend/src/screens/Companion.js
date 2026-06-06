@@ -413,7 +413,7 @@ try {
           position: "relative", zIndex: 2,
         }}>
           <motion.button
-           onClick={() => { setShowCard(true); setTimeout(() => navigate("/modes"), 2500); }}
+onClick={() => { setShowCard(true); setTimeout(() => navigate("/modes"), 2500); }}
             whileHover={{
               scale: 1.06,
               boxShadow: "0 0 24px rgba(50,192,42,0.2)",
@@ -429,12 +429,15 @@ try {
               backdropFilter: "blur(12px)",
               transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
             }}
-          >← Return</motion.button>
+       >← Return</motion.button>
 
           <div style={{
             fontSize: "clamp(9px,1.6vw,10px)", letterSpacing: "0.28em",
             color: "rgba(95,198,72,0.36)",
             fontFamily: "Georgia, serif",
+            textAlign: "right",
+            maxWidth: "45%",
+            lineHeight: 1.4,
           }}>ANTAR · INNER GUIDE</div>
         </div>
 

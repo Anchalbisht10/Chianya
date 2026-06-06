@@ -204,7 +204,10 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
       style={{
         position:"absolute",inset:0,zIndex:10,
         display:"flex",alignItems:"center",justifyContent:"center",
-        padding:"clamp(1rem,3vw,2rem)",overflowY:"auto",
+   padding: "clamp(1rem,3vw,2rem)",
+        paddingTop: "clamp(70px,12vh,90px)",
+        paddingBottom: "clamp(80px,12vh,100px)",
+        overflowY: "auto",
       }}>
       <motion.div ref={cardRef}
         initial={{opacity:0,y:24,scale:0.96}}
@@ -215,10 +218,12 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
           border:"0.5px solid rgba(68,178,50,0.18)",
           borderRadius:"clamp(16px,3vw,24px)",
           padding:"clamp(1.6rem,4vw,2.4rem)",
-          maxWidth:480,width:"100%",
+      maxWidth:480,width:"100%",
           backdropFilter:"blur(28px)",
           boxShadow:"0 0 80px rgba(18,140,18,0.1)",
           position:"relative",overflow:"hidden",
+          maxHeight:"calc(100dvh - 160px)",
+          overflowY:"auto",
         }}>
         <ModeAtmosphere width={cardSize.w} height={cardSize.h}/>
 <div style={{
@@ -425,8 +430,10 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
               right: 0,
               height: "100%",
               minHeight: "100vh",
-              width: "85vw",
-              maxWidth: 320,
+          width: "80vw",
+              maxWidth: 280,
+              maxHeight: "70vh",
+              overflowY: "auto",
                 background: "rgba(3,14,5,0.96)",
                 border: "0.5px solid rgba(70,180,50,0.2)",
                 borderRadius: "16px 0 0 16px",
@@ -434,7 +441,7 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
                 zIndex: 100,
                 display: "flex",
                 flexDirection: "column",
-                padding: "2rem 1.5rem",
+              padding: "1.2rem 1rem",
                 gap: 12,
                 boxShadow: "-4px 0 40px rgba(20,140,20,0.15)",
               }}>
@@ -568,10 +575,12 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
 
 
 
-        {/* Mode grid */}
+     {/* Mode grid */}
         <div style={{
-          display:"grid",gridTemplateColumns:"1fr 1fr 1fr",
-          gap:10,marginBottom:10,position:"relative",zIndex:2,
+          display:"grid",
+          gridTemplateColumns: window.innerWidth < 650 ? "1fr 1fr" : "1fr 1fr 1fr",
+          gap: window.innerWidth < 650 ? 8 : 10,
+          marginBottom:10,position:"relative",zIndex:2,
         }}>
           {MODES.map((m,i)=>{
             const isRec=m.id===suggested;
@@ -585,7 +594,7 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
                   boxShadow:isRec?"0 0 28px rgba(78,218,58,0.2)":"0 0 18px rgba(48,178,38,0.12)",
                   borderColor:isRec?"rgba(118,238,78,0.58)":"rgba(78,198,52,0.36)"}}
                 style={{
-                  padding:"clamp(0.9rem,2vw,1.1rem) clamp(0.5rem,1.5vw,0.8rem)",
+                padding: window.innerWidth < 650 ? "0.7rem 0.5rem" : "clamp(0.9rem,2vw,1.1rem) clamp(0.5rem,1.5vw,0.8rem)",
                   borderRadius:16,
                   border:isRec?"0.5px solid rgba(118,232,78,0.5)":"0.5px solid rgba(66,160,46,0.22)",
                   background:isRec?"rgba(13,73,10,0.78)":"rgba(5,26,5,0.68)",
