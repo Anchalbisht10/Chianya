@@ -31,7 +31,7 @@ let isMoving = false;
         mouse = { x, y };
         isMoving = true;
         clearTimeout(moveTimer);
-        moveTimer = setTimeout(() => { isMoving = false; }, 100);
+     moveTimer = setTimeout(() => { isMoving = false; }, 60);
       }
     };
 
@@ -42,14 +42,14 @@ let isMoving = false;
    if (mouse.x !== -999 && isMoving) {
         smoothX += (mouse.x - smoothX) * 0.12;
         smoothY += (mouse.y - smoothY) * 0.12;
-        trail.push({ x: smoothX, y: smoothY, age: 0, maxAge: 220 });
+     trail.push({ x: smoothX, y: smoothY, age: 0, maxAge: 60 });
       }
       if (!isMoving) {
         trail.length = 0;
         smoothX = mouse.x;
         smoothY = mouse.y;
       }
-      if (trail.length > 120) trail.shift();
+      if (trail.length > 25) trail.shift();
 
       // Age points
       for (let i = trail.length - 1; i >= 0; i--) {
@@ -72,8 +72,8 @@ let isMoving = false;
           const alpha = Math.max(0, 1 - trail[i].age / trail[i].maxAge);
           ctx.quadraticCurveTo(trail[i].x, trail[i].y, cpx, cpy);
         }
-        ctx.strokeStyle = "rgba(160,240,120,0.06)";
-        ctx.lineWidth = 22;
+      ctx.strokeStyle = "rgba(160,240,120,0.04)";
+        ctx.lineWidth = 12;
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctx.stroke();
@@ -86,8 +86,8 @@ let isMoving = false;
           const cpy = (trail[i].y + trail[i + 1].y) / 2;
           ctx.quadraticCurveTo(trail[i].x, trail[i].y, cpx, cpy);
         }
-        ctx.strokeStyle = "rgba(190,255,150,0.1)";
-        ctx.lineWidth = 10;
+ctx.strokeStyle = "rgba(190,255,150,0.07)";
+        ctx.lineWidth = 5;
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
         ctx.stroke();
