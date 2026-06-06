@@ -22,7 +22,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   setTimeout(() => {
     const banner = document.createElement('div');
     banner.id = 'install-banner';
-    banner.innerHTML = `
+banner.innerHTML = `
       <div style="
         position: fixed;
         bottom: 24px;
@@ -30,28 +30,22 @@ window.addEventListener('beforeinstallprompt', (e) => {
         transform: translateX(-50%);
         background: rgba(3,14,5,0.96);
         border: 0.5px solid rgba(98,222,68,0.4);
-        borderRadius: 40px;
+        border-radius: 40px;
         padding: 14px 24px;
         display: flex;
         align-items: center;
         gap: 14px;
-        zIndex: 99999;
-        backdropFilter: blur(20px);
-        boxShadow: 0 0 40px rgba(40,180,40,0.2);
-        fontFamily: Georgia, serif;
+        z-index: 99999;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 0 40px rgba(40,180,40,0.2);
+        font-family: Georgia, serif;
         cursor: pointer;
-        animation: fadeUp 0.5s ease;
       ">
         <span style="font-size:20px">🌿</span>
         <span style="color:rgba(172,242,142,0.96);font-size:13px;font-style:italic;letter-spacing:0.08em;">
           Add Chianya to your home screen
         </span>
-        <span style="
-          color:rgba(98,222,68,0.5);
-          font-size:11px;
-          cursor:pointer;
-          padding: 2px 8px;
-        " id="dismiss-install">✕</span>
+        <span style="color:rgba(98,222,68,0.5);font-size:11px;cursor:pointer;padding:2px 8px;" id="dismiss-install">✕</span>
       </div>
     `;
     
