@@ -58,10 +58,11 @@ export default function InstallButton() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            style={{
+       style={{
               position: "fixed",
               bottom: 80,
               left: 16,
+              right: "auto",
               zIndex: 200,
               background: "rgba(3,14,5,0.97)",
               border: "0.5px solid rgba(98,222,68,0.4)",
