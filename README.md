@@ -1,150 +1,177 @@
-
 > ⚠️ This project is protected under a custom license.
-> Code may not be copied, reused, or redistributed without 
-> explicit written permission from the author.
+> Unauthorized use, copying, or redistribution is strictly prohibited.
 > © 2026 Anchal Bisht · All Rights Reserved
-
 
 # Chianya — Forest of Consciousness
 
 > *"You don't have to explain anything. Just arrive as you are."*
 
-**Chianya** is an open, emotionally intelligent well-being platform built for the generation that is always online, always expected to perform, and rarely given space to simply feel.
+**Live:** https://chianya.vercel.app  
+**Built by:** Anchal Bisht | anchal001bisht@gmail.com | github.com/Anchalbisht10
 
 ---
 
-## The Problem It Solves
+## Where the Name Comes From
 
-Modern youth — students, young professionals, first-generation strivers — are navigating an invisible crisis.
+The project was first called Sattva — a Sanskrit word meaning purity of mind and clarity. It was beautiful, but something felt incomplete. Then one night, a word arrived: Chittaranya. It comes from two Sanskrit roots — Chitta, meaning consciousness, and Aranya, meaning forest, wildness, sacred inner space. Together they become forest of consciousness.
 
-Not the kind that makes headlines. The kind that lives in 2 AM study sessions, in the quiet dread before a presentation, in the numbness after months of pushing through without pause. The kind where someone is technically fine but emotionally drowning.
-
-The existing options are broken:
-- **Therapy** is expensive, inaccessible, and carries stigma in many cultures
-- **Wellness apps** are clinical, corporate, or gamified in ways that feel hollow
-- **Social media** offers distraction, not recovery
-- **Doing nothing** is what most young people default to — and it compounds
-
-Chianya addresses the gap between "I'm struggling" and "I need professional help." It is the space that most people never have: a place to pause, feel, and be met with care — without judgment, without diagnosis, without cost.
+We live in a world of extraordinary technology and extraordinary loneliness. We have apps for everything and space for almost nothing. Chianya does not claim to fix that. It is a tool, built with intention, designed so that when you arrive here — even briefly — you feel something natural. Something conscious. Something yours.
 
 ---
 
-## Who It Specifically Helps
+## What Is Chianya?
 
-Chianya is built for:
+Chianya is a digital sanctuary — an emotionally intelligent wellbeing platform built specifically for young people who are carrying something heavy and have nowhere to put it down.
 
-- **Students** under academic pressure — board exams, entrance tests, thesis deadlines, the weight of family expectations
-- **Young professionals** experiencing burnout in their first or second jobs, caught between ambition and exhaustion
-- **Digitally overwhelmed youth** aged 16–28 who have grown up in an always-on world and don't know what emotional rest looks like
-- **People experiencing quiet suffering** — not in crisis, but carrying anxiety, loneliness, emotional numbness, or a sense of being stuck
-- **Youth in cultures** where mental health conversations are still stigmatized, where "talking to someone" feels impossible or shameful
+It is not a therapy app. It is not a productivity tool. It is not another wellness dashboard with mood sliders and habit trackers.
+
+Chianya is a forest. A space that meets you exactly where you are — without diagnosis, without judgment, without cost.
+
+When you enter, a 3D forest world opens around you. An AI companion named Antar waits — not as a chatbot, but as a presence. You choose what you are carrying. The forest responds. You breathe, release, ground yourself, receive wisdom, or simply sit in stillness. And if you need a real human voice, Antar will always point you there.
+
+---
+
+## The Problem
+
+Millions of young people exist in a space the mental health system has largely ignored — the space between "I'm fine" and "I need a therapist."
+
+They are not in crisis. They are not diagnosed. They are simply overwhelmed, anxious, lonely, numb, or stuck — and they have no idea what to do about it.
+
+Therapy is expensive, inaccessible, and culturally stigmatized in many communities. Wellness apps feel clinical, corporate, or hollow. Social media offers distraction, not recovery. So most young people do nothing — and it compounds.
+
+The World Health Organization identifies depression and anxiety as leading causes of disability among young people globally. In South Asia alone, student mental health crises linked to academic pressure are documented at alarming levels. Yet mental health infrastructure for youth — especially in middle and lower-income countries — remains severely underfunded and culturally inaccessible.
+
+Chianya was built for that 11 PM moment. The alone-in-a-crowd moment. The I-don't-even-know-what-I'm-feeling moment.
+
+---
+
+## Who It Is Built For
+
+Chianya is built for youth aged 16–28 — specifically:
+
+- Students under academic pressure: board exams, entrance tests, family expectations, thesis deadlines
+- Young professionals experiencing early burnout, caught between ambition and exhaustion
+- People in cultures where mental health conversations are still stigmatized, where asking for help feels impossible
+- Anyone carrying quiet suffering — not in crisis, but not okay either
+- Youth across South Asia and beyond who have never had access to affordable, culturally resonant emotional support
 
 Chianya does not require the user to identify as mentally ill. It only requires them to show up.
 
 ---
 
-## What It Does (Complete Vision)
+## Core Features
 
-When complete, Chianya will offer a full emotional support ecosystem through a visually immersive, forest-world interface guided by **Antar** — the platform's inner guide character.
+### 🌲 The Living Forest
+A fully immersive 3D forest environment built with Three.js. The forest is not decoration — it is alive and responsive. When you select your emotional state, the forest changes with you. Feeling anxious? The fog thickens, the light dims. Feeling numb? The fireflies fade. Feeling heavy? The atmosphere deepens. The world around you reflects what you are carrying inside. As you return daily, the forest grows brighter — more fireflies, warmer light — quietly acknowledging your consistency.
 
-### Core Experience Flows
+### 🧘 Antar — The Inner Guide
+An AI companion powered by Groq's Llama 3.3 70B model, designed to converse with emotional intelligence. Antar is not a chatbot. Antar listens, reflects, and responds with genuine care — never clinical advice, never false promises. Every message is crafted to make the user feel received, not processed.
 
-| Feature | What It Does |
+Antar also remembers. Based on how many days you have returned to the forest, Antar's greeting changes. On day 7: *"Seven days. The forest has been counting. It missed you on the days you weren't here."* On day 30: *"A month. You came back every day. That is not nothing. That is everything."*
+
+### 🛡️ Crisis Safety Layer
+If Antar detects language indicating serious distress or self-harm risk, the conversation shifts immediately. Antar gently acknowledges the weight of what was shared and surfaces real human support — specifically iCall (9152987821) in India — warmly and in character, never alarmingly, never pretending to be a therapist.
+
+### 🌬️ Breathe
+Guided 4-7-8 breathing technique with animated visual feedback. Evidence-based. Designed to slow the nervous system in moments of acute anxiety.
+
+### 🌍 Ground
+The 5-4-3-2-1 sensory grounding technique — five things you can see, four you can touch, three you can hear, two you can smell, one you can taste. Brings users back to the present moment, away from spiral thinking.
+
+### 🌿 Release
+A ritual writing space. Users write what is heavy. Then they watch it dissolve into the earth. By design, release content is never stored. What is released, is released.
+
+### 🪷 Just Sit
+A dedicated space to do nothing. No prompts. No tasks. No guidance. Simply rest in the forest and let the stillness be enough.
+
+### 📖 Wisdom
+60 philosophical teachings across 7 themes — awareness, acceptance, presence, stillness, self-compassion, impermanence, and detachment — matched to the user's emotional state.
+
+### ✉️ Letter to Future Self
+Users write a letter to their future self and choose when it arrives — 7, 14, or 30 days from now. The forest holds it. On the chosen day, it arrives by email: *"The forest kept this for you."* No other student wellness project does this.
+
+### 🌱 Forest Streak System
+Every day a user returns, their streak grows. Badges earned quietly: Forest Seedling at 3 days, Forest Walker at 7, Forest Keeper at 14, Forest Elder at 30. The forest visually responds to consistency. Antar's greeting changes at every milestone.
+
+### ⭐ Voices from the Forest
+A community feedback wall where users leave star ratings and reflections using emoji avatars. A quiet reminder that others have been here too — and found something worth returning to.
+
+### 📊 Your Sanctuary — Personal Dashboard
+Session history, emotional patterns over the last 7 days, streak and badge status, time in the forest. Not a clinical dashboard — a mirror held with kindness.
+
+### 🌐 Community Impact Counter
+Live statistics — how many breaths taken, how many things released, how many conversations held, how many souls in the forest. A quiet reminder that no one is doing this alone.
+
+### 🔒 Ethical Architecture
+No advertising. No data sold. No diagnosis. No manipulation. No dark patterns. The forest does not have a business model built on human pain.
+
+---
+
+## Technical Stack
+
+| Layer | Technology |
 |---|---|
-| **Emotional Check-In** | Users select what they're "carrying" from a curated emotion vocabulary. Antar responds with a reflection, not a prescription. |
-| **Antar — Inner Guide** | An AI-powered, emotionally intelligent conversation companion. Not a chatbot. A presence. Responds with grounding, compassion, and wisdom — never clinical advice. |
-| **Breathe** | Guided breathing exercises (4-7-8, box breathing) with animated visual feedback to slow the nervous system |
-| **Ground** | 5-4-3-2-1 sensory grounding technique to bring users back to the present moment |
-| **Release** | A ritual writing space. Write what is heavy. Watch it dissolve. A symbolic act of emotional letting go. |
-| **Just Sit** | A dedicated do-nothing space. No prompts, no tasks. Simply rest in the forest. |
-| **Wisdom** | Daily philosophical teachings — short, meaningful, tied to the user's emotional state |
-| **Mood Tracking** | Lightweight emotional pattern awareness — not overwhelming dashboards, but gentle reflection over time |
-| **Anonymous Reflection** | Users can share thoughts without identity — the forest holds it, no one judges it |
-| **Resource Section** | Curated, culturally sensitive links to real professional support, crisis lines, and community resources |
+| Frontend | React.js, Three.js, Framer Motion |
+| Backend | Node.js, Express.js |
+| Database | MongoDB Atlas |
+| AI | Groq API — Llama 3.3 70B (conversations), Llama 3.1 8B (quick responses) |
+| Email | Nodemailer with Gmail App Password |
+| Auth | bcrypt, JWT, httpOnly cookies |
+| Security | helmet.js, rate limiting, CORS domain lock |
+| Deployment | Vercel (frontend), Render (backend) |
+| PWA | Installable on mobile home screen |
 
-### Safety Layer
-Chianya will include an ethical crisis detection system. If a user expresses language indicating serious distress or self-harm risk, Antar will gently acknowledge the weight of what was shared and surface appropriate human support resources — without alarming the user or pretending to be a therapist.
-
----
-
-## Why It Matters
-
-**The scale of the problem is real.**
-
-The World Health Organization identifies depression and anxiety as leading causes of disability among young people globally. In South Asia alone, student suicide rates linked to academic pressure have been documented at alarming levels. Yet mental health infrastructure for youth — especially in middle and lower-income countries — remains severely underfunded and culturally inaccessible.
-
-**The existing digital response is inadequate.**
-
-Most mental health apps are built for Western, English-speaking, middle-class users with insurance. They use clinical language. They require credit cards. They feel like medical software.
-
-**Chianya is different because:**
-
-- It feels like a sanctuary, not a service
-- It speaks in emotional truth, not clinical terminology
-- It is designed to be accessible to anyone with a browser
-- It does not require account creation to begin healing
-- It is built with ethical AI principles — no manipulation, no false promises, no diagnosis
-- It is grounded in evidence-based techniques (breathing, grounding, reflective journaling) presented through a culturally resonant, visually human interface
+Languages & Technologies
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=flat&logo=mongodb&logoColor=white) ![Three.js](https://img.shields.io/badge/Three.js-000000?style=flat&logo=threedotjs&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
 
 ---
 
-## The Goal
-
-**Short-term:** Build a fully functional, emotionally thoughtful platform that youth can use today to feel less alone and more grounded.
-
-**Medium-term:** Reach young people in high-stress educational and professional environments across South Asia and beyond — starting with India, expanding to communities where emotional support infrastructure is weakest.
-
-**Long-term:** Become a trusted, community-referenced emotional well-being companion — a platform that educators, student organizations, and youth communities can point to without hesitation. One that sets a standard for what ethical, human-centered mental wellness technology looks like.
-
-**This project is not trying to replace therapists.**
-It is trying to make sure that the millions of young people who will never see a therapist have somewhere to go.
-
----
-
-## Technical Architecture
-
-```
-chianya/
-├── frontend/          # Immersive visual interface (HTML/CSS/JS)
-│   ├── scenes/        # Forest world, emotional flows
-│   ├── components/    # Antar guide, breathing animations
-│   └── assets/        # Characters, backgrounds, audio
+## Project Architecture
+Chianya/
+├── backend/
+│   ├── models/       — User, Conversation, MoodEntry, FutureLetter,
+│   │                   StarRating, Wisdom, UserActivity
+│   ├── routes/       — auth, antar, mood, activity, wisdom, feedback,
+│   │                   futureLetter, starRating, admin
+│   ├── services/     — antarService (Groq AI), emailService, weatherReport
+│   ├── middleware/   — auth (JWT protect)
+│   └── server.js     — Express app, MongoDB connection, cron jobs
 │
-├── backend/           # Node.js / Express API server
-│   ├── routes/        # API endpoints
-│   ├── controllers/   # Business logic
-│   ├── models/        # Database schemas
-│   └── middleware/    # Auth, safety filters, rate limiting
-│
-├── database/          # MongoDB / PostgreSQL
-│   ├── check-ins      # Emotional state records (anonymized)
-│   ├── sessions       # User journey tracking
-│   └── reflections    # Anonymous written releases
-│
-└── ai/                # AI integration layer
-    ├── antar/         # Conversation engine (open-source LLM)
-    └── safety/        # Crisis detection & resource routing
-```
-
-### Tech Stack
-- **Frontend:** HTML5, CSS3, JavaScript (Vanilla / lightweight framework)
-- **Backend:** Node.js + Express.js
-- **Database:** MongoDB (flexible schema for emotional data)
-- **AI:** Open-source LLM integration (Ollama / Hugging Face / free-tier APIs)
-- **Deployment:** Railway / Render / Vercel (accessible, low-cost)
+└── frontend/
+├── src/
+│   ├── screens/  — 18 screens across the full user journey
+│   ├── components/ — ProfileBadge, StarButton, CursorTrail,
+│   │                 AmbientSound, InstallButton
+│   ├── scenes/   — ForestScene (Three.js 3D world)
+│   ├── avatar/   — Antar SVG character with animations
+│   ├── context/  — ChianyaContext (global state)
+│   └── services/ — api.js (all backend calls)
+└── public/
+└── sounds/   — 7 ambient audio files with per-mode fade switching
 
 ---
 
 ## Ethical Commitments
 
-Chianya is built on principles, not just features:
-
 1. **No diagnosis, ever.** Antar is a companion, not a clinician.
-2. **No data exploitation.** Emotional check-ins are anonymized and never sold.
-3. **Crisis safety first.** Any sign of serious distress surfaces human resources immediately.
+2. **No data exploitation.** Emotional data is never sold, never shared.
+3. **Crisis safety first.** Any sign of serious distress surfaces real human support immediately.
 4. **Accessible by default.** No paywall to access core emotional support tools.
 5. **Transparent AI.** Users always know they are speaking with an AI guide.
-6. **Culturally humble.** Language, metaphor, and design account for South Asian emotional contexts.
+6. **Culturally grounded.** Language, metaphor, and crisis resources account for South Asian emotional and social contexts.
+7. **Release is real.** Content written in Release mode is never stored — by architectural design, not just policy.
+
+---
+
+## Social Impact Alignment
+
+| Framework | Alignment |
+|---|---|
+| WHO Global Mental Health Action Plan | Addresses youth mental health gap in low-resource settings |
+| UNESCO Education for Sustainable Development | Emotional regulation as foundational to quality education |
+| UN SDG 3 — Good Health and Wellbeing | Direct contribution to mental wellbeing as a human right |
+| UN SDG 4 — Quality Education | Emotional stability as prerequisite for learning |
+| UN SDG 10 — Reduced Inequalities | Free, accessible mental support across economic backgrounds |
 
 ---
 
@@ -152,47 +179,45 @@ Chianya is built on principles, not just features:
 
 | Component | Status |
 |---|---|
-| Visual Design & World-Building | ✅ Complete |
-| Emotional Check-In Flow | ✅ Built |
-| Breathing Exercise | ✅ Built |
-| Grounding (5-4-3-2-1) | ✅ Built |
-| Release Ritual | ✅ Built |
-| Just Sit / Wisdom screens | ✅ Built |
-| Antar Conversation (AI) | ✅ Complete |
-| Backend API | ✅ Complete |
-| Database Integration | ✅ Complete |
-| Crisis Safety Layer | ✅ Complete |
-| Mood Tracking | ✅ Complete |
-| Anonymous Reflection System | ✅ Complete |
-| Resource Section | ✅ Complete |
-| Mobile Optimization | ✅ Complete |
-| Deployment | ✅ Complete |
+| 3D Forest World | ✅ Complete |
+| Emotional Check-In Flow | ✅ Complete |
+| Antar AI Companion | ✅ Complete |
+| Crisis Safety Detection | ✅ Complete |
+| All 6 Therapeutic Modes | ✅ Complete |
 | Letter to Future Self | ✅ Complete |
-| Emotional Weather Report | ✅ Complete |
-| Star Ratings & Feedback Wall | ✅ Complete |
+| Forest Streak + Badges | ✅ Complete |
+| Mood Timeline | ✅ Complete |
+| Star Rating System | ✅ Complete |
+| Community Impact Counter | ✅ Complete |
+| Personal Dashboard | ✅ Complete |
+| About / Mission Page | ✅ Complete |
+| Creator Page | ✅ Complete |
 | Admin Panel | ✅ Complete |
-| Shareable Moment Cards | ✅ Complete |
+| Mobile Responsive | ✅ Complete |
+| PWA Installable | ✅ Complete |
+| Ambient Sound System | ✅ Complete |
+| Security Layer | ✅ Complete |
+| Deployed — Production | ✅ Live |
 
 ---
 
-## Impact Direction
+## Who Built This
 
-Chianya is being developed as a meaningful social-impact platform with the ambition of meeting the standard expected in global youth innovation spaces — including UNESCO youth programs, UNICEF innovation initiatives, international student fellowships, and social-impact showcases.
+I am Anchal Bisht — a student, a builder, and someone who believes technology can hold space for human emotion. I created Chianya because I know what it feels like to carry something heavy with nowhere to put it down.
 
-It is not a portfolio project dressed as social good. It is social good that happens to also be a portfolio.
+Chianya was born from a simple question: what if there was a space online that felt like sitting beside a calm lake at night — no judgment, no advice, just presence? I built the answer. Every line of code in this project is an attempt to make that feeling real for someone who needs it.
 
-The measure of success is not downloads or revenue. It is whether a student at 11 PM, carrying something they can't name, finds this and feels — even slightly — less alone.
-
----
-
-## Built By
-
-**[Anchal Bisht]**
-Student | Builder | Believer in emotionally intelligent technology
-
-*Building at the intersection of human emotion and responsible AI.*
+This is not just a portfolio project. It is my attempt to contribute something meaningful to the conversation about youth mental wellbeing. I built Chianya with honesty, care, and the belief that no one should have to carry this alone.
 
 ---
 
-> *"The forest is still here. So am I. Take your time."*
+## Impact Measure
+
+The measure of success for Chianya is not downloads or revenue.
+
+It is whether a student at 11 PM, carrying something they cannot name, finds this — and feels, even slightly, less alone.
+
+---
+
+> *"The forest is still here. So am I. Take your time."*  
 > — Antar, Chianya's inner guide

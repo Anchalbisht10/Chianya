@@ -522,6 +522,8 @@ for (let i = 0; i < fireflyCount; i++) {
 
   return (
     <canvas ref={ref} style={{
+      
+         
       position: "absolute",
       inset: 0,
       width: "100%",
@@ -707,6 +709,7 @@ const moodOverlay = {
    <LakeCanvas fireflyCount={streakConfig.fireflyCount} />
 
       <Canvas
+       dpr={Math.min(window.devicePixelRatio, 1.5)}
         camera={{ position:[0, 1, 3.5], fov:78 }}
         style={{ width:"100%", height:"100%", background: mood.bgColor, transition:"background 2s ease" }}
         gl={{ antialias:true }}

@@ -225,7 +225,7 @@ const [reflectInput, setReflectInput] = useState(todayReflection || "");
       maxHeight:"75vh",
           overflowY:"auto",
         }}>
-        <ModeAtmosphere width={cardSize.w} height={cardSize.h}/>
+      {window.innerWidth >= 768 && <ModeAtmosphere width={cardSize.w} height={cardSize.h}/>}
 <div style={{
           display:"flex", justifyContent:"space-between",
           alignItems:"center", marginBottom:"clamp(1rem,2.5vw,1.5rem)",
