@@ -664,9 +664,10 @@ const moodOverlay = {
 
 
   return (
-    <div style={{
+   <div style={{
       position: "fixed", top:0, left:0,
       width: "100vw", height: "100vh", zIndex: 0,
+      filter: "brightness(1.15) contrast(1.05)",
     }}>
       {/* Mood overlay */}
     <div style={{

@@ -25,7 +25,7 @@ const SOUND_MAP = {
 export default function AmbientSound() {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
-  const [enabled, setEnabled] = useState(false);
+const [enabled, setEnabled] = useState(true);
   const [currentSound, setCurrentSound] = useState("forest");
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -37,10 +37,11 @@ export default function AmbientSound() {
   }, []);
 
   // Load audio on mount
-  useEffect(() => {
+ useEffect(() => {
     audioRef.current = new Audio("/sounds/forest.mp3");
     audioRef.current.loop = true;
     audioRef.current.volume = 0.3;
+    audioRef.current.play().catch(() => {});
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
