@@ -1,6 +1,12 @@
 const BASE = process.env.REACT_APP_BACKEND_URL
   ? `${process.env.REACT_APP_BACKEND_URL}/api`
   : "http://localhost:5000/api";
+  // Keep backend alive
+const keepAlive = () => {
+  fetch(`${BASE}/health`).catch(() => {});
+};
+setInterval(keepAlive, 10 * 60 * 1000);
+keepAlive();
 
 const opts = (method, body) => ({
   method,
