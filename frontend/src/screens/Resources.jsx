@@ -87,7 +87,7 @@ export default function Resources() {
         maxHeight: "78vh", overflowY: "auto",
           backdropFilter: "blur(28px)",
           boxShadow: "0 0 80px rgba(20,140,20,0.09)",
-          maxHeight: "75vh", overflowY: "auto",
+      
         }}>
 
         {/* Header */}

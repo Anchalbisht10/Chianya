@@ -35,7 +35,7 @@ export default function About() {
         maxHeight: "75vh", overflowY: "auto",
           backdropFilter: "blur(28px)",
           boxShadow: "0 0 80px rgba(20,140,20,0.09)",
-          maxHeight: "75vh", overflowY: "auto",
+   
         }}>
 
         <motion.button onClick={() => navigate("/modes")}
@@ -167,25 +167,8 @@ function Section({ children, delay, label }) {
         lineHeight: 2,
       }}>{children}</div>
     </motion.div>
-  );
-<div style={{
-          textAlign: "center",
-          marginTop: "2rem",
-          paddingTop: "1rem",
-          borderTop: "0.5px solid rgba(70,180,50,0.1)",
-          fontSize: "clamp(8px,1.4vw,9px)",
-          color: "rgba(85,175,62,0.25)",
-          fontFamily: "Georgia, serif",
-          letterSpacing: "0.18em",
-          lineHeight: 2,
-        }}>
-          © 2026 Anchal Bisht · All Rights Reserved<br/>
-          Chianya — Forest of Consciousness<br/>
-          Unauthorized reproduction or use is prohibited.
-        </div>
-
+);
 }
-
 function Divider() {
   return (
     <div style={{

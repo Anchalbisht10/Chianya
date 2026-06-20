@@ -67,8 +67,6 @@ getMyActivity().then(data => {
          maxHeight: "78vh", overflowY: "auto",
           backdropFilter: "blur(28px)",
           boxShadow: "0 0 80px rgba(20,140,20,0.09)",
- maxHeight: "calc(100vh - 160px)",
-          overflowY: "auto",
         }}>
 
         {/* Header */}

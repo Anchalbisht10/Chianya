@@ -8,6 +8,31 @@ import { logMood } from "../services/api";
 import { getStreak } from "../services/api";
 
 
+const TRANSLATIONS = {
+  en: {
+    title: "Chianya",
+    subtitle: "forest of consciousness",
+    line1: "You don't have to explain anything.",
+    line2: "Just arrive as you are.",
+    question: "What are you carrying right now?",
+    feelings: ["anxious","heavy","scattered","numb","overwhelmed","tired","lost","restless","hollow","stuck","hurt","lonely"],
+    enter: "Enter the Sanctuary",
+    choose: "← choose differently",
+    carrying: "YOU ARE CARRYING",
+  },
+  hi: {
+    title: "चिआन्या",
+    subtitle: "चेतना का वन",
+    line1: "आपको कुछ भी समझाने की ज़रूरत नहीं।",
+    line2: "बस जैसे हैं, वैसे आ जाइए।",
+    question: "आप अभी क्या महसूस कर रहे हैं?",
+    feelings: ["चिंतित","भारी","बिखरा हुआ","सुन्न","अभिभूत","थका हुआ","खोया हुआ","बेचैन","खोखला","अटका हुआ","आहत","अकेला"],
+    enter: "अभयारण्य में प्रवेश करें",
+    choose: "← अलग चुनें",
+    carrying: "आप ले जा रहे हैं",
+  }
+};
+
 const FEELINGS = [
   "anxious","heavy","scattered","numb",
   "overwhelmed","tired","lost","restless",
@@ -185,8 +210,8 @@ function AtmosphericBg({ width, height }) {
     }} />
   );
 }
-
 export default function Entry() {
+const [lang, setLang] = useState("en");
 const { setFeelings, setAvatarLine, avatarLine, setUserStreak } = useChianya();
   const isMobile = window.innerWidth < 1100;
   const [selected, setSelected] = useState([]);
@@ -243,8 +268,9 @@ useEffect(() => {
     return () => obs.disconnect();
   }, []);
 
-const toggle = (f) => {
-    setSelected([f]);
+const toggle = (f, index) => {
+    const englishFeeling = TRANSLATIONS["en"].feelings[index];
+    setSelected([englishFeeling]);
     setTransitioning(true);
   };
 
@@ -456,13 +482,13 @@ if (transitioning) return (
               />
             </svg>
           </motion.div>
-        <div style={{
+     <div style={{
           fontSize: "clamp(9px,1.6vw,10px)",
           letterSpacing: "0.28em",
           color: "rgba(92,195,68,0.38)",
           fontFamily: "Georgia, serif",
           marginBottom: "1rem",
-        }}>YOU ARE CARRYING</div>
+        }}>{TRANSLATIONS[lang].carrying}</div>
         <div style={{
           fontSize: "clamp(20px,4vw,26px)",
           color: "rgba(172,242,142,0.96)",
@@ -501,7 +527,7 @@ if (transitioning) return (
             transition: "all 0.45s",
             marginBottom: "1rem",
           }}>
-          Enter the Sanctuary
+       {TRANSLATIONS[lang].enter}
         </motion.button>
         <button
           onClick={() => setTransitioning(false)}
@@ -513,7 +539,7 @@ if (transitioning) return (
             fontSize: 11, cursor: "pointer",
             letterSpacing: "0.12em",
           }}>
-          ← choose differently
+      {TRANSLATIONS[lang].choose}
         </button>
       </motion.div>
     </motion.div>
@@ -548,6 +574,31 @@ if (transitioning) return (
         }}
       >
         <AtmosphericBg width={cardSize.w} height={cardSize.h} />
+        {/* Language toggle */}
+        <div style={{
+          position: "absolute", top: 12, right: 12,
+          zIndex: 10, display: "flex", gap: 4,
+        }}>
+          {["en", "hi"].map(l => (
+            <button key={l} onClick={() => setLang(l)} style={{
+              padding: "3px 10px",
+              borderRadius: 20,
+              border: lang === l
+                ? "0.5px solid rgba(98,222,68,0.5)"
+                : "0.5px solid rgba(68,162,48,0.2)",
+              background: lang === l
+                ? "rgba(14,78,12,0.8)"
+                : "rgba(5,22,5,0.5)",
+              color: lang === l
+                ? "rgba(182,250,148,0.96)"
+                : "rgba(95,185,70,0.4)",
+              fontSize: 10,
+              cursor: "pointer",
+              fontFamily: "Georgia, serif",
+              transition: "all 0.3s",
+            }}>{l === "en" ? "EN" : "हि"}</button>
+          ))}
+        </div>
 
         {/* Title */}
         <motion.div
@@ -556,18 +607,19 @@ if (transitioning) return (
           transition={{ delay:0.2, duration:1 }}
           style={{ textAlign:"center", marginBottom:"clamp(0.8rem,2vw,1.5rem)", position:"relative" }}
         >
-          <div style={{
+        
+        <div style={{
             fontSize:"clamp(30px,7vw,44px)", fontWeight:300,
             letterSpacing:"0.18em",
             color:"rgba(172,242,142,0.96)",
             fontFamily:"Georgia, serif",
             textShadow:"0 0 50px rgba(58,222,58,0.3)",
             marginBottom:6,
-          }}>Chianya</div>
+          }}>{TRANSLATIONS[lang].title}</div>
           <div style={{
             fontSize:"clamp(9px,1.8vw,11px)", letterSpacing:"0.38em",
             color:"rgba(98,200,75,0.36)", fontFamily:"Georgia, serif",
-          }}>forest of consciousness</div>
+          }}>{TRANSLATIONS[lang].subtitle}</div>
         </motion.div>
 
         <motion.div initial={{ scaleX:0 }} animate={{ scaleX:1 }}
@@ -585,10 +637,10 @@ if (transitioning) return (
             marginBottom:"clamp(1rem,2.5vw,1.6rem)", position:"relative",
           }}
         >
-          You don't have to explain anything.<br/>
-          Just arrive as you are.<br/>
+          {TRANSLATIONS[lang].line1}<br/>
+          {TRANSLATIONS[lang].line2}<br/>
           <span style={{ fontSize:"clamp(10px,2vw,12px)", opacity:0.48 }}>
-            What are you carrying right now?
+            {TRANSLATIONS[lang].question}
           </span>
         </motion.p>
 
@@ -601,14 +653,14 @@ if (transitioning) return (
             marginBottom:"clamp(0.9rem,2vw,1.5rem)", position:"relative",
           }}
         >
-          {FEELINGS.map((f, i) => {
+{TRANSLATIONS[lang].feelings.map((f, i) => {
             const isSel = selected.includes(f);
             return (
               <motion.button key={f}
                 initial={{ opacity:0, scale:0.75 }}
                 animate={{ opacity:1, scale:1 }}
                 transition={{ delay:1+i*0.055 }}
-                onClick={() => toggle(f)}
+              onClick={() => toggle(f, i)}
                 // onMouseEnter={() => setHovered(f)}
                 // onMouseLeave={() => setHovered(null)}
                 whileHover={{ scale:1.12, y:-3 }}

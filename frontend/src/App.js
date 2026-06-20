@@ -9,8 +9,6 @@ import CursorTrail from "./components/CursorTrail";
 import InstallButton from "./components/InstallButton";
 import AmbientSound from "./components/AmbientSound";
 
-
-// Lazy load all screens
 const Welcome = lazy(() => import("./screens/Welcome"));
 const Entry = lazy(() => import("./screens/Entry"));
 const ModeSelect = lazy(() => import("./screens/ModeSelect"));
@@ -29,6 +27,9 @@ const About = lazy(() => import("./screens/About"));
 const FutureLetter = lazy(() => import("./screens/FutureLetter"));
 const Admin = lazy(() => import("./screens/Admin"));
 const Creator = lazy(() => import("./screens/Creator"));
+const Privacy = lazy(() => import("./screens/Privacy"));
+const Terms = lazy(() => import("./screens/Terms"));
+const Accessibility = lazy(() => import("./screens/Accessibility"));
 
 export default function App() {
   return (
@@ -48,24 +49,27 @@ export default function App() {
 
           <Suspense fallback={null}>
             <Routes>
-              <Route path="/"           element={<Welcome />} />
-              <Route path="/auth"       element={<Auth />} />
-              <Route path="/entry"      element={<Entry />} />
-              <Route path="/modes"      element={<ModeSelect />} />
-              <Route path="/wisdom"     element={<Wisdom />} />
-              <Route path="/breathe"    element={<Breathe />} />
-              <Route path="/release"    element={<Release />} />
-              <Route path="/ground"     element={<Ground />} />
-              <Route path="/sit"        element={<JustSit />} />
-              <Route path="/companion"  element={<Companion />} />
-              <Route path="/dashboard"  element={<Dashboard />} />
-              <Route path="/feedback"   element={<FeedbackWall />} />
-              <Route path="/resources"  element={<Resources />} />
-              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/"              element={<Welcome />} />
+              <Route path="/auth"          element={<Auth />} />
+              <Route path="/entry"         element={<Entry />} />
+              <Route path="/modes"         element={<ModeSelect />} />
+              <Route path="/wisdom"        element={<Wisdom />} />
+              <Route path="/breathe"       element={<Breathe />} />
+              <Route path="/release"       element={<Release />} />
+              <Route path="/ground"        element={<Ground />} />
+              <Route path="/sit"           element={<JustSit />} />
+              <Route path="/companion"     element={<Companion />} />
+              <Route path="/dashboard"     element={<Dashboard />} />
+              <Route path="/feedback"      element={<FeedbackWall />} />
+              <Route path="/resources"     element={<Resources />} />
+              <Route path="/onboarding"    element={<Onboarding />} />
               <Route path="/future-letter" element={<FutureLetter />} />
-              <Route path="/about"      element={<About />} />
-              <Route path="/admin"      element={<Admin />} />
-              <Route path="/creator"    element={<Creator />} />
+              <Route path="/about"         element={<About />} />
+              <Route path="/admin"         element={<Admin />} />
+              <Route path="/creator"       element={<Creator />} />
+              <Route path="/privacy"       element={<Privacy />} />
+              <Route path="/terms"         element={<Terms />} />
+              <Route path="/accessibility" element={<Accessibility />} />
             </Routes>
           </Suspense>
         </div>

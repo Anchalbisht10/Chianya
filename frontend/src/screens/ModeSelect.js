@@ -470,12 +470,15 @@ onBlur={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zInd
                 }}>✕</button>
               </div>
 
-              {[
+             {[
                 { label: "voices from the forest", path: "/feedback", desc: "what others have carried here" },
                 { label: "real support & resources", path: "/resources", desc: "when you need a human voice" },
                 { label: "why chianya exists", path: "/about", desc: "the story behind this sanctuary" },
-                { label: "letter to future self", path: "/future-letter" },
-                { label: "meet the creator", path: "/creator" },
+                { label: "letter to future self", path: "/future-letter", desc: "write to who you will become" },
+                { label: "meet the creator", path: "/creator", desc: "the person behind the forest" },
+                { label: "privacy policy", path: "/privacy", desc: "how we protect your trust" },
+                { label: "terms of service", path: "/terms", desc: "our commitments to you" },
+                { label: "accessibility", path: "/accessibility", desc: "the forest belongs to everyone" },
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -485,19 +488,19 @@ onBlur={() => document.querySelectorAll('canvas').forEach(c => { if(c.style.zInd
                   onClick={() => { setMenuOpen(false); navigate(item.path); }}
                   whileHover={{ x: -4, borderColor: "rgba(98,222,68,0.4)" }}
                   style={{
-                    padding: "14px 16px",
-                    borderRadius: 14,
+                padding: "10px 12px",
+                    borderRadius: 12,
                     border: "0.5px solid rgba(68,175,50,0.2)",
                     background: "rgba(4,18,5,0.55)",
                     cursor: "pointer",
                     transition: "all 0.3s",
                   }}>
-                  <div style={{
-                    fontSize: "clamp(11px,2vw,12px)",
+             <div style={{
+                    fontSize: "clamp(10px,1.8vw,11px)",
                     color: "rgba(162,238,132,0.88)",
                     fontFamily: "Georgia, serif",
                     fontStyle: "italic",
-                    marginBottom: 4,
+                    marginBottom: 2,
                   }}>✦ {item.label}</div>
                   <div style={{
                     fontSize: "clamp(9px,1.6vw,10px)",
