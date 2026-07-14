@@ -20,6 +20,20 @@ const futureLetterRoutes = require("./routes/futureLetter");
 const starRatingRoutes = require("./routes/starRating");
 const moodRoutes = require("./routes/mood");
 const adminRoutes = require("./routes/admin");
+async function runFutureLetterCheck() {
+  const now = new Date();
+  const letters = await FutureLetter.find({
+    delivered: false,
+    deliverOn: { $lte: now },
+  });
+  for (const l of letters) {
+    const daysAgo = Math.round((now - l.createdAt) / (1000 * 60 * 60 * 24));
+    await sendFutureLetter(l.email, l.letter, daysAgo);
+    l.delivered = true;
+    await l.save();
+    console.log(`Future letter delivered to ${l.email}`);
+  }
+}
 
 const app = express();
 
@@ -114,25 +128,21 @@ mongoose.connect(process.env.MONGODB_URI)
       console.log("Weather report cron scheduled — every Sunday 9am");
     });
 
-    // Run every day at 8am — deliver future letters
-    cron.schedule("0 8 * * *", async () => {
+   // Run every day at 8am — deliver future letters
+    cron.schedule("0 8 * * *", () => {
+      runFutureLetterCheck().catch(err => console.error("Cron error:", err.message));
+    });
+
+    // Manual trigger — lets an outside pinger (cron-job.org) wake the server and check too
+    app.get("/api/future-letter/run-check", async (req, res) => {
+      if (req.query.key !== process.env.CRON_SECRET) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
       try {
-        const now = new Date();
-        const letters = await FutureLetter.find({
-          delivered: false,
-          deliverOn: { $lte: now },
-        });
-        for (const l of letters) {
-          const daysAgo = Math.round(
-            (now - l.createdAt) / (1000 * 60 * 60 * 24)
-          );
-          await sendFutureLetter(l.email, l.letter, daysAgo);
-          l.delivered = true;
-          await l.save();
-          console.log(`Future letter delivered to ${l.email}`);
-        }
+        await runFutureLetterCheck();
+        res.json({ success: true });
       } catch (err) {
-        console.error("Cron error:", err.message);
+        res.status(500).json({ error: err.message });
       }
     });
   })
