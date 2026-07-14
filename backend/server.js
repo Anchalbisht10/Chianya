@@ -1,4 +1,5 @@
-
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
 require("dotenv").config();
 const cron          = require("node-cron");
 const FutureLetter  = require("./models/FutureLetter");
