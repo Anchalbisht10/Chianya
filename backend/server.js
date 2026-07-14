@@ -106,7 +106,18 @@ app.use("/api/wisdom",   wisdomRoutes);
 app.get("/api/health", (_, res) => {
   res.json({ status: "Chianya backend alive", sanctuary: true });
 });
-
+   // Manual trigger — lets an outside pinger (cron-job.org) wake the server and check too
+    app.get("/api/future-letter/run-check", async (req, res) => {
+      if (req.query.key !== process.env.CRON_SECRET) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+      try {
+        await runFutureLetterCheck();
+        res.json({ success: true });
+      } catch (err) {
+        res.status(500).json({ error: err.message });
+      }
+    });
 // ── 404 ───────────────────────────────────────────────────────
 app.use((_, res) => {
   res.status(404).json({ error: "Not found" });
@@ -133,18 +144,7 @@ mongoose.connect(process.env.MONGODB_URI)
       runFutureLetterCheck().catch(err => console.error("Cron error:", err.message));
     });
 
-    // Manual trigger — lets an outside pinger (cron-job.org) wake the server and check too
-    app.get("/api/future-letter/run-check", async (req, res) => {
-      if (req.query.key !== process.env.CRON_SECRET) {
-        return res.status(403).json({ error: "Forbidden" });
-      }
-      try {
-        await runFutureLetterCheck();
-        res.json({ success: true });
-      } catch (err) {
-        res.status(500).json({ error: err.message });
-      }
-    });
+ 
   })
   .catch(err => {
     console.error("MongoDB connection failed:", err.message);
