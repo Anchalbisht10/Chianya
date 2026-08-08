@@ -77,23 +77,8 @@ app.use((req, res, next) => {
   stripMongoOperators(req.body);
   next();
 });
-app.use((req, res, next) => {
-  const sanitize = (obj) => {
-    if (!obj) return;
-    for (const key in obj) {
-      if (typeof obj[key] === "string") {
-        obj[key] = obj[key]
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#x27;");
-      }
-    }
-  };
-  sanitize(req.body);
-  sanitize(req.query);
-  next();
-});
+
+
 // ── Rate limiting ─────────────────────────────────────────────
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
