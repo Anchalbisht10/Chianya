@@ -13,13 +13,12 @@ export default function Dashboard() {
   const [timeline, setTimeline] = useState([]);
   const [streak, setStreak] = useState(null);
 
-  useEffect(() => {
+useEffect(() => {
     getStreak().then(data => {
       if (data?.streak !== undefined) setStreak(data);
     }).catch(() => {});
-  }, []);
 
-getMyActivity().then(data => {
+    getMyActivity().then(data => {
       if (data?.activity) setActivity(data.activity);
       setLoading(false);
     }).catch(() => setLoading(false));
@@ -27,6 +26,7 @@ getMyActivity().then(data => {
     getMoodTimeline().then(data => {
       if (data?.entries) setTimeline(data.entries);
     }).catch(() => {});
+  }, []);
 
   const handleLogout = async () => {
     await logout();
