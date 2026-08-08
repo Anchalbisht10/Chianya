@@ -59,6 +59,24 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.json({ limit: "10kb" }));
+
+function stripMongoOperators(obj) {
+  if (!obj || typeof obj !== "object") return;
+  for (const key of Object.keys(obj)) {
+    if (key.startsWith("$") || key.includes(".")) {
+      delete obj[key];
+      continue;
+    }
+    if (typeof obj[key] === "object") {
+      stripMongoOperators(obj[key]);
+    }
+  }
+}
+
+app.use((req, res, next) => {
+  stripMongoOperators(req.body);
+  next();
+});
 app.use((req, res, next) => {
   const sanitize = (obj) => {
     if (!obj) return;
@@ -109,7 +127,7 @@ app.get("/api/health", (_, res) => {
 });
    // Manual trigger — lets an outside pinger (cron-job.org) wake the server and check too
     app.get("/api/future-letter/run-check", async (req, res) => {
-      if (req.query.key !== process.env.CRON_SECRET) {
+      if (!process.env.CRON_SECRET || req.query.key !== process.env.CRON_SECRET) {
         return res.status(403).json({ error: "Forbidden" });
       }
       try {

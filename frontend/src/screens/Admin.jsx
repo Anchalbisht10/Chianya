@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const ADMIN_KEY = "chianya_admin_2026";
 const BASE = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 export default function Admin() {
