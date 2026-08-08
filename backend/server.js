@@ -59,23 +59,28 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.json({ limit: "10kb" }));
-app.use((req, res, next) => {
-  const sanitize = (obj) => {
-    if (!obj) return;
-    for (const key in obj) {
-      if (typeof obj[key] === "string") {
-        obj[key] = obj[key]
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#x27;");
-      }
+
+function stripMongoOperators(obj) {
+  if (!obj || typeof obj !== "object") return;
+  for (const key of Object.keys(obj)) {
+    if (key.startsWith("$") || key.includes(".")) {
+      delete obj[key];
+      continue;
     }
-  };
-  sanitize(req.body);
-  sanitize(req.query);
+    if (typeof obj[key] === "object") {
+      stripMongoOperators(obj[key]);
+    }
+  }
+}
+
+app.use((req, res, next) => {
+  stripMongoOperators(req.body);
   next();
 });
+
+
+
+
 // ── Rate limiting ─────────────────────────────────────────────
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
