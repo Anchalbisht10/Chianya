@@ -30,6 +30,9 @@ export default function FeedbackWall() {
         feeling: feelings[0] || "",
       });
       if (data.success) {
+        const tokens = JSON.parse(localStorage.getItem("chianyaFeedbackTokens") || "{}");
+        tokens[data.feedback._id] = data.ownerToken;
+        localStorage.setItem("chianyaFeedbackTokens", JSON.stringify(tokens));
         setSubmitted(true);
         setFeedbacks(prev => [data.feedback, ...prev]);
       }
@@ -241,21 +244,28 @@ export default function FeedbackWall() {
                     <span>{new Date(f.createdAt).toLocaleDateString("en-IN", {
                       day: "numeric", month: "short"
                     })}</span>
-                    <button
-                      onClick={async () => {
-                        await deleteFeedback(f._id);
-                        setFeedbacks(prev => prev.filter(x => x._id !== f._id));
-                      }}
-                      style={{
-                        background: "none", border: "none",
-                        color: "rgba(255,80,80,0.25)",
-                        cursor: "pointer", fontSize: 10,
-                        fontFamily: "Georgia, serif",
-                        transition: "all 0.3s",
-                      }}
-                      onMouseEnter={e => e.target.style.color = "rgba(255,80,80,0.6)"}
-                      onMouseLeave={e => e.target.style.color = "rgba(255,80,80,0.25)"}
-                    >remove</button>
+                    {JSON.parse(localStorage.getItem("chianyaFeedbackTokens") || "{}")[f._id] && (
+                      <button
+                        onClick={async () => {
+                          const tokens = JSON.parse(localStorage.getItem("chianyaFeedbackTokens") || "{}");
+                          const res = await deleteFeedback(f._id, tokens[f._id]);
+                          if (res.success) {
+                            delete tokens[f._id];
+                            localStorage.setItem("chianyaFeedbackTokens", JSON.stringify(tokens));
+                            setFeedbacks(prev => prev.filter(x => x._id !== f._id));
+                          }
+                        }}
+                        style={{
+                          background: "none", border: "none",
+                          color: "rgba(255,80,80,0.25)",
+                          cursor: "pointer", fontSize: 10,
+                          fontFamily: "Georgia, serif",
+                          transition: "all 0.3s",
+                        }}
+                        onMouseEnter={e => e.target.style.color = "rgba(255,80,80,0.6)"}
+                        onMouseLeave={e => e.target.style.color = "rgba(255,80,80,0.25)"}
+                      >remove</button>
+                    )}
                   </div>
                 </div>
               </motion.div>

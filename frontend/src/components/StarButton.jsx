@@ -47,9 +47,9 @@ export default function StarButton() {
     try {
       const data = await submitRating({ stars, message, emoji, name });
       if (data.success) {
-        const myRatings = JSON.parse(localStorage.getItem("myRatings") || "[]");
-        myRatings.push(data.rating._id);
-        localStorage.setItem("myRatings", JSON.stringify(myRatings));
+        const tokens = JSON.parse(localStorage.getItem("chianyaRatingTokens") || "{}");
+        tokens[data.rating._id] = data.ownerToken;
+        localStorage.setItem("chianyaRatingTokens", JSON.stringify(tokens));
       }
       setSubmitted(true);
       setStep("view");
@@ -316,13 +316,16 @@ export default function StarButton() {
                             {"⭐".repeat(r.stars)}
                           </span>
                         </div>
-                      {JSON.parse(localStorage.getItem("myRatings") || "[]").includes(r._id) && (
+                      {JSON.parse(localStorage.getItem("chianyaRatingTokens") || "{}")[r._id] && (
                           <button
                             onClick={async () => {
-                              await deleteRating(r._id);
-                              const myRatings = JSON.parse(localStorage.getItem("myRatings") || "[]");
-                              localStorage.setItem("myRatings", JSON.stringify(myRatings.filter(id => id !== r._id)));
-                              setRatings(prev => prev.filter(x => x._id !== r._id));
+                              const tokens = JSON.parse(localStorage.getItem("chianyaRatingTokens") || "{}");
+                              const res = await deleteRating(r._id, tokens[r._id]);
+                              if (res.success) {
+                                delete tokens[r._id];
+                                localStorage.setItem("chianyaRatingTokens", JSON.stringify(tokens));
+                                setRatings(prev => prev.filter(x => x._id !== r._id));
+                              }
                             }}
                             style={{
                               background: "none", border: "none",

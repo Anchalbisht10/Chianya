@@ -1,6 +1,11 @@
-const express = require("express");
-const StarRating = require("../models/StarRating");
-const router = express.Router();
+const express     = require("express");
+const crypto      = require("crypto");
+const StarRating  = require("../models/StarRating");
+const router      = express.Router();
+
+function hashToken(token) {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
 
 router.post("/", async (req, res) => {
   try {
@@ -8,12 +13,19 @@ router.post("/", async (req, res) => {
     if (!stars || stars < 1 || stars > 5)
       return res.status(400).json({ error: "Stars required (1-5)." });
 
+    const ownerToken = crypto.randomBytes(32).toString("hex");
+
     const rating = await StarRating.create({
       stars, message: message?.trim() || "",
       emoji: emoji || "🌿",
       name: name?.trim() || "Anonymous",
+      ownerTokenHash: hashToken(ownerToken),
     });
-    res.status(201).json({ success: true, rating });
+
+    const result = rating.toObject();
+    delete result.ownerTokenHash;
+
+    res.status(201).json({ success: true, rating: result, ownerToken });
   } catch (err) {
     res.status(500).json({ error: "Could not save rating." });
   }
@@ -35,7 +47,18 @@ router.get("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await StarRating.findByIdAndDelete(req.params.id);
+    const { ownerToken } = req.body;
+    if (!ownerToken || typeof ownerToken !== "string")
+      return res.status(400).json({ error: "Owner token required." });
+
+    const doc = await StarRating.findById(req.params.id).select("+ownerTokenHash");
+    if (!doc)
+      return res.status(404).json({ error: "Not found." });
+
+    if (doc.ownerTokenHash !== hashToken(ownerToken))
+      return res.status(403).json({ error: "Not authorized." });
+
+    await doc.deleteOne();
     res.json({ success: true });
   } catch {
     res.status(500).json({ error: "Could not delete." });

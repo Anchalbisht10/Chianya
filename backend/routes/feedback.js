@@ -1,6 +1,11 @@
 const express  = require("express");
+const crypto   = require("crypto");
 const Feedback = require("../models/Feedback");
 const router   = express.Router();
+
+function hashToken(token) {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
 
 router.post("/", async (req, res) => {
   try {
@@ -10,13 +15,19 @@ router.post("/", async (req, res) => {
     if (message.length > 500)
       return res.status(400).json({ error: "Message too long." });
 
+    const ownerToken = crypto.randomBytes(32).toString("hex");
+
     const feedback = await Feedback.create({
       message: message.trim(),
       feeling: feeling || "",
       name: name?.trim() || "Anonymous",
+      ownerTokenHash: hashToken(ownerToken),
     });
 
-    res.status(201).json({ success: true, feedback });
+    const result = feedback.toObject();
+    delete result.ownerTokenHash;
+
+    res.status(201).json({ success: true, feedback: result, ownerToken });
   } catch (err) {
     res.status(500).json({ error: "Could not save feedback." });
   }
@@ -35,7 +46,18 @@ router.get("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await Feedback.findByIdAndDelete(req.params.id);
+    const { ownerToken } = req.body;
+    if (!ownerToken || typeof ownerToken !== "string")
+      return res.status(400).json({ error: "Owner token required." });
+
+    const doc = await Feedback.findById(req.params.id).select("+ownerTokenHash");
+    if (!doc)
+      return res.status(404).json({ error: "Not found." });
+
+    if (doc.ownerTokenHash !== hashToken(ownerToken))
+      return res.status(403).json({ error: "Not authorized." });
+
+    await doc.deleteOne();
     res.json({ success: true });
   } catch {
     res.status(500).json({ error: "Could not delete feedback." });

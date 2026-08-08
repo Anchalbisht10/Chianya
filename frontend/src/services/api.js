@@ -45,8 +45,8 @@ export const submitFeedback = (data) =>
 export const getFeedback = () =>
   fetch(`${BASE}/feedback`, opts("GET")).then(r => r.json());
 
-export const deleteFeedback = (id) =>
-  fetch(`${BASE}/feedback/${id}`, opts("DELETE")).then(r => r.json());
+export const deleteFeedback = (id, ownerToken) =>
+  fetch(`${BASE}/feedback/${id}`, opts("DELETE", { ownerToken })).then(r => r.json());
 
 export const getCommunityStats = () =>
   fetch(`${BASE}/activity/community-stats`, opts("GET")).then(r => r.json());
@@ -57,8 +57,8 @@ export const submitRating = (data) =>
 export const getRatings = () =>
   fetch(`${BASE}/ratings`, opts("GET")).then(r => r.json());
 
-export const deleteRating = (id) =>
-  fetch(`${BASE}/ratings/${id}`, opts("DELETE")).then(r => r.json());
+export const deleteRating = (id, ownerToken) =>
+  fetch(`${BASE}/ratings/${id}`, opts("DELETE", { ownerToken })).then(r => r.json());
 
 export const logMood = (feeling) =>
   fetch(`${BASE}/mood`, opts("POST", { feeling })).then(r => r.json());

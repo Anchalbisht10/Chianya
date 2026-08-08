@@ -5,6 +5,7 @@ const StarRatingSchema = new mongoose.Schema({
   message: { type: String, default: "", maxlength: 300 },
   emoji: { type: String, default: "🌿" },
   name: { type: String, default: "Anonymous" },
+  ownerTokenHash: { type: String, required: true, select: false },
   createdAt: { type: Date, default: Date.now },
 });
 
