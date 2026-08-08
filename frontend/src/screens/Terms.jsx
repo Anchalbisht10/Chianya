@@ -10,7 +10,7 @@ export default function Terms() {
   useEffect(() => {
     setAvatarLine("The forest has one rule — arrive as you are. Everything else is here to protect you.");
     setCurrentMode("default");
-  }, []);
+  }, [setAvatarLine, setCurrentMode]);
 
   const sections = [
     {

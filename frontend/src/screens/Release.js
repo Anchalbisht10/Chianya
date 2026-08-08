@@ -122,8 +122,10 @@ const [showCard, setShowCard] = useState(false);
   const [released, setReleased] = useState(false);
   const canvasRef = useRef();
 
-  useEffect(() => { setAvatarLine(avatarLines.release); }, []);
-  setCurrentMode("release");  
+  useEffect(() => {
+    setAvatarLine(avatarLines.release);
+    setCurrentMode("release");
+  }, [setAvatarLine, setCurrentMode]);  
 
 const doRelease = () => {
   if (!text.trim()) return;
@@ -159,7 +161,6 @@ logSession("release", [], {}).catch(()=>{});
     age:0,
   }));
 
-  let frame;
   const draw = () => {
     ctx.clearRect(0,0,W,H);
     ctx.fillStyle="rgba(3,14,5,0.96)";
@@ -216,7 +217,7 @@ logSession("release", [], {}).catch(()=>{});
     }
 
     t++;
-    if (t < 260) frame=requestAnimationFrame(draw);
+    if (t < 260) requestAnimationFrame(draw);
   };
   draw();
 };

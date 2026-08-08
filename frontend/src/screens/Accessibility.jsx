@@ -10,7 +10,7 @@ export default function Accessibility() {
   useEffect(() => {
     setAvatarLine("The forest belongs to everyone. No one should be left at the gate.");
     setCurrentMode("default");
-  }, []);
+  }, [setAvatarLine, setCurrentMode]);
 
   const sections = [
     {

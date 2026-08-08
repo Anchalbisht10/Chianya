@@ -332,8 +332,7 @@ const filaments = Array.from({ length: 75 }, () => ({
         ctx.stroke();
       });
 
-      // ── Long organic grass — Ground.js style ─────────────
-      const grassBaseY = lakeTop + H * 0.028;
+    
 
 
       // ── Organic filaments ─────────────────────────────────
@@ -518,7 +517,7 @@ for (let i = 0; i < fireflyCount; i++) {
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("resize", setSize);
-    };}, [fireflyCount]);
+    };}, [fireflyCount, ref]);
 
   return (
     <canvas ref={ref} style={{
@@ -645,8 +644,6 @@ const moodOverlay = {
     extraGlow: null,
   };
   
-
- const overlayColor = moodOverlay[primaryFeeling] || moodOverlay.default;
 
  const modeOverlay = {
     antar:    "rgba(255,195,50,0.14)",

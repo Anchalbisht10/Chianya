@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { getMyActivity, logout, getMoodTimeline } from "../services/api";
-import { useChianya } from "../context/ChianyaContext";
 import { getStreak } from "../services/api";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { } = useChianya();
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
   const [timeline, setTimeline] = useState([]);

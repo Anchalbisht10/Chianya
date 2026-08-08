@@ -10,7 +10,7 @@ export default function About() {
   useEffect(() => {
     setAvatarLine("Every forest begins with a single seed. This one began with a question.");
     setCurrentMode("default");
-  }, []);
+  }, [setAvatarLine, setCurrentMode]);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}

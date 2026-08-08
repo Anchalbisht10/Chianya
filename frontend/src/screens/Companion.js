@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useChianya } from "../context/ChianyaContext";
 import ShareCard from "../components/ShareCard";
 import { avatarLines } from "../avatar/avatarLines";
@@ -346,6 +346,7 @@ useEffect(() => {
     `The user arrived feeling: ${feelings.join(", ") || "something heavy"}. Open with a single warm, grounded reflection and one gentle question. 2-3 sentences only.`,
     true
   );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

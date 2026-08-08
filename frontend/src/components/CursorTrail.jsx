@@ -69,7 +69,6 @@ let isMoving = false;
         for (let i = 1; i < trail.length - 2; i++) {
           const cpx = (trail[i].x + trail[i + 1].x) / 2;
           const cpy = (trail[i].y + trail[i + 1].y) / 2;
-          const alpha = Math.max(0, 1 - trail[i].age / trail[i].maxAge);
           ctx.quadraticCurveTo(trail[i].x, trail[i].y, cpx, cpy);
         }
       ctx.strokeStyle = "rgba(160,240,120,0.08)";

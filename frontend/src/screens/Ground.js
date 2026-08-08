@@ -87,8 +87,10 @@ useEffect(() => {
   }
 }, [allDone]);
 
-  useEffect(() => { setAvatarLine(avatarLines.ground); }, []);
-  setCurrentMode("ground");
+  useEffect(() => {
+    setAvatarLine(avatarLines.ground);
+    setCurrentMode("ground");
+  }, [setAvatarLine, setCurrentMode]);
   useEffect(() => {
     if(!cardRef.current)return;
     const obs=new ResizeObserver(e=>{

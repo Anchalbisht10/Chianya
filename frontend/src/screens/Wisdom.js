@@ -295,12 +295,12 @@ logSession("wisdom", feelings || [], {}).catch(()=>{});
       });
     }
   }).catch(() => {});
-}, []);
+}, [feelings]);
 
 useEffect(() => {
   setAvatarLine("A small truth for today's journey through the forest.");
   setCurrentMode("wisdom");
-}, []);
+}, [setAvatarLine, setCurrentMode]);
 
   return (
     <motion.div initial={{opacity:0}} animate={{opacity:1}}

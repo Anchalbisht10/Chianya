@@ -199,7 +199,7 @@ const [showCard, setShowCard] = useState(false);
     }, PHASES[p].duration * 1000);
     let timer = tick();
     return () => clearTimeout(timer);
-  }, []);
+  }, [setAvatarLine, setCurrentMode]);
 
   return (
     <motion.div initial={{opacity:0}} animate={{opacity:1}}

@@ -33,11 +33,7 @@ const TRANSLATIONS = {
   }
 };
 
-const FEELINGS = [
-  "anxious","heavy","scattered","numb",
-  "overwhelmed","tired","lost","restless",
-  "hollow","stuck","hurt","lonely",
-];
+
 
 // Atmospheric canvas — lake + forest silhouette + fireflies
 function AtmosphericBg({ width, height }) {
@@ -212,20 +208,15 @@ function AtmosphericBg({ width, height }) {
 }
 export default function Entry() {
 const [lang, setLang] = useState("en");
-const { setFeelings, setAvatarLine, avatarLine, setUserStreak } = useChianya();
-  const isMobile = window.innerWidth < 1100;
+const { setFeelings, setAvatarLine, setUserStreak } = useChianya();
   const [selected, setSelected] = useState([]);
   const navigate = useNavigate();
   const cardRef = useRef();
   const [cardSize, setCardSize] = useState({ w:480, h:600 });
   const [transitioning, setTransitioning] = useState(false);
-  const [streakData, setStreakData] = useState(null);
-
-  const transitionRef = useRef(false);
-useEffect(() => {
+  useEffect(() => {
     getStreak().then(data => {
       if (data?.streak) {
-        setStreakData(data);
         setUserStreak(data.streak);
         if (data.streak === 1) {
           setAvatarLine("The forest opens for you. Whatever you are carrying — there is space for it here.");
@@ -256,7 +247,7 @@ useEffect(() => {
       }
       localStorage.setItem("chianya_visited", "true");
     });
-  }, []);
+  }, [setAvatarLine, setUserStreak]);
 
   useEffect(() => {
     if (!cardRef.current) return;

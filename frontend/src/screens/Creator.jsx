@@ -54,7 +54,7 @@ export default function Creator() {
   useEffect(() => {
     setAvatarLine("Every forest has a gardener. This one is hers.");
     setCurrentMode("default");
-  }, []);
+  }, [setAvatarLine, setCurrentMode]);
 
   const skills = [
     "React.js", "Node.js", "Express.js", "MongoDB",

@@ -61,7 +61,7 @@ export default function Resources() {
 
   useEffect(() => {
     setAvatarLine("You are not alone. Real support exists, and asking for it is courage.");
-  }, []);
+  }, [setAvatarLine]);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}

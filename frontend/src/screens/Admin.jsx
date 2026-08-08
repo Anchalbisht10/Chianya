@@ -31,14 +31,7 @@ export default function Admin() {
     setLoading(false);
   };
 
-  const s = (val) => ({
-    fontSize: "clamp(9px,1.5vw,10px)",
-    letterSpacing: "0.22em",
-    color: "rgba(92,195,68,0.38)",
-    fontFamily: "Georgia, serif",
-    marginBottom: 6,
-    val,
-  });
+ 
 
   if (!authed) return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}

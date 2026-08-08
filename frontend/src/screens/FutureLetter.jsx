@@ -2,11 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { sendFutureLetter } from "../services/api";
-import { useChianya } from "../context/ChianyaContext";
 
 export default function FutureLetter() {
   const navigate = useNavigate();
-  const { setCurrentMode } = useChianya();
   const [step, setStep] = useState("write");
   const [form, setForm] = useState({ email: "", letter: "", days: 30 });
   const [loading, setLoading] = useState(false);

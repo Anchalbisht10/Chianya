@@ -142,7 +142,7 @@ useEffect(() => {
     setTimeout(() => setShowCard(true), 500);
   }, 80000);
   return () => clearTimeout(timer);
-}, []);
+}, [setAvatarLine, setCurrentMode]);
 
   return (
     <motion.div initial={{opacity:0}} animate={{opacity:1}}

@@ -24,7 +24,6 @@ const SOUND_MAP = {
 
 export default function AmbientSound() {
   const audioRef = useRef(null);
-  const [playing, setPlaying] = useState(false);
 const [enabled, setEnabled] = useState(true);
   const [currentSound, setCurrentSound] = useState("forest");
   const location = useLocation();
@@ -81,14 +80,13 @@ const [enabled, setEnabled] = useState(true);
         }, 80);
       }
     }, 80);
-  }, [location.pathname]);
+  }, [location.pathname, currentSound, enabled]);
 
   const toggle = () => {
     if (!audioRef.current) return;
     if (enabled) {
       audioRef.current.pause();
       setEnabled(false);
-      setPlaying(false);
     } else {
       const soundName = SOUND_MAP[location.pathname] || "forest";
       audioRef.current.src = `/sounds/${soundName}.mp3`;
@@ -96,7 +94,6 @@ const [enabled, setEnabled] = useState(true);
       audioRef.current.loop = true;
       audioRef.current.play().catch(() => {});
       setEnabled(true);
-      setPlaying(true);
       setCurrentSound(soundName);
     }
   };
