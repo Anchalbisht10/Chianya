@@ -10,7 +10,8 @@ export default function Privacy() {
   useEffect(() => {
     setAvatarLine("Your privacy is not negotiable. The forest keeps no secrets about you.");
     setCurrentMode("default");
-  }, []);
+  }, [setAvatarLine, setCurrentMode]);
+  
 
   const sections = [
     {
